@@ -165,7 +165,7 @@ KEYBITS = 256
 ALLOWED_VERSIONS = ['v1', 'v2']
 DEFAULT_VERSION = 'v1'
 
-BASEURL="https://decide-guadalfeo-cabina.herokuapp.com"
+BASEURL="https://decide-full-guadalfeo-cabina.herokuapp.com"
 APIS = {}
 
 try:
