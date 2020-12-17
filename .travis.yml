@@ -31,3 +31,5 @@ deploy:
   app: decide-full-guadalfeo-cabina
   strategy: git
   api_key: $HEROKU_AUTH_TOKEN
+  on:
+    branch: main
