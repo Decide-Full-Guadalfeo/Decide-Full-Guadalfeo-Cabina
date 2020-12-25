@@ -31,6 +31,7 @@ const Login = ({ post, setToken, setUser }) => {
             }
         });
 
+        ElGamal.BITS = keybits;
     }
 
     const onSubmitLogin = (event) => {
@@ -53,7 +54,7 @@ const Login = ({ post, setToken, setUser }) => {
     /*############### FUNCTIONALITY ###############*/
 
     useEffect(() => {
-        init()
+        init();
     }, [])
 
 
@@ -78,7 +79,7 @@ const Login = ({ post, setToken, setUser }) => {
                 required
             />
 
-            <button type="">Login</button>
+            <button>Login</button>
 
         </form>
     );

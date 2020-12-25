@@ -16,6 +16,23 @@
 {% endblock %}
 
 {% block extrabody %}
+    <!-- needed to generate big random -->
+    <script src="{% static "crypto/sjcl.js" %}"></script>
+
+    <!-- Big integer -->
+    <script src="{% static "crypto/jsbn.js" %}"></script>
+    <script src="{% static "crypto/jsbn2.js" %}"></script>
+    <script src="{% static "crypto/bigint.js" %}"></script>
+
+    <!-- ElGamal encrypt -->
+    <script src="{% static "crypto/elgamal.js" %}"></script>
+
+    <!--Django variables-->
+    <script>
+        let voting = {{voting|safe}};
+        let keybits = {{KEYBITS}};
+    </script>
+
 
     <!-- Load React. Note: when deploying, replace "development.js" with "production.min.js". -->
     <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
@@ -24,9 +41,11 @@
     <!-- Load Babel (For using JSX)-->
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <!-- babel-standalone@6 -->
+
     <!-- Load React components. -->
-    <script src="{% static "booth/react/Test/Test.js" %}" type="text/babel" data-plugins="transform-es2015-modules-umd"></script>
-    <script src="{% static "booth/react/Login.js" %}" type="text/babel" data-plugins="transform-es2015-modules-umd"></script>
+    <script src="{% static "booth/react/Navbar/Navbar.js" %}" type="text/babel" data-plugins="transform-es2015-modules-umd"></script>
+    <script src="{% static "booth/react/Login/Login.js" %}" type="text/babel" data-plugins="transform-es2015-modules-umd"></script>
+    <script src="{% static "booth/react/Voting/Voting.js" %}" type="text/babel" data-plugins="transform-es2015-modules-umd"></script>
     <script src="{% static "booth/react/App.js" %}" type="text/babel" data-plugins="transform-es2015-modules-umd"></script>
 
     <!--Bootstrap-->

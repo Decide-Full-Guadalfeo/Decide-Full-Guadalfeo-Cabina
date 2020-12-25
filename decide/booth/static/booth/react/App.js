@@ -1,6 +1,9 @@
 'use strict';
 
-import Login from "./Login";
+import Login from "./Login/Login";
+import Voting from "./Voting/Voting";
+import Navbar from "./Navbar/Navbar"
+
 const { useState, useEffect } = React;
 
 const App = () => {
@@ -9,7 +12,7 @@ const App = () => {
   const [token, setToken] = useState(null)
   const [user, setUser] = useState(null)
 
-
+  
   /*############### UTILITY FUNCTIONS ###############*/
   const post = (url, data) => {
     // Default options are marked with *
@@ -35,24 +38,12 @@ const App = () => {
       });
   }
 
-  const logout = () => {
-    const data = { token };
-    post("/gateway/authentication/logout/", data);
-    setToken(null);
-    setUser(null);
-    document.cookie = 'decide=;';
-  }
-
-
   /*############### FUNCTIONALITY ###############*/
-  console.log(user)
-
   const view = () => {
     if(user) {
       return(
         <div>
-          <p>Hola {user.username}</p>
-          <button onClick={logout}>Logout</button>
+          <Voting post={post} user={user} token={token}/>
         </div>
       )
     }
@@ -66,9 +57,8 @@ const App = () => {
   /*############### RETURN ###############*/
   return (
     <div className="App">
-      
+      <Navbar/>
       {view()}
-
     </div>
   );
 
