@@ -9,8 +9,14 @@ const { useState, useEffect } = React;
 const App = () => {
 
   /*############### STATE ###############*/
-  const [token, setToken] = useState(null)
-  const [user, setUser] = useState(null)
+  const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
+  const [alert, setAlert] = useState(
+    {
+      lvl: null,
+      msg: null,
+    }
+  )
 
   
   /*############### UTILITY FUNCTIONS ###############*/
@@ -38,18 +44,20 @@ const App = () => {
       });
   }
 
+  const utils = {token, user, setToken, setUser, alert, setAlert, post}
+
   /*############### FUNCTIONALITY ###############*/
   const view = () => {
     if(user) {
       return(
         <div>
-          <Voting post={post} user={user} token={token}/>
+          <Voting utils={utils}/>
         </div>
       )
     }
     else{
       return(
-        <Login post={post} setToken={setToken} setUser={setUser} />
+        <Login utils={utils}/>
       )
     }
   }
@@ -57,7 +65,8 @@ const App = () => {
   /*############### RETURN ###############*/
   return (
     <div className="App">
-      <Navbar/>
+      <Navbar utils={utils}/>
+      <h1>Please vote {voting.id} - { voting.name }</h1>
       {view()}
     </div>
   );

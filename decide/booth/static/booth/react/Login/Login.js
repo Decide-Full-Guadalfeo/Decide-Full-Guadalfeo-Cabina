@@ -1,7 +1,7 @@
 'use strict';
 const { useState, useEffect } = React
 
-const Login = ({ post, setToken, setUser }) => {
+const Login = ({ utils }) => {
 
     /*############### STATE ###############*/
 
@@ -12,9 +12,9 @@ const Login = ({ post, setToken, setUser }) => {
     /*############### UTILITY FUNCTIONS ###############*/
     const getUser = (tkn) => {
         var data = { token: tkn };
-        post("/gateway/authentication/getuser/", data)
+        utils.post("/gateway/authentication/getuser/", data)
             .then(data => {
-                setUser(data);
+                utils.setUser(data);
             }).catch(error => {
                 console.log(error)//this.showAlert("danger", '{% trans "Error: " %}' + error);
             });
@@ -26,7 +26,7 @@ const Login = ({ post, setToken, setUser }) => {
         cookies.forEach((c) => {
             var cs = c.split("=");
             if (cs[0] == 'decide' && cs[1]) {
-                setToken(cs[1]);
+                utils.setToken(cs[1]);
                 getUser(cs[1]);
             }
         });
@@ -39,14 +39,14 @@ const Login = ({ post, setToken, setUser }) => {
 
         const form = { username, password };
 
-        post("/gateway/authentication/login/", form)
+        utils.post("/gateway/authentication/login/", form)
             .then(data => {
                 document.cookie = 'decide=' + data.token + ';';
-                setToken(data.token);
+                utils.setToken(data.token);
                 getUser(data.token);
             })
             .catch(error => {
-                console.log(error)//this.showAlert("danger", '{% trans "Error: " %}' + error);
+                utils.setAlert({ lvl: 'danger', msg: 'Error: ' + error, });
             });
     }
 
@@ -60,28 +60,30 @@ const Login = ({ post, setToken, setUser }) => {
 
     /*############### RETURN ###############*/
     return (
-        <form onSubmit={onSubmitLogin}>
-            <label>Username</label>
-            <input
-                type="text"
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-                autoComplete="username"
-                required
-            />
+        <div className="login">
+            <form onSubmit={onSubmitLogin}>
+                <label>Username</label>
+                <input
+                    type="text"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                    autoComplete="username"
+                    required
+                />
 
-            <label>Password</label>
-            <input
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                autoComplete="current-password"
-                required
-            />
+                <label>Password</label>
+                <input
+                    type="password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    autoComplete="current-password"
+                    required
+                />
 
-            <button>Login</button>
+                <button>Login</button>
 
-        </form>
+            </form>
+        </div>
     );
 }
 export default Login;

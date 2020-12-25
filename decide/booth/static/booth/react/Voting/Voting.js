@@ -1,7 +1,7 @@
 'use strict';
 const { useState } = React
 
-const Voting = ({ post, user, token }) => {
+const Voting = ({ utils }) => {
 
     /*############### STATE ###############*/
 
@@ -20,29 +20,29 @@ const Voting = ({ post, user, token }) => {
         const cipher = ElGamal.encrypt(bigpk, bigmsg);
         return cipher;
     }
-    /*const showAlert = (lvl, msg) => {
-        const alertLvl = lvl;
-        this.alertMsg = msg;
-        this.alertShow = true;
-    }*/
-
+    console.log(selectedAnswer)
     const sendVoting = (event) => {
         event.preventDefault();
-        
-        const v = encrypt();
-        const data = {
-            vote: { a: v.alpha.toString(), b: v.beta.toString() },
-            voting: voting.id,
-            voter: user.id,
-            token: token
+
+        if (selectedAnswer == null) {
+            utils.setAlert({lvl:'error', msg:'Please select an option'})
         }
-        post("/gateway/store/", data)
-            .then(data => {
-                console.log('Ha funcao')//showAlert("success", '{% trans "Conglatulations. Your vote has been sent" %}');
-            })
-            .catch(error => {
-                console.log('No funcao')//showAlert("danger", '{% trans "Error: " %}' + error);
-            });
+        else {
+            const v = encrypt();
+            const data = {
+                vote: { a: v.alpha.toString(), b: v.beta.toString() },
+                voting: voting.id,
+                voter: utils.user.id,
+                token: utils.token
+            }
+            utils.post("/gateway/store/", data)
+                .then(data => {
+                    utils.setAlert({ lvl: 'success', msg: 'Conglatulations. Your vote has been sent' });
+                })
+                .catch(error => {
+                    utils.setAlert({ lvl: 'danger', msg: 'Error: ' + error, });
+                });
+        }
     }
 
     /*############### FUNCTIONALITY ###############*/
@@ -66,7 +66,6 @@ const Voting = ({ post, user, token }) => {
                 <button>Vote</button>
             </form>
 
-            <p>Question voted: {selectedAnswer}</p>
         </div >
     );
 }
