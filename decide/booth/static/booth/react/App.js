@@ -20,12 +20,28 @@ const App = () => {
 
   
   /*############### UTILITY FUNCTIONS ###############*/
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
   const post = (url, data) => {
     // Default options are marked with *
     var fdata = {
       body: JSON.stringify(data),
       headers: {
         'content-type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')
       },
       method: 'POST',
     };

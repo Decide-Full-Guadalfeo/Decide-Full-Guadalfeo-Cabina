@@ -8,7 +8,7 @@ from mixnet.mixcrypt import ElGamal
 
 from base import mods
 
-"""
+
 class MixnetCase(APITestCase):
 
     def setUp(self):
@@ -188,4 +188,3 @@ class MixnetCase(APITestCase):
 
         self.assertNotEqual(clear, clear1)
         self.assertEqual(sorted(clear), sorted(clear1))
-"""

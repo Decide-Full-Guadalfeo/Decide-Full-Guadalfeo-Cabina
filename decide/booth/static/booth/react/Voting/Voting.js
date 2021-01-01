@@ -46,12 +46,34 @@ const Voting = ({ utils }) => {
     }
 
     /*############### FUNCTIONALITY ###############*/
-
+    
 
     /*############### RETURN ###############*/
     return (
         <div className="voting">
-            <h2>{voting.question.desc}</h2>
+            
+            <form onSubmit={sendVoting}>
+                {voting.question.map(o => (
+                    <div>
+                        <h2>{o.desc}</h2>
+                        {o.options.map(p => (
+                        <div key={p.number}>
+                            <input type="radio" onChange={e => setSelectedAnswer(p.number)} checked={selectedAnswer === p.number} />
+                            {p.option}
+                            <br />
+                        </div>
+                    ))}
+                    </div>
+                ))}
+                <button>Vote</button>
+            </form>
+
+        </div >
+    );
+}
+export default Voting;
+
+/* <h2>{voting.question.desc}</h2>
 
             <form onSubmit={sendVoting}>
 
@@ -64,9 +86,13 @@ const Voting = ({ utils }) => {
                 ))}
 
                 <button>Vote</button>
-            </form>
-
-        </div >
-    );
-}
-export default Voting;
+            </form> 
+            
+            
+            {o.options.map(p => (
+                        <div key={p.number}>
+                            <input type="radio" onChange={e => setSelectedAnswer(p.number)} checked={selectedAnswer === p.number} />
+                            {p.option}
+                            <br />
+                        </div>
+                    ))}*/
