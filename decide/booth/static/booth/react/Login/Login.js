@@ -36,8 +36,8 @@ const Login = ({ utils }) => {
     }
 
     const getVotingUser = () => {
-        var data = { id: '1'};
-        utils.post("/getVotingUser/", data)
+        var data = { };
+        utils.post("/authentication/decide/getVotingUser/", data)
             .catch(error => {
                 console.log(error)//this.showAlert("danger", '{% trans "Error: " %}' + error);
             });
@@ -67,7 +67,7 @@ const Login = ({ utils }) => {
                 document.cookie = 'decide=' + data.token + ';';
                 utils.setToken(data.token);
                 getUser(data.token);
-                //getVotingUser();
+                getVotingUser();
             })
             .catch(error => {
                 utils.setAlert({ lvl: 'danger', msg: 'Error: ' + error, });
