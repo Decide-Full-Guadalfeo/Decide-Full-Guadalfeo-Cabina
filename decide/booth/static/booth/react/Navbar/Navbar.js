@@ -1,36 +1,101 @@
-'use strict';
-const { useState, useEffect } = React
+"use strict";
+const { useState, useEffect } = React;
 
 const Navbar = ({ utils }) => {
+  const logout = () => {
+    const data = { token: utils.token };
+    utils.post("/gateway/authentication/logout/", data);
+    utils.setToken(null);
+    utils.setUser(null);
+    document.cookie = "decide=;";
+  };
 
-    const logout = () => {
-        const data = { token: utils.token };
-        utils.post("/gateway/authentication/logout/", data);
-        utils.setToken(null);
-        utils.setUser(null);
-        document.cookie = 'decide=;';
+  const closeAlert = () => {
+    utils.setAlert({ lvl: null, msg: null });
+  };
+
+  // When the user scrolls the page, execute myFunction
+  window.onscroll = function () {
+    myFunction();
+  };
+  // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+  function myFunction() {
+    var header = $(".navbar");
+
+    var sticky = header.offsetTop;
+
+    if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+    } else {
+        header.classList.remove("sticky");
     }
+  }
 
-    const closeAlert = () => {
-        utils.setAlert({lvl:null,msg:null});
-    }
-    return (
-        <div className='navbar'>
-            <span>Decide</span>
-
-            {utils.user ? <button onClick={logout}>Logout</button>: null}
-
-            {utils.alert.lvl ? 
-                
-                <div className={'alert '+utils.alert.lvl}>
-                    <p>{utils.alert.msg}</p>
-                    <button onClick={closeAlert}>close</button>
-                </div>
-                
-            : null}
-            
+  return (
+    <div>
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top " id="mainNav">
+        {/* <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/navbar-logo.svg" alt="" /></a> */}
+        <div>
+          {" "}
+          <h1 class="white">Decide</h1>{" "}
         </div>
-    )
-}
+
+        {/* <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        Menu
+                        <i class="fas fa-bars ml-1"></i>
+                    </button> */}
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav text-uppercase ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#candidatura1">
+                Candidatura 1
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#candidatura2">
+                Candidatura 2
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#candidatura3">
+                Candidatura 3
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#candidatura4">
+                Candidatura 4
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#candidatura5">
+                Candidatura 5
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#candidatura6">
+                Candidatura 6
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#candidaturaExtra">
+                10 Candidatos
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          {utils.user ? <button onClick={logout}>Logout</button> : null}
+          {utils.alert.lvl ? (
+            <div className={"alert " + utils.alert.lvl}>
+              <p>{utils.alert.msg}</p>
+              <button onClick={closeAlert}>close</button>
+            </div>
+          ) : null}
+        </div>
+      </nav>
+    </div>
+  );
+};
 
 export default Navbar;

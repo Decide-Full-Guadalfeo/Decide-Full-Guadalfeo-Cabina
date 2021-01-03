@@ -61,12 +61,15 @@ const App = () => {
       )
     }
   }
+  
 
   /*############### RETURN ###############*/
   return (
     <div className="App">
       <Navbar utils={utils}/>
+      {/* <div class="welcome">
       <h1>Please vote {voting.id} - { voting.name }</h1>
+      </div> */}
       {view()}
     </div>
   );
