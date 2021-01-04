@@ -8,6 +8,9 @@
   justify-content: space-between;
 } */
 
+.alert {
+padding: 5vw 5vh;
+}
 .alert.success {
   background-color: chartreuse;
   color: black;
@@ -15,24 +18,27 @@
 
 .alert.error {
   background-color: red;
-}
+} 
 
 /* The sticky class is added to the header with JS when it reaches its scroll position */
-.sticky {
+/* .sticky {
   position: fixed;
   top: 0;
   width: 100%;
-}
+} */
 
 /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
-.sticky + .voting {
+/* .sticky + .voting {
   padding-top: 102px;
-}
+} */
 
 /* Style the header */
-.navbar {
+/* .navbar {
   padding: 10px 16px;
   background: #555;
   color: #f1f1f1;
 }
-
+ */
+.navbar {
+  height: 10vh;
+}

@@ -15,21 +15,21 @@ const Navbar = ({ utils }) => {
   };
 
   // When the user scrolls the page, execute myFunction
-  window.onscroll = function () {
-    myFunction();
-  };
-  // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
-  function myFunction() {
-    var header = $(".navbar");
+  // window.onscroll = function () {
+  //   myFunction();
+  // };
+  // // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+  // function myFunction() {
+  //   var header = $(".navbar");
 
-    var sticky = header.offsetTop;
+  //   var sticky = header.offsetTop;
 
-    if (window.pageYOffset > sticky) {
-        header.classList.add("sticky");
-    } else {
-        header.classList.remove("sticky");
-    }
-  }
+  //   if (window.pageYOffset > sticky) {
+  //       header.classList.add("sticky");
+  //   } else {
+  //       header.classList.remove("sticky");
+  //   }
+  // }
 
   return (
     <div>

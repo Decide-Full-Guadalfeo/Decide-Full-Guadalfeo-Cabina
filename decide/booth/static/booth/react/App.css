@@ -1,8 +1,12 @@
-/* .App{
+.App{
     background-color: rgb(65, 65, 65);
     color: whitesmoke;
-} */
-
-.welcome {
-    top: 100px;
 }
+body{
+    background-color: rgb(87, 82, 82);
+    color: rgb(245, 235, 235);
+}
+
+/* .welcome {
+    top: 100px;
+} */
