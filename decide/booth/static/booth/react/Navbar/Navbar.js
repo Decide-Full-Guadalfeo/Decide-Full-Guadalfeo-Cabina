@@ -1,6 +1,9 @@
 'use strict';
 const { useState, useEffect } = React
 
+render(<Example />);
+
+
 const Navbar = ({ utils }) => {
 
     const logout = () => {
@@ -13,7 +16,7 @@ const Navbar = ({ utils }) => {
 
     const closeAlert = () => {
         utils.setAlert({lvl:null,msg:null});
-    }
+    }z
     return (
         <div className='navbar'>
             <span>Decide</span>

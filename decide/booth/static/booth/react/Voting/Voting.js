@@ -53,7 +53,7 @@ const Voting = ({ utils }) => {
         <div className="voting">
             <h2>{voting.question.desc}</h2>
 
-            <form onSubmit={votingPopup}>
+            <form onSubmit={sendVoting}>
 
                 {voting.question.options.map(o => (
                     <div key={o.number}>
@@ -63,13 +63,13 @@ const Voting = ({ utils }) => {
                     </div>
                 ))}
 
-                <button>Tu madre</button>
+                <button>Submit voting</button>
             </form>
 
         </div >
     );
 }
-function votingPopup() {
+/*function votingPopup() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -98,5 +98,5 @@ function votingPopup() {
     </>
   );
 }
-
+*/
 export default Voting;
