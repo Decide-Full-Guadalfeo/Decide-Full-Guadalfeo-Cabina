@@ -1,8 +1,8 @@
 "use strict";
 const { useState } = React;
 
-const Voting = ({ utils }) => {
-  /*############### STATE ###############*/
+
+const Voting = ({ utils, value }) => {
 
   const [selectedAnswer, setSelectedAnswer] = useState(null);
 
@@ -74,6 +74,53 @@ const Voting = ({ utils }) => {
   // };
   // $(window).scroll(function () {
   //   // $( "span" ).css( "display", "inline" ).fadeOut( "slow" );
+    const encrypt = (options) => {
+        const bigmsg = BigInt.fromJSONObject(options.toString());
+        const cipher = ElGamal.encrypt(bigpk, bigmsg);
+        return cipher;
+    }
+    
+    const sendVoting = (event) => {
+        event.preventDefault();
+
+        const options = getInput()
+
+        const v = encrypt(options);
+        const data = {
+            vote: { a: v.alpha.toString(), b: v.beta.toString() },
+            voting: voting.id,
+            voter: value.user_id,
+            token: value.token,
+        }
+        console.log(data)
+        utils.post("/gateway/store/", data)
+            .then(data => {
+                utils.setAlert({ lvl: 'success', msg: 'Conglatulations. Your vote has been sent' });
+            })
+            .catch(error => {
+                utils.setAlert({ lvl: 'danger', msg: 'Error: ' + error, });
+            });
+    }
+
+    const getInput = (event) => {
+        let res = {}
+        let a = document.getElementsByClassName('question')
+        for (let i = 0; i < a.length; i++) {
+            const titulo = a[i].children[0].innerHTML;
+            let inputs = a[i].getElementsByTagName('input')
+            for (let j = 0; j < inputs.length; j++) {
+                if (inputs[j].checked) {
+                    res[titulo] = inputs[j].value
+                }
+            }
+        }
+        res['sex'] = value.sex
+        res['age'] = value.age
+        res['grade'] = value.grade
+        res['year'] = value.year
+        console.log(res)
+        return res
+    }
 
   //   console.log("Scrolled" + ($(window).scrollTop() + window.innerHeight));
   //   // alert("La barra vertical se ha movido " + $(window).scrollTop() + " pixels");
@@ -91,8 +138,35 @@ const Voting = ({ utils }) => {
   // $(window).scroll(function () {
   //   // console.log("Scrolled" + ($(window).scrollTop() + window.innerHeight));
 
-  //   var umbral = 50;
-  //   var st = $(this).scrollTop();
+
+    /*############### RETURN ###############*/
+    return (
+        <div className="voting">
+
+            <form onSubmit={sendVoting}>
+                {voting.question.map(o => (
+                    <div className='question'>
+                        <h2>{o.desc}</h2>
+                        {o.options.map(p => (
+                            <div>
+                                <input type="radio" name={o.desc} value={p.number} required />
+                                {p.option}
+                                <br />
+                            </div>
+                        ))}
+                    </div>
+                ))}
+                <button>Vote</button>
+            </form>
+
+        </div >
+    );
+}
+export default Voting;
+
+/* onChange={e => setObjeto(...objeto,{[o.desc]:p.number})}
+
+<h2>{voting.question.desc}</h2>
 
   //   console.log("lastScrollTop" + lastScrollTop);
   //   console.log("st" + st);
@@ -279,3 +353,12 @@ const Voting = ({ utils }) => {
   );
 };
 export default Voting;
+
+
+            {o.options.map(p => (
+                        <div key={p.number}>
+                            <input type="radio" onChange={e => setSelectedAnswer(p.number)} checked={selectedAnswer === p.number} />
+                            {p.option}
+                            <br />
+                        </div>
+                    ))}*/
