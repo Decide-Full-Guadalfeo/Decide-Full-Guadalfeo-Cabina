@@ -32,10 +32,6 @@ const Voting = ({ utils, value }) => {
             voting: voting.id,
             voter: value.user_id,
             token: value.token,
-            sex: value.sex,
-            age: value.age,
-            grade: value.grade,
-            year: value.year,
         }
         console.log(data)
         utils.post("/gateway/store/", data)
@@ -59,6 +55,11 @@ const Voting = ({ utils, value }) => {
                 }
             }
         }
+        res['sex'] = value.sex
+        res['age'] = value.age
+        res['grade'] = value.grade
+        res['year'] = value.year
+        console.log(res)
         return res
     }
 
