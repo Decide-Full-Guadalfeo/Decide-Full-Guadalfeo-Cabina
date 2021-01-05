@@ -14,25 +14,10 @@ const Navbar = ({ utils }) => {
     utils.setAlert({ lvl: null, msg: null });
   };
 
-  // When the user scrolls the page, execute myFunction
-  // window.onscroll = function () {
-  //   myFunction();
-  // };
-  // // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
-  // function myFunction() {
-  //   var header = $(".navbar");
 
-  //   var sticky = header.offsetTop;
-
-  //   if (window.pageYOffset > sticky) {
-  //       header.classList.add("sticky");
-  //   } else {
-  //       header.classList.remove("sticky");
-  //   }
-  // }
 
   return (
-    <div>
+    <div id= "fixed-header" >
       <nav class="navbar navbar-expand-lg navbar-dark fixed-top " id="mainNav">
         {/* <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/navbar-logo.svg" alt="" /></a> */}
         <div>

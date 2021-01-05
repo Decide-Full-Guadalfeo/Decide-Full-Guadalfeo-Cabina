@@ -1,44 +1,33 @@
-.voting {
-  padding: 16px;
-  padding-top: 10vh;
-}
 html,
 body,
 #react-root,
-div.question {
+.App {
   height: 100vh;
+  overflow: auto;
 }
 
-div.candidatura {
-  height: 100vh;
+.App > div > div#fixed-header {
+  height: 10vh;
+  overflow: auto;
 }
-/*
-/*   
-.container {
-  max-width: 900px;
-  margin: 0 auto;
+.App > div > div#content {
+  height: 89vh;
+  top: 10vh;
+  overflow: auto;
+  padding-top: 1vh;
+}
+.candidatura {
+  position: absolute;
+  height: 80vh;
+  overflow: auto;
+}
+
+/* .voting {
+  padding: 16px;
+  overflow: hidden;
 } */
 
-/**
-    Component
-  **/
-
-/* label {
-  width: 100%;
-}
-
-
-.card-input {
-  margin: 10px;
-  padding: 00px;
-}
-
-
-
-.card-input-element:checked + .card-input {
-  box-shadow: 0 0 1px 1px #2ecc71;
-} */
-
+/* DESDE AQUI SON PARA MOSTRAR COMO CARTAS */
 .card-input-element {
   display: none;
 }
@@ -97,7 +86,6 @@ div.candidatura {
   /* width: 70%; */
   /* background: #EEE;
     margin: 10px auto; */
-  padding: 5vw 5vh;
   position: relative;
   display: flex;
   flex-wrap: wrap;
@@ -105,4 +93,32 @@ div.candidatura {
 }
 .card-input {
   padding: 2.5vh 2.5vw;
+}
+
+/* div.candidatura:first-of-type{
+  display:block;
+} */
+div.candidatura {
+  display: none;
+  /* opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
+  transition: opacity 0.2s ease-out, transform 1s; */
+}
+
+.active-question {
+  display: block !important;
+  opacity: 1 !important;
+  /* transition: opacity 2s linear;
+  transform: translateY(-80vh);
+  transition: opacity 0.2s ease-out, transform 1s; */
+}
+
+#candidatura1{
+  background-color: #EF476F;
+  filter: brightness(95%);
+}
+#candidatura2{
+  background-color: #FFD166;
+  filter: brightness(95%);
+
 }

@@ -20,25 +20,7 @@ padding: 5vw 5vh;
   background-color: red;
 } 
 
-/* The sticky class is added to the header with JS when it reaches its scroll position */
-/* .sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
-} */
-
-/* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
-/* .sticky + .voting {
-  padding-top: 102px;
-} */
-
-/* Style the header */
-/* .navbar {
-  padding: 10px 16px;
-  background: #555;
-  color: #f1f1f1;
-}
- */
-.navbar {
+#fixed-header {
   height: 10vh;
+  background-color: rgb(22, 22, 22);
 }

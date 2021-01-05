@@ -126,30 +126,50 @@ const Voting = ({ utils }) => {
       var delta = e.originalEvent.deltaY;
 
       if (delta > 0) {
-        $("html, body").animate(
-          {
-            // scrollTop: $("#candidatura2").offset().top,
-            scrollTop: $(window).scrollTop() + window.innerHeight,
-          },
-          1000
-        );
+        var active_question = $("div.active-question");
+
+        if (active_question.next().hasClass("candidatura")) {
+          active_question.next().addClass("active-question");
+          active_question.removeClass("active-question");
+        }
+        console.log("scrolled downs");
+        // $("html, body").animate(
+        //   {
+        //     // scrollTop: $("#candidatura2").offset().top,
+        //     scrollTop: $(window).scrollTop() + window.innerHeight,
+        //   },
+        //   1000
+        // );
       } else {
+        // $("div.active-question").prev().addClass("active-question");
+        // $("div.active-question").removeClass("active-question");
+        var active_question = $("div.active-question");
+        if (active_question.prev().hasClass("candidatura")) {
+          active_question.prev().addClass("active-question");
+          active_question.removeClass("active-question");
+        }
+        console.log("scrolled up");
+
         // upscroll code
-        $("html, body").animate(
-          {
-            // scrollTop: $("#candidatura1").offset().top,
-            scrollTop: $(window).scrollTop() - window.innerHeight,
-          },
-          1000
-        );
+        // $("html, body").animate(
+        //   {
+        //     // scrollTop: $("#candidatura1").offset().top,
+        //     scrollTop: $(window).scrollTop() - window.innerHeight,
+        //   },
+        //   1000
+        // );
       }
       return false; // this line is only added so the whole page won't scroll in the demo
     });
   });
+  //   show the first element, the others are hide by default
+  $(document).ready(function () {
+    $("div.candidatura:first-of-type").addClass("active-question");
+  });
 
   /*############### RETURN ###############*/
   return (
-    <div className="voting">
+    <div id="content" className="voting">
       <h2>{voting.question.desc}</h2>
       {/* CANDIDATURA 1 */}
       <div className="candidatura" id="candidatura1">
@@ -236,45 +256,6 @@ const Voting = ({ utils }) => {
           <button>Vote</button>
         </form>
       </div>
-      {/* CANDIDATURA 3 */}
-
-      {/* <div className="" id="candidatura3">
-      <h2>CANDIDATURA 3</h2>
-
-        <form onSubmit={sendVoting}>
-          <div className="row">
-            {voting.question.options.map((o) => (
-              <div key={o.number}>
-                <label>
-                  <input
-                    type="radio"
-                    name="product"
-                    className="card-input-element"
-                    onChange={(e) => setSelectedAnswer(o.number)}
-                    checked={selectedAnswer === o.number}
-                  />
-                  <div className="flip-card">
-                    <div className="flip-card-inner">
-                      <div className="flip-card-front">
-                        <h1>Candidato: {o.option}</h1>
-                        
-                      </div>
-                      <div className="flip-card-back">
-                        <h1>Candidato 1</h1>
-                        <p>Algo del candidato</p>
-                        <p>{o.option}</p>
-                        <p>Has elegido el candidato: {selectedAnswer}</p>
-                      </div>
-                    </div>
-                  </div>
-                </label>
-                <br />
-              </div>
-            ))}
-          </div>
-          <button>Vote</button>
-        </form>
-      </div> */}
     </div>
   );
 };
