@@ -1,50 +1,59 @@
-.voting {
-  padding: 16px;
-  padding-top: 10vh;
-}
+/* #####################################################ADJUSTING TO SCREEN SIZE #################################*/
+
 html,
 body,
 #react-root,
-div.question {
-  height: 100vh;
+.App  {
+  max-height: 100vh;
+  overflow: auto;
 }
 
-div.candidatura {
-  height: 100vh;
+.App > div > div#fixed-header {
+  height: 10%;
+  /* overflow: auto; */
 }
-/*
-/*   
-.container {
-  max-width: 900px;
-  margin: 0 auto;
+.App > div > div#content > form {
+  height: 80%;
+  overflow: auto;
+  padding-top: 1vh;
+}
+.question {
+  overflow: auto;
+}
+
+.option {
+  /* width: 70%; */
+  /* background: #EEE;
+    margin: 10px auto; */
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* .card-input {
+  padding: 2.5vh 2.5vw;
 } */
 
-/**
-    Component
-  **/
+/* ############################################## QUESTIONS DISPLAY ANIMATION #################################*/
 
-/* label {
-  width: 100%;
+.question {
+  display: none;
+}
+div.active-question {
+  display: block;
 }
 
-
-.card-input {
-  margin: 10px;
-  padding: 00px;
-}
-
-
-
-.card-input-element:checked + .card-input {
-  box-shadow: 0 0 1px 1px #2ecc71;
-} */
+/* ############################################### CARDS STYLE FORM #################################*/
 
 .card-input-element {
-  display: none;
+  display: block;
 }
 
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
+  overflow: auto;
+
   background-color: transparent;
   width: 20vw;
   height: 20vh;
@@ -92,17 +101,3 @@ div.candidatura {
 }
 
 /* Style for the cards grid */
-
-.option {
-  /* width: 70%; */
-  /* background: #EEE;
-    margin: 10px auto; */
-  padding: 5vw 5vh;
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.card-input {
-  padding: 2.5vh 2.5vw;
-}
