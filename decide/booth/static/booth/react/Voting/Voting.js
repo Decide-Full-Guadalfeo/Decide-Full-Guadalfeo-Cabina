@@ -2,6 +2,7 @@
 const { useState } = React;
 
 const Voting = ({ utils }) => {
+
   /*#################################################################*/
   /*####################### UTILITY FUNCTIONS #######################*/
   /*#################################################################*/
@@ -66,6 +67,7 @@ const Voting = ({ utils }) => {
       else if (genres[i] === "Woman") females = females + 1;
       else others = others + 1;
     }
+
 
     if (males > 5 || females > 5 || males + females + others > 10) res = false;
 
@@ -342,6 +344,7 @@ const Voting = ({ utils }) => {
                       </div>
                       <br />
                     </div>
+
                   ))}
                 </div>
               </div>
