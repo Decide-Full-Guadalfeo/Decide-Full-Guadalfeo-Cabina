@@ -17,8 +17,9 @@ const Navbar = ({ utils }) => {
 
 
   return (
-    <div id= "fixed-header" >
-      <nav class="navbar navbar-expand-lg navbar-dark fixed-top " id="mainNav">
+    <div >
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top " id="voting-nav">
+
         {/* <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/navbar-logo.svg" alt="" /></a> */}
         <div>
           {" "}

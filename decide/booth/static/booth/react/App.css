@@ -1,12 +1,62 @@
-.App{
-    background-color: rgb(65, 65, 65);
-    color: whitesmoke;
+.App {
+  background-color: rgb(65, 65, 65);
+  color: whitesmoke;
 }
-body{
-    background-color: rgb(87, 82, 82);
-    color: rgb(245, 235, 235);
+body {
+  background-color: rgb(87, 82, 82);
+  color: rgb(245, 235, 235);
 }
 
-/* .welcome {
-    top: 100px;
-} */
+html,
+body {
+  height: 100%;
+}
+nav.menu {
+  height: 10%;
+}
+#react-root {
+  height: 90%;
+ 
+}
+.App,
+.App > div:nth-child(2) {
+  height: 100%;
+ 
+}
+div#voting-body > .row:nth-child(1) {
+  height: 10%;
+}
+div#voting-body > .row:nth-child(2) {
+  height: 90%;
+}
+div#voting-body > .row:nth-child(2) > .col {
+  height: 100%;
+}
+
+form {
+  height: 100%;
+}
+form > div.question {
+  height: 90%;
+  margin-bottom: 1%;
+}
+form > button {
+  height: 8%;
+}
+
+ .container-fluid {
+  height: 100%;
+  overflow-y: hidden;
+}
+/*
+.App > div > nav#voting-nav {
+  display: none;
+}
+.App > div > div#voting-body {
+  overflow-y: hidden;
+}
+button#next-question,
+button#prev-question {
+  max-height: 10%;
+}
+ */

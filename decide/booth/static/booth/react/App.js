@@ -99,7 +99,6 @@ const App = () => {
   return (
     <div className="App">
       <Navbar utils={utils} />
-      <h1>Please vote {voting.id} - {voting.name}</h1>
       {getOptions()}
       {view(options)}
     </div>
