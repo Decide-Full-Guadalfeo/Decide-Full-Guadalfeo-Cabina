@@ -1,6 +1,3 @@
-'use strict';
-
-import Login from "./Login/Login";
 import Voting from "./Voting/Voting";
 import Navbar from "./Navbar/Navbar"
 
@@ -8,19 +5,10 @@ const { useState, useEffect } = React;
 
 const App = () => {
 
-  /*############### STATE ###############*/
-  const [options, setOptions] = useState(null);
-  const [token, setToken] = useState(null);
-  const [user, setUser] = useState(null);
-  const [alert, setAlert] = useState(
-    {
-      lvl: null,
-      msg: null,
-    }
-  )
-
-
-  /*############### UTILITY FUNCTIONS ###############*/
+  /*#################################################################*/
+  /*####################### UTILITY FUNCTIONS #######################*/
+  /*#################################################################*/ 
+  
   function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -37,7 +25,6 @@ const App = () => {
   }
 
   const post = (url, data) => {
-    // Default options are marked with *
     var fdata = {
       body: JSON.stringify(data),
       headers: {
@@ -47,8 +34,8 @@ const App = () => {
       method: 'POST',
     };
 
-    if (options) {
-      fdata.headers['Authorization'] = 'Token ' + options.token;
+    if (votingUserData) {
+      fdata.headers['Authorization'] = 'Token ' + votingUserData.token;
     }
 
     return fetch(url, fdata)
@@ -61,50 +48,53 @@ const App = () => {
       });
   }
 
-  const utils = { token, user, setToken, setUser, alert, setAlert, post }
+  const getVotingUserData = () => {
 
-  const getVotingUser = () => {
-    var data = null;
-    data = utils.post("/authentication/decide/getVotingUser/", data)
+    utils.post("/authentication/decide/getVotingUser/")
+      .then(res => {
+        setVotingUserData(res);
+      })
       .catch(error => {
         console.log(error)//this.showAlert("danger", '{% trans "Error: " %}' + error);
       });
-    return data
   }
 
-  const getOptions = () => {
-    if (!options) {
-      const data = getVotingUser()
+  /*#####################################################*/
+  /*####################### STATE #######################*/
+  /*#####################################################*/
 
-      data.then((value) => {
-        setOptions(value)
-      })
-    }
-  }
+  const [votingUserData, setVotingUserData] = useState(null);
+  const [alert, setAlert] = useState({ lvl: null, msg: null, });
 
-  /*############### FUNCTIONALITY ###############*/
+  
+  /*#############################################################*/
+  /*####################### FUNCTIONALITY #######################*/
+  /*#############################################################*/
 
-  const view = (value) => {
-    if (value) {
-      return (
-        <div>
-          <Voting utils={utils} value={value} />
-        </div>
-      )
-    }
-  }
+  //Run only once
+  useEffect(() => {
+    getVotingUserData();
+  }, [])
 
-  /*############### RETURN ###############*/
+  const utils = { alert, setAlert, post, votingUserData }
+  
+
+  /*####################################################*/
+  /*####################### VIEW #######################*/
+  /*####################################################*/
+
   return (
+    
     <div className="App">
+
       <Navbar utils={utils} />
+
       <h1>Please vote {voting.id} - {voting.name}</h1>
-      {getOptions()}
-      {view(options)}
+
+      {votingUserData && <Voting utils={utils} votingUserData={votingUserData} />}
+
     </div>
   );
-
-
 }
 
 const domContainer = document.querySelector('#react-root');
