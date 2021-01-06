@@ -89,7 +89,8 @@ const App = () => {
 
       <Navbar utils={utils} />
 
-      <h1>Please vote {voting.id} - {voting.name}</h1>
+
+      {/* <h1>Please vote {voting.id} - {voting.name}</h1> */}
 
       {votingUserData && <Voting utils={utils} />}
 
