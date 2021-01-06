@@ -68,17 +68,24 @@ const Voting = ({ utils, value }) => {
   /*############### FUNCTIONALITY ###############*/
   //   show the first element, the others are hide by default
   $(document).ready(function () {
+    // $(".App").addClass("container-fluid");
+
     $("div.question:first-of-type").addClass("active-question");
     // $("#next-question").click(function () {
 
     console.log("doc ready");
     if ($("#prev-question").length) {
       console.log("Element exists");
-    }else{
+    } else {
       console.log("Element doesnt exists");
-
     }
-    var colors = new Array("#EF476F", "#FFD166", "#06D6A0");
+    var colors = new Array(
+      "#EF476F",
+      "#FFD166",
+      "#06D6A0",
+      "#118AB2",
+      "#073B4C"
+    );
     // new colors = ["#EF476F","#FFD166","#06D6A0","#118AB2","#073B4C"];
 
     $(".question").each(function (index) {
@@ -87,14 +94,14 @@ const Voting = ({ utils, value }) => {
 
       $(this).css({
         "background-color": colors[index],
-        "filter":"brightness(95%)"
-      }); 
+        filter: "brightness(95%)",
+      });
       // console.log(index + ": " + $(this).text());
     });
 
     $("#next-question").click(function () {
       console.log("next");
-  
+
       var active_question = $("div.active-question");
       if (active_question.next().hasClass("question")) {
         active_question.next().addClass("active-question");
@@ -103,7 +110,7 @@ const Voting = ({ utils, value }) => {
     });
     $("button#prev-question").click(function () {
       console.log("prev");
-  
+
       var active_question = $("div.active-question");
       if (active_question.prev().hasClass("question")) {
         active_question.prev().addClass("active-question");
@@ -172,63 +179,96 @@ const Voting = ({ utils, value }) => {
 
   /*############### RETURN ###############*/
   return (
-    <div id="content" className="voting">
+    <div id="voting-body" className="voting container-fluid">
       {/* <div>
         <button id="prev-question">Prev Question </button>
         <button id="next-question">Next Question </button>
       </div> */}
-      <button id="prev-question" type="button" class="btn btn-outline-light">Prev</button>
-      <button id="next-question" type="button" class="btn btn-outline-light">Next</button>
+      <div class="row align-items-center">
+        <div class="col-4">
+          <button
+            id="prev-question"
+            type="button"
+            class="btn btn-outline-light"
+          >
+            Prev
+          </button>{" "}
+        </div>
 
-      <form onSubmit={sendVoting}>
-        {voting.question.map((o) => (
-          <div className="question">
-            <h2>{o.desc}</h2>
-            {o.options.map((p) => (
-              <div>
-                <div className="option">
-                  <div className="card-input" key={o.number}>
-                    <label>
-                      {/* <input
+        <div class="col-4">
+          {" "}
+          <button
+            id="next-question"
+            type="button"
+            class="btn btn-outline-light"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <form onSubmit={sendVoting}>
+            {voting.question.map((o) => (
+              <div className="question ">
+                <h2>{o.desc}</h2>
+                <div class="d-flex align-content-center flex-wrap ">
+                  {o.options.map((p) => (
+                    <div>
+                      <div className="option p-3">
+                        <div className="card-input" key={o.number}>
+                          <label>
+                            {/* <input
                         type="radio"
                         name="product"
                         className="card-input-element"
                         onChange={(e) => setSelectedAnswer(o.number)}
                         checked={selectedAnswer === o.number}
                       /> */}
-                      <input
-                        type="radio"
-                        name={o.desc}
-                        className="card-input-element"
-                        value={p.number}
-                        required
-                      />
-                      {p.option}
-                      <div className="flip-card">
-                        <div className="flip-card-inner">
-                          <div className="flip-card-front">
-                            <h1>Candidato: {o.option}</h1>
-                          </div>
-                          <div className="flip-card-back">
-                            <h1>Candidato 1</h1>
-                            <p>Algo del candidato</p>
-                            <p>{o.option}</p>
-                            <p>Has elegido el candidato: {selectedAnswer}</p>
-                          </div>
+                            <input
+                              type="radio"
+                              name={o.desc}
+                              className="card-input-element"
+                              value={p.number}
+                              required
+                            />
+                            {p.option}
+                            <div className="flip-card">
+                              <div className="flip-card-inner">
+                                <div className="flip-card-front">
+                                  <h1>Candidato: {p.option}</h1>
+                                </div>
+                                <div className="flip-card-back">
+                                  <h1>Candidato 1</h1>
+                                  <p>Algo del candidato</p>
+                                  <p>{o.option}</p>
+                                  <p>
+                                    Has elegido el candidato: {selectedAnswer}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </label>
+                          <br />
                         </div>
                       </div>
-                    </label>
-                    <br />
-                  </div>
+                      <br />
+                    </div>
+                  ))}
                 </div>
-                <br />
               </div>
             ))}
-          </div>
-        ))}
-
-        <button>Vote</button>
-      </form>
+            {/* <div class="row">
+              <div class="col"> */}
+            <div>
+              <button class="btn btn-outline-light ">Vote</button>
+            </div>
+            {/* </div> */}
+            {/* </div> */}
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
