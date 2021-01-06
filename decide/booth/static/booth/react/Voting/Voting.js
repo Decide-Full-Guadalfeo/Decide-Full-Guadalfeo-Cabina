@@ -174,7 +174,7 @@ const Voting = ({ utils, value }) => {
         <button id="prev-question">Prev Question </button>
         <button id="next-question">Next Question </button>
       </div> */}
-      <form onSubmit={sendVoting}>
+      <form onSubmit={votingPopup()}>
         {voting.question.map((o) => (
           <div className="question">
             <h2>{o.desc}</h2>
@@ -256,4 +256,30 @@ export default Voting;
                           style="width:300px;height:300px;"
                         >
                         </img> */
+}
+function votingPopup() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  return (
+    <>
+      <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure of your selection?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={sendVoting}>
+            Yes
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            No
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
 }
