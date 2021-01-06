@@ -41,6 +41,7 @@ const Voting = ({ utils, value }) => {
         });
       })
       .catch((error) => {
+
         utils.setAlert({ lvl: "danger", msg: "Error: " + error });
       });
   };

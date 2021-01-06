@@ -1,18 +1,17 @@
-
 .alert {
-padding: 5vw 5vh;
-}
-.alert.success {
-  background-color: chartreuse;
-  color: black;
-}
-
-.alert.error {
-  background-color: red;
-} 
-
-
-.navbar {
-  display: none;
-  /* height: 8vh; */
-  background-color: rgb(36, 36, 36);
+  padding: 5vw 5vh;
+  }
+  .alert.success {
+    background-color: chartreuse;
+    color: black;
+  }
+  
+  .alert.error {
+    background-color: red;
+  } 
+  
+  
+  .navbar {
+    display: none;
+    /* height: 8vh; */
+    background-color: rgb(36, 36, 36);
