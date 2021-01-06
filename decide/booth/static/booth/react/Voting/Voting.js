@@ -69,9 +69,10 @@ const Voting = ({ utils, value }) => {
   //   show the first element, the others are hide by default
   $(document).ready(function () {
     $("div.question:first-of-type").addClass("active-question");
+    // $("#next-question").click(function () {
 
     console.log("doc ready");
-    if ($(".question").length) {
+    if ($("#prev-question").length) {
       console.log("Element exists");
     }else{
       console.log("Element doesnt exists");
@@ -82,7 +83,7 @@ const Voting = ({ utils, value }) => {
 
     $(".question").each(function (index) {
       // console.log(index + ": " + $(this).text());
-      console.log(index + ": " + colors[index]);
+      // console.log(index + ": " + colors[index]);
 
       $(this).css({
         "background-color": colors[index],
@@ -91,29 +92,31 @@ const Voting = ({ utils, value }) => {
       // console.log(index + ": " + $(this).text());
     });
 
+    $("#next-question").click(function () {
+      console.log("next");
+  
+      var active_question = $("div.active-question");
+      if (active_question.next().hasClass("question")) {
+        active_question.next().addClass("active-question");
+        active_question.removeClass("active-question");
+      }
+    });
+    $("button#prev-question").click(function () {
+      console.log("prev");
+  
+      var active_question = $("div.active-question");
+      if (active_question.prev().hasClass("question")) {
+        active_question.prev().addClass("active-question");
+        active_question.removeClass("active-question");
+      }
+    });
+
     // $( "option" ).each( function(option) {
     //   console.log('do something with this list item', option);
     // })
   });
   // BUTTONS NOT WORKING
-  // $("button#next-question").click(function () {
-  //   console.log("next");
 
-  //   var active_question = $("div.active-question");
-  //   if (active_question.next().hasClass("question")) {
-  //     active_question.next().addClass("active-question");
-  //     active_question.removeClass("active-question");
-  //   }
-  // });
-  // $("button#prev-question").click(function () {
-  //   console.log("prev");
-
-  //   var active_question = $("div.active-question");
-  //   if (active_question.prev().hasClass("question")) {
-  //     active_question.prev().addClass("active-question");
-  //     active_question.removeClass("active-question");
-  //   }
-  // });
   // For the flip effect, not working
   // $(".flip-card").click(function () {
   //   console.log("clicked");
@@ -125,47 +128,47 @@ const Voting = ({ utils, value }) => {
   //   $(this).removeClass("flipped");
   // });
 
-  $(function () {
-    $(window).on("wheel", function (e) {
-      var delta = e.originalEvent.deltaY;
+  // $(function () {
+  //   $(window).on("wheel", function (e) {
+  //     var delta = e.originalEvent.deltaY;
 
-      if (delta > 0) {
-        var active_question = $("div.active-question");
+  //     if (delta > 0) {
+  //       var active_question = $("div.active-question");
 
-        if (active_question.next().hasClass("question")) {
-          active_question.next().addClass("active-question");
-          active_question.removeClass("active-question");
-        }
-        console.log("scrolled downs");
-        // $("html, body").animate(
-        //   {
-        //     // scrollTop: $("#candidatura2").offset().top,
-        //     scrollTop: $(window).scrollTop() + window.innerHeight,
-        //   },
-        //   1000
-        // );
-      } else {
-        // $("div.active-question").prev().addClass("active-question");
-        // $("div.active-question").removeClass("active-question");
-        var active_question = $("div.active-question");
-        if (active_question.prev().hasClass("question")) {
-          active_question.prev().addClass("active-question");
-          active_question.removeClass("active-question");
-        }
-        console.log("scrolled up");
+  //       if (active_question.next().hasClass("question")) {
+  //         active_question.next().addClass("active-question");
+  //         active_question.removeClass("active-question");
+  //       }
+  //       console.log("scrolled downs");
+  //       // $("html, body").animate(
+  //       //   {
+  //       //     // scrollTop: $("#candidatura2").offset().top,
+  //       //     scrollTop: $(window).scrollTop() + window.innerHeight,
+  //       //   },
+  //       //   1000
+  //       // );
+  //     } else {
+  //       // $("div.active-question").prev().addClass("active-question");
+  //       // $("div.active-question").removeClass("active-question");
+  //       var active_question = $("div.active-question");
+  //       if (active_question.prev().hasClass("question")) {
+  //         active_question.prev().addClass("active-question");
+  //         active_question.removeClass("active-question");
+  //       }
+  //       console.log("scrolled up");
 
-        // upscroll code
-        // $("html, body").animate(
-        //   {
-        //     // scrollTop: $("#candidatura1").offset().top,
-        //     scrollTop: $(window).scrollTop() - window.innerHeight,
-        //   },
-        //   1000
-        // );
-      }
-      return false; // this line is only added so the whole page won't scroll in the demo
-    });
-  });
+  //       // upscroll code
+  //       // $("html, body").animate(
+  //       //   {
+  //       //     // scrollTop: $("#candidatura1").offset().top,
+  //       //     scrollTop: $(window).scrollTop() - window.innerHeight,
+  //       //   },
+  //       //   1000
+  //       // );
+  //     }
+  //     return false; // this line is only added so the whole page won't scroll in the demo
+  //   });
+  // });
 
   /*############### RETURN ###############*/
   return (
@@ -174,6 +177,9 @@ const Voting = ({ utils, value }) => {
         <button id="prev-question">Prev Question </button>
         <button id="next-question">Next Question </button>
       </div> */}
+      <button id="prev-question" type="button" class="btn btn-outline-light">Prev</button>
+      <button id="next-question" type="button" class="btn btn-outline-light">Next</button>
+
       <form onSubmit={sendVoting}>
         {voting.question.map((o) => (
           <div className="question">
