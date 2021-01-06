@@ -19,9 +19,8 @@ nav.menu {
  
 }
 .App,
-.App > div:nth-child(2) {
+.App > :nth-child(3) {
   height: 100%;
- 
 }
 div#voting-body > .row:nth-child(1) {
   height: 10%;
