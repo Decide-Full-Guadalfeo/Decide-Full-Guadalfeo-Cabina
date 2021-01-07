@@ -209,9 +209,13 @@ const Voting = ({ utils }) => {
     // })
     $("input").on("click", function () {
       //flip-card, flip-card-inner, flip-card-front, input
-      if ($("input:checked").parent().parent().parent().hasClass("flipped")) {
+      if ($(this).parent().parent().parent().hasClass("flipped")) {
+        console.log($("input:checked").val() + " is checked!");
+
         $(".flip-card.flipped").removeClass("flipped");
       } else {
+        console.log($("input:checked").val() + " is checked!");
+
         $(".flip-card.flipped").removeClass("flipped");
         $("input:checked").parent().parent().parent().addClass("flipped");
       }
