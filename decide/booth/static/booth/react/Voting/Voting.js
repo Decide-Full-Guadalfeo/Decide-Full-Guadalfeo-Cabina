@@ -369,6 +369,7 @@ const Voting = ({ utils }) => {
                                       name={o.desc}
                                       className="card-input-element"
                                       value={p.number}
+                                      required
                                     />
                                     <h1>Candidato:</h1>
                                     <h1>{p.option}</h1>
