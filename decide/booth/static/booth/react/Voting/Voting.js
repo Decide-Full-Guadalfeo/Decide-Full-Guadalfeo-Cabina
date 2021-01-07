@@ -6,6 +6,21 @@ const Voting = ({ utils }) => {
   /*####################### UTILITY FUNCTIONS #######################*/
   /*#################################################################*/
 
+  const dictionary = {
+    "Man": 1,
+    "Woman": 2,
+    "Other": 3,
+    "Software": 1,
+    "Computer Technology": 2,
+    "Information Technology": 3,
+    "Health": 4,
+    "First": 1,
+    "Second": 2,
+    "Third": 3,
+    "Fourth": 4,
+    "Master": 5
+  }
+
   const getVotingType = () => {
     let res = "";
     if (voting.tipo === "PV" && voting.question.length == 6) res = "primary";
@@ -26,10 +41,27 @@ const Voting = ({ utils }) => {
   };
 
   const encrypt = (options) => {
-    const bigmsg = BigInt.fromJSONObject(options.toString());
+    const bigmsg = BigInt.fromJSONObject(options);
     const cipher = ElGamal.encrypt(bigpk, bigmsg);
     return cipher;
   };
+
+  const encryptAll = (options) => {
+    for (let o in options) {
+      console.log(options[o])
+      if(Array.isArray(options[o])){
+        for (let p in options[o]){
+          options[o][p] = encrypt(options[o][p].toString())
+        }
+      }else if (dictionary[options[o]]) {
+        options[o] = encrypt(dictionary[options[o]])
+      } else {
+        options[o] = encrypt(options[o].toString())
+      }
+    }
+    console.log(options)
+    return options
+  }
 
   const getGenresByIds = async (ids) => {
     let res = null;
@@ -110,9 +142,9 @@ const Voting = ({ utils }) => {
     const options = await getInput();
 
     if (options) {
-      const v = encrypt(options);
+      const v = encryptAll(options);
       const data = {
-        vote: { a: v.alpha.toString(), b: v.beta.toString() },
+        vote: v,
         voting: voting.id,
         voter: utils.votingUserData.user_id,
         token: utils.votingUserData.token,
@@ -316,11 +348,11 @@ const Voting = ({ utils }) => {
               <div className="question" key={o.desc}>
                 <h2>{o.desc}</h2>
                 <div className="container">
-                  <div class="d-flex align-content-center flex-wrap ">
+                  <div className="d-flex align-content-center flex-wrap ">
                     {o.options.map((p) => (
-                      <div>
+                      <div key={p.number}>
                         <div className="option p-3">
-                          <div className="card-input" key={p.number}>
+                          <div className="card-input">
                             <label>
                               {/* <input
                         type="radio"
@@ -337,6 +369,7 @@ const Voting = ({ utils }) => {
                                       name={o.desc}
                                       className="card-input-element"
                                       value={p.number}
+                                      required
                                     />
                                     <h1>Candidato:</h1>
                                     <h1>{p.option}</h1>
