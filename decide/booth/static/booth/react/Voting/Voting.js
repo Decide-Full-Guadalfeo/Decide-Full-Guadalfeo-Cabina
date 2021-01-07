@@ -2,7 +2,6 @@
 const { useState } = React;
 
 const Voting = ({ utils }) => {
-
   /*#################################################################*/
   /*####################### UTILITY FUNCTIONS #######################*/
   /*#################################################################*/
@@ -68,7 +67,6 @@ const Voting = ({ utils }) => {
       else others = others + 1;
     }
 
-
     if (males > 5 || females > 5 || males + females + others > 10) res = false;
 
     return res;
@@ -133,6 +131,7 @@ const Voting = ({ utils }) => {
             lvl: "success",
             msg: "Conglatulations! Your vote has been sent",
           });
+          $("div.active-question").removeClass("active-question");
         })
         .catch((error) => {
           utils.setAlert({ lvl: "error", msg: "Error: " + error });
@@ -189,12 +188,10 @@ const Voting = ({ utils }) => {
       $(this).css({
         "background-color": colors[index],
         filter: "brightness(95%)",
-
       });
       // console.log(index + ": " + $(this).text());
     });
 
-  
     $("#next-question").click(function () {
       console.log("next");
 
@@ -213,8 +210,7 @@ const Voting = ({ utils }) => {
         active_question.removeClass("active-question");
       }
     });
-    
-    
+
     // $( "option" ).each( function(option) {
     //   console.log('do something with this list item', option);
     // })
@@ -312,51 +308,50 @@ const Voting = ({ utils }) => {
               <div className="question" key={o.desc}>
                 <h2>{o.desc}</h2>
                 <div className="container">
-                <div class="d-flex align-content-center flex-wrap ">
-                  {o.options.map((p) => (
-                    <div>
-                      <div className="option p-3">
-                        <div className="card-input" key={p.number}>
-                          <label>
-                            {/* <input
+                  <div class="d-flex align-content-center flex-wrap ">
+                    {o.options.map((p) => (
+                      <div>
+                        <div className="option p-3">
+                          <div className="card-input" key={p.number}>
+                            <label>
+                              {/* <input
                         type="radio"
                         name="product"
                         className="card-input-element"
                         onChange={(e) => setSelectedAnswer(o.number)}
                         checked={selectedAnswer === o.number}
                       /> */}
-                            <div className="flip-card">
-                              <div className="flip-card-inner">
-                                <div className="flip-card-front">
-                                  <input
-                              type="radio"
-                              name={o.desc}
-                              className="card-input-element"
-                              value={p.number}
-                              required
-                            />
-                                  <h1>Candidato:</h1>
-                                  <h1>{p.option}</h1>
-                                </div>
-                                
-                                <div className="flip-card-back">
-                                  <h1>Candidato 1</h1>
-                                  <p>Algo del candidato</p>
-                                  <p>{o.option}</p>
-                                  <p>Has elegido el candidato:</p>
+                              <div className="flip-card">
+                                <div className="flip-card-inner">
+                                  <div className="flip-card-front">
+                                    <input
+                                      type="radio"
+                                      name={o.desc}
+                                      className="card-input-element"
+                                      value={p.number}
+                                      required
+                                    />
+                                    <h1>Candidato:</h1>
+                                    <h1>{p.option}</h1>
+                                  </div>
+
+                                  <div className="flip-card-back">
+                                    <h1>Candidato 1</h1>
+                                    <p>Algo del candidato</p>
+                                    <p>{o.option}</p>
+                                    <p>Has elegido el candidato:</p>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </label>
-                          <br />
+                            </label>
+                            <br />
+                          </div>
                         </div>
+                        <br />
                       </div>
-                      <br />
-                    </div>
-
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
               </div>
             ))}
             {/* The alumn list */}
@@ -379,7 +374,9 @@ const Voting = ({ utils }) => {
             {/* <div class="row">
               <div class="col"> */}
             <div>
-              <button id="voteButton" class="btn btn-outline-light ">Vote</button>
+              <button id="voteButton" class="btn btn-outline-light ">
+                Vote
+              </button>
             </div>
             {/* </div> */}
             {/* </div> */}
@@ -387,10 +384,11 @@ const Voting = ({ utils }) => {
           {utils.alert.lvl ? (
             <div className={"alert " + utils.alert.lvl}>
               <p>{utils.alert.msg}</p>
-              <button className="closeAlert" onClick={closeAlert}>close</button>
+              <button className="closeAlert" onClick={closeAlert}>
+                close
+              </button>
             </div>
           ) : null}
-
         </div>
       </div>
     </div>
