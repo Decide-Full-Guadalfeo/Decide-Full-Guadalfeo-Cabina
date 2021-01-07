@@ -109,6 +109,10 @@ const Voting = ({ utils }) => {
     return res;
   };
 
+  const closeAlert = () => {
+    utils.setAlert({ lvl: null, msg: null });
+  };
+
   const sendVoting = async (event) => {
     event.preventDefault();
 
@@ -127,7 +131,7 @@ const Voting = ({ utils }) => {
         .then((data) => {
           utils.setAlert({
             lvl: "success",
-            msg: "Conglatulations. Your vote has been sent",
+            msg: "Conglatulations! Your vote has been sent",
           });
         })
         .catch((error) => {
@@ -185,10 +189,12 @@ const Voting = ({ utils }) => {
       $(this).css({
         "background-color": colors[index],
         filter: "brightness(95%)",
+
       });
       // console.log(index + ": " + $(this).text());
     });
 
+  
     $("#next-question").click(function () {
       console.log("next");
 
@@ -207,7 +213,8 @@ const Voting = ({ utils }) => {
         active_question.removeClass("active-question");
       }
     });
-
+    
+    
     // $( "option" ).each( function(option) {
     //   console.log('do something with this list item', option);
     // })
@@ -274,7 +281,7 @@ const Voting = ({ utils }) => {
         <button id="prev-question">Prev Question </button>
         <button id="next-question">Next Question </button>
       </div> */}
-      <div class="row align-items-center">
+      <div class="row justify-content-between align-items-center">
         <div class="col-4">
           <button
             id="prev-question"
@@ -304,6 +311,7 @@ const Voting = ({ utils }) => {
             {voting.question.slice(0, 6).map((o) => (
               <div className="question" key={o.desc}>
                 <h2>{o.desc}</h2>
+                <div className="container">
                 <div class="d-flex align-content-center flex-wrap ">
                   {o.options.map((p) => (
                     <div>
@@ -317,19 +325,20 @@ const Voting = ({ utils }) => {
                         onChange={(e) => setSelectedAnswer(o.number)}
                         checked={selectedAnswer === o.number}
                       /> */}
-                            <input
+                            <div className="flip-card">
+                              <div className="flip-card-inner">
+                                <div className="flip-card-front">
+                                  <input
                               type="radio"
                               name={o.desc}
                               className="card-input-element"
                               value={p.number}
                               required
                             />
-                            {p.option}
-                            <div className="flip-card">
-                              <div className="flip-card-inner">
-                                <div className="flip-card-front">
-                                  <h1>Candidato: {p.option}</h1>
+                                  <h1>Candidato:</h1>
+                                  <h1>{p.option}</h1>
                                 </div>
+                                
                                 <div className="flip-card-back">
                                   <h1>Candidato 1</h1>
                                   <p>Algo del candidato</p>
@@ -347,6 +356,7 @@ const Voting = ({ utils }) => {
 
                   ))}
                 </div>
+              </div>
               </div>
             ))}
             {/* The alumn list */}
@@ -369,11 +379,18 @@ const Voting = ({ utils }) => {
             {/* <div class="row">
               <div class="col"> */}
             <div>
-              <button class="btn btn-outline-light ">Vote</button>
+              <button id="voteButton" class="btn btn-outline-light ">Vote</button>
             </div>
             {/* </div> */}
             {/* </div> */}
           </form>
+          {utils.alert.lvl ? (
+            <div className={"alert " + utils.alert.lvl}>
+              <p>{utils.alert.msg}</p>
+              <button className="closeAlert" onClick={closeAlert}>close</button>
+            </div>
+          ) : null}
+
         </div>
       </div>
     </div>

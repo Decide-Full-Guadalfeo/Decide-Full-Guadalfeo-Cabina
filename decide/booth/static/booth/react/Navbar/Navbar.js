@@ -10,15 +10,13 @@ const Navbar = ({ utils }) => {
     document.cookie = "decide=;";
   };
 
-  const closeAlert = () => {
-    utils.setAlert({ lvl: null, msg: null });
-  };
+  
 
 
 
   return (
     <div >
-      <nav class="navbar navbar-expand-lg navbar-dark fixed-top " id="voting-nav">
+      <nav class="navbar navbar-expand-lg navbar-dark" id="voting-nav">
 
         {/* <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/navbar-logo.svg" alt="" /></a> */}
         <div>
@@ -72,14 +70,9 @@ const Navbar = ({ utils }) => {
 
         <div>
           {utils.user ? <button onClick={logout}>Logout</button> : null}
-          {utils.alert.lvl ? (
-            <div className={"alert " + utils.alert.lvl}>
-              <p>{utils.alert.msg}</p>
-              <button onClick={closeAlert}>close</button>
-            </div>
-          ) : null}
+    
         </div>
-      </nav>
+        </nav>
     </div>
   );
 };
