@@ -277,31 +277,31 @@ const Voting = ({ utils }) => {
         <button id="prev-question">Prev Question </button>
         <button id="next-question">Next Question </button>
       </div> */}
-      <div class="row justify-content-between align-items-center">
-        <div class="col-4">
+      <div className="row justify-content-between align-items-center">
+        <div className="col-4">
           <button
             id="prev-question"
             type="button"
-            class="btn btn-outline-light"
+            className="btn btn-outline-light"
           >
             Prev
           </button>{" "}
         </div>
 
-        <div class="col-4">
+        <div className="col-4">
           {" "}
           <button
             id="next-question"
             type="button"
-            class="btn btn-outline-light"
+            className="btn btn-outline-light"
           >
             Next
           </button>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col">
+      <div className="row">
+        <div className="col">
           <form onSubmit={sendVoting}>
             {/* The 6 questions all votings have */}
             {voting.question.slice(0, 6).map((o) => (
@@ -374,7 +374,7 @@ const Voting = ({ utils }) => {
             {/* <div class="row">
               <div class="col"> */}
             <div>
-              <button id="voteButton" class="btn btn-outline-light ">
+              <button id="voteButton" className="btn btn-outline-light ">
                 Vote
               </button>
             </div>
