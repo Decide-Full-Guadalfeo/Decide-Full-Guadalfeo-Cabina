@@ -16,11 +16,15 @@ nav.menu {
 }
 #react-root {
   height: 90%;
- 
 }
-.App,
-.App > :nth-child(3) {
+.App{
   height: 100%;
+}
+.App > :nth-child(1) {
+  height: 10%;
+}
+.App > :nth-child(2) {
+  height: 90%;
 }
 div#voting-body > .row:nth-child(1) {
   height: 10%;
