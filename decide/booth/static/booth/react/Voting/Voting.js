@@ -1,203 +1,467 @@
-'use strict';
-const { useState } = React
+"use strict";
+const { useState } = React;
 
 const Voting = ({ utils }) => {
+  /*#################################################################*/
+  /*####################### UTILITY FUNCTIONS #######################*/
+  /*#################################################################*/
 
-    /*#################################################################*/
-    /*####################### UTILITY FUNCTIONS #######################*/
-    /*#################################################################*/
+  const dictionary = {
+    "Man": 1,
+    "Woman": 2,
+    "Other": 3,
+    "Software": 1,
+    "Computer Technology": 2,
+    "Information Technology": 3,
+    "Health": 4,
+    "First": 1,
+    "Second": 2,
+    "Third": 3,
+    "Fourth": 4,
+    "Master": 5
+  }
 
-    const getVotingType = () => {
-        let res = "";
-        if (
-            voting.tipo === "PV" &&
-            voting.question.length == 6
-          )
-            res = "primary";
-          else if (
-            voting.tipo === "GV" &&
-            voting.question.length == 7
-          )
-            res = "general";
-        else {
-            res = "error"
-            console.log("error");//setAlert()
+  const getVotingType = () => {
+    let res = "";
+    if (voting.tipo === "PV" && voting.question.length == 6) res = "primary";
+    else if (voting.tipo === "GV" && voting.question.length == 7)
+      res = "general";
+    else {
+      res = "error";
+      console.log("error"); //setAlert()
+    }
+
+    return res;
+  };
+
+  const bigpk = {
+    p: BigInt.fromJSONObject(voting.pub_key.p.toString()),
+    g: BigInt.fromJSONObject(voting.pub_key.g.toString()),
+    y: BigInt.fromJSONObject(voting.pub_key.y.toString()),
+  };
+
+  const encrypt = (options) => {
+    const bigmsg = BigInt.fromJSONObject(options);
+    const cipher = ElGamal.encrypt(bigpk, bigmsg);
+    return cipher;
+  };
+
+  const encryptAll = (options) => {
+    for (let o in options) {
+      console.log(options[o])
+      if(Array.isArray(options[o])){
+        for (let p in options[o]){
+          options[o][p] = encrypt(options[o][p].toString())
         }
+      }else if (dictionary[options[o]]) {
+        options[o] = encrypt(dictionary[options[o]])
+      } else {
+        options[o] = encrypt(options[o].toString())
+      }
+    }
+    console.log(options)
+    return options
+  }
 
-        return res;
+  const getGenresByIds = async (ids) => {
+    let res = null;
+
+    await utils
+      .post("/authentication/decide/getGenresByIds/", ids)
+      .then((result) => {
+        res = result;
+      })
+      .catch((error) => {
+        console.log(error); //this.showAlert("danger", '{% trans "Error: " %}' + error);
+      });
+
+    return res.genres;
+  };
+
+  const checkRestrictions = async (ids) => {
+    let res = true;
+
+    let genres = await getGenresByIds(ids);
+    let males = 0;
+    let females = 0;
+    let others = 0;
+
+    for (let i = 0; i < genres.length; i++) {
+      if (genres[i] === "Man") males = males + 1;
+      else if (genres[i] === "Woman") females = females + 1;
+      else others = others + 1;
     }
 
-    const bigpk = {
-        p: BigInt.fromJSONObject(voting.pub_key.p.toString()),
-        g: BigInt.fromJSONObject(voting.pub_key.g.toString()),
-        y: BigInt.fromJSONObject(voting.pub_key.y.toString()),
-    }
+    if (males > 5 || females > 5 || males + females + others > 10) res = false;
 
-    const encrypt = (options) => {
-        const bigmsg = BigInt.fromJSONObject(options.toString());
-        const cipher = ElGamal.encrypt(bigpk, bigmsg);
-        return cipher;
-    }
+    return res;
+  };
 
+  const getInput = async () => {
+    let res = {};
 
-    const getGenresByIds = async (ids) => {
-        let res = null;
-
-        await utils.post("/authentication/decide/getGenresByIds/", ids)
-            .then(result => {
-                res = result;
-            })
-            .catch(error => {
-                console.log(error)//this.showAlert("danger", '{% trans "Error: " %}' + error);
-            });
-
-        return res.genres;
-    }
-
-    const checkRestrictions = async (ids) => {
-        let res = true;
-
-        let genres = await getGenresByIds(ids);
-        let males = 0; let females = 0; let others = 0;
-
-        for (let i = 0; i < genres.length; i++) {
-            if (genres[i] === 'Man')
-                males = males + 1;
-            else if (genres[i] === 'Woman')
-                females = females + 1;
-            else
-                others = others + 1;
+    let questions = document.getElementsByClassName("question");
+    for (let i = 0; i < questions.length; i++) {
+      const titulo = questions[i].children[0].innerHTML;
+      let inputs = questions[i].getElementsByTagName("input");
+      for (let j = 0; j < inputs.length; j++) {
+        if (inputs[j].checked) {
+          res[titulo] = inputs[j].value;
         }
+      }
+    }
+    res["sex"] = utils.votingUserData.sex;
+    res["age"] = utils.votingUserData.age;
+    res["grade"] = utils.votingUserData.grade;
+    res["year"] = utils.votingUserData.year;
 
-        if ((males > 5) || (females > 5) || (males + females + others > 10))
-            res = false;
+    if (votingType === "general") {
+      let la = document.getElementsByClassName("alum-list");
+      let alumns = [];
+      let inputs = la[0].getElementsByTagName("input");
 
-        return res;
+      for (let j = 0; j < inputs.length; j++) {
+        if (inputs[j].checked) alumns.push(inputs[j].value);
+      }
+      res[la[0].children[0].innerHTML] = alumns;
+
+      const valid = await checkRestrictions(alumns);
+      if (!valid) res = false;
     }
 
-    const getInput = async () => {
-        let res = {}
+    return res;
+  };
 
-        let questions = document.getElementsByClassName('question')
-        for (let i = 0; i < questions.length; i++) {
-            const titulo = questions[i].children[0].innerHTML;
-            let inputs = questions[i].getElementsByTagName('input')
-            for (let j = 0; j < inputs.length; j++) {
-                if (inputs[j].checked) {
-                    res[titulo] = inputs[j].value
-                }
-            }
-        }
-        res['sex'] = utils.votingUserData.sex
-        res['age'] = utils.votingUserData.age
-        res['grade'] = utils.votingUserData.grade
-        res['year'] = utils.votingUserData.year
+  const closeAlert = () => {
+    utils.setAlert({ lvl: null, msg: null });
+  };
 
-        if (votingType === 'general') {
-            let la = document.getElementsByClassName('alum-list');
-            let alumns = [];
-            let inputs = la[0].getElementsByTagName('input')
+  const sendVoting = async (event) => {
+    event.preventDefault();
 
-            for (let j = 0; j < inputs.length; j++) {
-                if (inputs[j].checked)
-                    alumns.push(inputs[j].value)
-            }
-            res[la[0].children[0].innerHTML] = alumns
+    const options = await getInput();
 
-            const valid = await checkRestrictions(alumns)
-            if (!valid)
-                res = false;
-        }
-
-        return res
+    if (options) {
+      const v = encryptAll(options);
+      const data = {
+        vote: v,
+        voting: voting.id,
+        voter: utils.votingUserData.user_id,
+        token: utils.votingUserData.token,
+      };
+      utils
+        .post("/gateway/store/", data)
+        .then((data) => {
+          utils.setAlert({
+            lvl: "success",
+            msg: "Conglatulations! Your vote has been sent",
+          });
+          $("div.active-question").removeClass("active-question");
+        })
+        .catch((error) => {
+          utils.setAlert({ lvl: "error", msg: "Error: " + error });
+        });
+    } else {
+      utils.setAlert({
+        lvl: "error",
+        msg:
+          "Solo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente",
+      });
     }
+  };
 
-    const sendVoting = async (event) => {
-        event.preventDefault();
+  /*#####################################################*/
+  /*####################### STATE #######################*/
+  /*#####################################################*/
 
-        const options = await getInput()
+  /*############### FUNCTIONALITY ###############*/
+  const votingType = getVotingType();
 
-        if (options) {
-            const v = encrypt(options);
-            const data = {
-                vote: { a: v.alpha.toString(), b: v.beta.toString() },
-                voting: voting.id,
-                voter: utils.votingUserData.user_id,
-                token: utils.votingUserData.token,
-            }
-            utils.post("/gateway/store/", data)
-                .then(data => {
-                    utils.setAlert({ lvl: 'success', msg: 'Conglatulations. Your vote has been sent' });
-                })
-                .catch(error => {
-                    utils.setAlert({ lvl: 'error', msg: 'Error: ' + error, });
-                });
-        }
-        else {
-            utils.setAlert({ lvl: 'error', msg: 'Solo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente', });
-        }
+  let alumList = null;
+  if (votingType === "general") {
+    alumList = voting.question[6];
+  }
+
+  // COSAS DEL ESTILO
+
+  //   show the first element, the others are hide by default
+  $(document).ready(function () {
+    // $(".App").addClass("container-fluid");
+
+    $("div.question:first-of-type").addClass("active-question");
+    // $("#next-question").click(function () {
+
+    console.log("doc ready");
+    if ($("#prev-question").length) {
+      console.log("Element exists");
+    } else {
+      console.log("Element doesnt exists");
     }
+    var colors = new Array(
+      "#EF476F",
+      "#FFD166",
+      "#06D6A0",
+      "#118AB2",
+      "#073B4C"
+    );
+    // new colors = ["#EF476F","#FFD166","#06D6A0","#118AB2","#073B4C"];
 
+    $(".question").each(function (index) {
+      // console.log(index + ": " + $(this).text());
+      // console.log(index + ": " + colors[index]);
 
+      $(this).css({
+        "background-color": colors[index],
+        filter: "brightness(95%)",
+      });
+      // console.log(index + ": " + $(this).text());
+    });
 
+    $("#next-question").click(function () {
+      console.log("next");
 
-    /*#####################################################*/
-    /*####################### STATE #######################*/
-    /*#####################################################*/
+      var active_question = $("div.active-question");
+      if (active_question.next().hasClass("question")) {
+        active_question.next().addClass("active-question");
+        active_question.removeClass("active-question");
+      }
+    });
+    $("button#prev-question").click(function () {
+      console.log("prev");
 
-    /*#############################################################*/
-    /*####################### FUNCTIONALITY #######################*/
-    /*#############################################################*/
-    const votingType = getVotingType();
+      var active_question = $("div.active-question");
+      if (active_question.prev().hasClass("question")) {
+        active_question.prev().addClass("active-question");
+        active_question.removeClass("active-question");
+      }
+    });
 
-    let alumList = null;
-    if (votingType === 'general') {
-        alumList = voting.question[6];
-    }
+    // $( "option" ).each( function(option) {
+    //   console.log('do something with this list item', option);
+    // })
+    $("input").on("click", function () {
+      //flip-card, flip-card-inner, flip-card-front, input
+      if ($(this).parent().parent().parent().hasClass("flipped")) {
+        console.log($("input:checked").val() + " is checked!");
 
+        $(".flip-card.flipped").removeClass("flipped");
+      } else {
+        console.log($("input:checked").val() + " is checked!");
 
+        $(".flip-card.flipped").removeClass("flipped");
+        $("input:checked").parent().parent().parent().addClass("flipped");
+      }
+      // console.log($("input:checked").val() + " is checked!");
+      // $("#log").html;
+    });
+  });
+  // BUTTONS NOT WORKING
 
-    /*####################################################*/
-    /*####################### VIEW #######################*/
-    /*####################################################*/
+  // For the flip effect, not working
+  // $(".flip-card").click(function () {
+  //   console.log("clicked");
+  //   $(".flip-card.flipped").removeClass("flipped");
+  //   $(this).addClass("flipped");
+  // });
 
-    return (
-        <div className="voting">
+  // $(".flip-card.flipped").click(function () {
+  //   $(this).removeClass("flipped");
+  // });
 
+  // $(function () {
+  //   $(window).on("wheel", function (e) {
+  //     var delta = e.originalEvent.deltaY;
+
+  //     if (delta > 0) {
+  //       var active_question = $("div.active-question");
+
+  //       if (active_question.next().hasClass("question")) {
+  //         active_question.next().addClass("active-question");
+  //         active_question.removeClass("active-question");
+  //       }
+  //       console.log("scrolled downs");
+  //       // $("html, body").animate(
+  //       //   {
+  //       //     // scrollTop: $("#candidatura2").offset().top,
+  //       //     scrollTop: $(window).scrollTop() + window.innerHeight,
+  //       //   },
+  //       //   1000
+  //       // );
+  //     } else {
+  //       // $("div.active-question").prev().addClass("active-question");
+  //       // $("div.active-question").removeClass("active-question");
+  //       var active_question = $("div.active-question");
+  //       if (active_question.prev().hasClass("question")) {
+  //         active_question.prev().addClass("active-question");
+  //         active_question.removeClass("active-question");
+  //       }
+  //       console.log("scrolled up");
+
+  //       // upscroll code
+  //       // $("html, body").animate(
+  //       //   {
+  //       //     // scrollTop: $("#candidatura1").offset().top,
+  //       //     scrollTop: $(window).scrollTop() - window.innerHeight,
+  //       //   },
+  //       //   1000
+  //       // );
+  //     }
+  //     return false; // this line is only added so the whole page won't scroll in the demo
+  //   });
+  // });
+
+  /*############### RETURN ###############*/
+  return (
+    <div id="voting-body" className="voting container-fluid">
+      {/* <div>
+        <button id="prev-question">Prev Question </button>
+        <button id="next-question">Next Question </button>
+      </div> */}
+      <div className="row justify-content-between align-items-center">
+        <div className="col-4">
+          <button
+            id="prev-question"
+            type="button"
+            className="btn btn-outline-light"
+          >
+            Prev
+          </button>{" "}
+        </div>
+
+        <div className="col-4">
+          {" "}
+          <button
+            id="next-question"
+            type="button"
+            className="btn btn-outline-light"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col">
+          <form onSubmit={sendVoting}>
+            {/* The 6 questions all votings have */}
+            {voting.question.slice(0, 6).map((o) => (
+              <div className="question" key={o.desc}>
+                <h2>{o.desc}</h2>
+                <div className="container">
+                  <div className="d-flex align-content-center flex-wrap ">
+                    {o.options.map((p) => (
+                      <div key={p.number}>
+                        <div className="option p-3">
+                          <div className="card-input">
+                            <label>
+                              {/* <input
+                        type="radio"
+                        name="product"
+                        className="card-input-element"
+                        onChange={(e) => setSelectedAnswer(o.number)}
+                        checked={selectedAnswer === o.number}
+                      /> */}
+                              <div className="flip-card">
+                                <div className="flip-card-inner">
+                                  <div className="flip-card-front">
+                                    <input
+                                      type="radio"
+                                      name={o.desc}
+                                      className="card-input-element"
+                                      value={p.number}
+                                      required
+                                    />
+                                    <h1>Candidato:</h1>
+                                    <h1>{p.option}</h1>
+                                  </div>
+
+                                  <div className="flip-card-back">
+                                    <h1>Candidato 1</h1>
+                                    <p>Algo del candidato</p>
+                                    <p>{o.option}</p>
+                                    <p>Has elegido el candidato:</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </label>
+                            <br />
+                          </div>
+                        </div>
+                        <br />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+            {/* The alumn list */}
+            {votingType === "general" && (
+              <div className="alum-list question">
+                <h2>{alumList.desc}</h2>
+
+                {alumList.options.map((p) => (
+                  <div key={p.number}>
+                    <input
+                      type="checkbox"
+                      name={"o.desc"}
+                      value={parseInt(p.option.split("/")[1].replace(" ", ""))}
+                    />
+                    {p.option.split("/")[0]}
+                  </div>
+                ))}
+              </div>
+            )}
+            {/* <div class="row">
+              <div class="col"> */}
+            <div>
+              <button id="voteButton" className="btn btn-outline-light ">
+                Vote
+              </button>
+            </div>
+            {/* </div> */}
+            {/* </div> */}
+          </form>
+          {utils.alert.lvl ? (
+            <div className={"alert " + utils.alert.lvl}>
+              <p>{utils.alert.msg}</p>
+              <button className="closeAlert" onClick={closeAlert}>
+                close
+              </button>
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  );
+};
+export default Voting;
+
+{
+  /* onChange={e => setObjeto(...objeto,{[o.desc]:p.number})}
+<h2>{voting.question.desc}</h2>
             <form onSubmit={sendVoting}>
-
-                {/* The 6 questions all votings have */}
-                {voting.question.slice(0, 6).map(o => (
-                    <div className='question' key={o.desc}>
-                        <h2>{o.desc}</h2>
-                        {o.options.map(p => (
-                            <div key={p.number}>
-                                <input type="radio" name={o.desc} value={p.number} />
-                                {p.option}
-                                <br />
-                            </div>
-                        ))}
+                {voting.question.options.map(o => (
+                    <div key={o.number}>
+                        <input type="radio" onChange={e => setSelectedAnswer(o.number)} checked={selectedAnswer === o.number} />
+                        {o.option}
+                        <br />
                     </div>
                 ))}
-
-                {/* The alumn list */}
-                {votingType === 'general' &&
-
-                    <div className="alum-list">
-                        <h2>{alumList.desc}</h2>
-
-                        {alumList.options.map(p => (
-                            <div key={p.number}>
-                                <input type="checkbox" name={'o.desc'} value={parseInt(p.option.split('/')[1].replace(' ', ''))} />{p.option.split('/')[0]}
-                            </div>
-                        ))}
-                    </div>
-                }
-
                 <button>Vote</button>
             </form>
-
-        </div >
-    );
+            {o.options.map(p => (
+                        <div key={p.number}>
+                            <input type="radio" onChange={e => setSelectedAnswer(p.number)} checked={selectedAnswer === p.number} />
+                            {p.option}
+                            <br />
+                        </div>
+                    ))} */
 }
-export default Voting;
+{
+  /* <img
+                          src="img_avatar.png"
+                          alt="Avatar"
+                          style="width:300px;height:300px;"
+                        >
+                        </img> */
+}
