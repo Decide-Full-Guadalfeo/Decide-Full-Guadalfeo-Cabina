@@ -9,9 +9,15 @@ const Voting = ({ utils }) => {
 
     const getVotingType = () => {
         let res = "";
-        if (voting.name.toLowerCase().includes('primaria') && voting.question.length == 6)
+        if (
+            voting.tipo === "PV" &&
+            voting.question.length == 6
+          )
             res = "primary";
-        else if (voting.name.toLowerCase().includes('general') && voting.question.length == 7)
+          else if (
+            voting.tipo === "GV" &&
+            voting.question.length == 7
+          )
             res = "general";
         else {
             res = "error"
