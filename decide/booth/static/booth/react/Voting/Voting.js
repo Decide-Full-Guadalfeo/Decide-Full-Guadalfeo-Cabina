@@ -8,15 +8,8 @@ const Voting = ({ utils }) => {
 
   const getVotingType = () => {
     let res = "";
-    if (
-      voting.tipo === "PV" &&
-      voting.question.length == 6
-    )
-      res = "primary";
-    else if (
-      voting.tipo === "GV" &&
-      voting.question.length == 7
-    )
+    if (voting.tipo === "PV" && voting.question.length == 6) res = "primary";
+    else if (voting.tipo === "GV" && voting.question.length == 7)
       res = "general";
     else {
       res = "error";
@@ -214,6 +207,17 @@ const Voting = ({ utils }) => {
     // $( "option" ).each( function(option) {
     //   console.log('do something with this list item', option);
     // })
+    $("input").on("click", function () {
+      //flip-card, flip-card-inner, flip-card-front, input
+      if ($("input:checked").parent().parent().parent().hasClass("flipped")) {
+        $(".flip-card.flipped").removeClass("flipped");
+      } else {
+        $(".flip-card.flipped").removeClass("flipped");
+        $("input:checked").parent().parent().parent().addClass("flipped");
+      }
+      // console.log($("input:checked").val() + " is checked!");
+      // $("#log").html;
+    });
   });
   // BUTTONS NOT WORKING
 
