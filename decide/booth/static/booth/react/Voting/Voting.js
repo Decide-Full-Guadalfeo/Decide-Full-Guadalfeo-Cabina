@@ -19,6 +19,62 @@ const Voting = ({ utils, value }) => {
     return cipher;
   };
 
+  const popupAreYouSure = () => {
+    const [show, setShow] = useState(false);
+  
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    return (
+    //<button variant="primary">Vote</button>
+   <nav style={styles.navStyle} className="navbar navbar-expand-md">
+          <p style={styles.noteStyle}>Notes</p>
+          <Button style={styles.btnStyle} variant="primary" onClick={handleShow}>
+            Hola
+          </Button>
+          <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Are You Sure You Want To submit this voting</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Yes
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              No
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        </nav>
+    );
+     /* <>
+        <nav style={styles.navStyle} className="navbar navbar-expand-md">
+          <p style={styles.noteStyle}>Notes</p>
+  
+          <Button style={styles.btnStyle} variant="primary" onClick={handleShow}>
+            Take Note
+          </Button>
+        </nav>
+  
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    );
+*/ 
+  };
+
   const sendVoting = (event) => {
     event.preventDefault();
 
@@ -220,24 +276,8 @@ const Voting = ({ utils, value }) => {
             ))}
           </div>
         ))}
-
-        <Button variant="primary" onClick={handleShow}>
-          Submit vote
-        </Button>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Are you sure of your selection?</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={sendVoting}>
-              Yes
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
-              No
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <button onClick={popupAreYouSure}>Submit vote</button>
+      
       </form>
     </div>
   );
@@ -245,6 +285,7 @@ const Voting = ({ utils, value }) => {
 export default Voting;
 
 {
+  //<button variant="primary">Submit vote</button>
   /* onChange={e => setObjeto(...objeto,{[o.desc]:p.number})}
 <h2>{voting.question.desc}</h2>
             <form onSubmit={sendVoting}>
@@ -273,30 +314,3 @@ export default Voting;
                         >
                         </img> */
 }
-/*function votingPopup() {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  return (
-    <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure of your selection?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={sendVoting}>
-            Yes
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            No
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
-  );
-}
-*/
