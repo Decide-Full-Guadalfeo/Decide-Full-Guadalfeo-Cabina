@@ -188,3 +188,42 @@ div.active-question {
   margin-top: 5px;
   margin-left: 5px;
 }
+
+@-webkit-keyframes move
+{
+    from {
+        left: -500px;
+    }
+    to {
+        left: 3000px;
+    }
+}
+@keyframes move
+{
+    from {
+        left: -500px;
+    }
+    to {
+        left: 3000px;
+    }
+}
+
+a#rotator {
+    text-decoration: none;
+    left: 3000px;
+    position: absolute;
+   
+    -webkit-animation: move 4s;
+    animation: move 4s;
+}
+
+a#rotator img {
+    width: 70%; 
+    
+}
+
+.votingAnimation{
+
+  z-index: 4000;
+
+}

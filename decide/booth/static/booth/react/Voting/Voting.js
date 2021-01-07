@@ -111,6 +111,10 @@ const Voting = ({ utils }) => {
 
     if (options) {
       const v = encrypt(options);
+      setSendVotingAnimation(true);
+      setTimeout(() => {
+        setSendVotingAnimation(false);
+      }, 3000);
       const data = {
         vote: { a: v.alpha.toString(), b: v.beta.toString() },
         voting: voting.id,
@@ -120,15 +124,18 @@ const Voting = ({ utils }) => {
       utils
         .post("/gateway/store/", data)
         .then((data) => {
-          utils.setAlert({
-            lvl: "success",
-            msg: "Conglatulations! Your vote has been sent",
-          });
-          $("div.active-question").removeClass("active-question");
+          setTimeout(() => {
+            utils.setAlert({
+              lvl: "success",
+              msg: "Conglatulations! Your vote has been sent",
+            });
+           }, 1700);
+           
         })
         .catch((error) => {
           utils.setAlert({ lvl: "error", msg: "Error: " + error });
         });
+        $("div.active-question").removeClass("active-question");
     } else {
       utils.setAlert({
         lvl: "error",
@@ -141,7 +148,7 @@ const Voting = ({ utils }) => {
   /*#####################################################*/
   /*####################### STATE #######################*/
   /*#####################################################*/
-
+  const[sendVotingAnimation, setSendVotingAnimation] = useState(false);
   /*############### FUNCTIONALITY ###############*/
   const votingType = getVotingType();
 
@@ -310,9 +317,17 @@ const Voting = ({ utils }) => {
             {/* The 6 questions all votings have */}
             {voting.question.slice(0, 6).map((o) => (
               <div className="question" key={o.desc}>
+                
                 <h2>{o.desc}</h2>
+                
                 <div className="container">
+
                   <div class="d-flex align-content-center flex-wrap ">
+                  {sendVotingAnimation &&
+                <div className="votingAnimation">
+                <a id="rotator"><img src="https://image.flaticon.com/icons/png/512/91/91848.png"/></a>
+                </div>
+                }
                     {o.options.map((p) => (
                       <div>
                         <div className="option p-3">
@@ -355,6 +370,7 @@ const Voting = ({ utils }) => {
                     ))}
                   </div>
                 </div>
+                
               </div>
             ))}
             {/* The alumn list */}
