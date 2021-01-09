@@ -7,18 +7,18 @@ const Voting = ({ utils }) => {
   /*#################################################################*/
 
   const dictionary = {
-    "Man": 1,
-    "Woman": 2,
-    "Other": 3,
-    "Software": 1,
-    "Computer Technology": 2,
-    "Information Technology": 3,
-    "Health": 4,
-    "First": 1,
-    "Second": 2,
-    "Third": 3,
-    "Fourth": 4,
-    "Master": 5
+    "Man": "1",
+    "Woman": "2",
+    "Other": "3",
+    "Software": "1",
+    "Computer Technology": "2",
+    "Information Technology": "3",
+    "Health": "4",
+    "First": "1",
+    "Second": "2",
+    "Third": "3",
+    "Fourth": "4",
+    "Master": "5"
   }
 
   const getVotingType = () => {
@@ -43,7 +43,7 @@ const Voting = ({ utils }) => {
   const encrypt = (options) => {
     const bigmsg = BigInt.fromJSONObject(options);
     const cipher = ElGamal.encrypt(bigpk, bigmsg);
-    return cipher;
+    return {'a': cipher.alpha.toString(), 'b': cipher.beta.toString()};
   };
 
   const encryptAll = (options) => {
