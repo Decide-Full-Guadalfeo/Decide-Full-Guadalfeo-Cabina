@@ -209,10 +209,12 @@ const Voting = ({ utils }) => {
     $(".question").each(function (index) {
       // console.log(index + ": " + $(this).text());
       // console.log(index + ": " + colors[index]);
-
       $(this).css({
         "background-color": colors[index],
         filter: "brightness(95%)",
+      });
+      $(this).find('.flip-card-back') .css({
+        "background-color": colors[index],
       });
       // console.log(index + ": " + $(this).text());
     });
@@ -322,7 +324,7 @@ const Voting = ({ utils }) => {
           <button
             id="prev-question"
             type="button"
-            className="btn btn-outline-light"
+            className="btn btn-outline-dark"
           >
             Prev
           </button>{" "}
@@ -333,7 +335,7 @@ const Voting = ({ utils }) => {
           <button
             id="next-question"
             type="button"
-            className="btn btn-outline-light"
+            className="btn btn-outline-dark"
           >
             Next
           </button>
@@ -414,7 +416,7 @@ const Voting = ({ utils }) => {
             {/* <div class="row">
               <div class="col"> */}
             <div>
-              <button id="voteButton" className="btn btn-outline-light ">
+              <button id="voteButton" className="btn btn-outline-dark ">
                 Vote
               </button>
             </div>

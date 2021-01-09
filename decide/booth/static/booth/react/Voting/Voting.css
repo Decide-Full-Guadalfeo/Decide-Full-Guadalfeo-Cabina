@@ -89,6 +89,8 @@ div.active-question {
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+
+  border: 2px solid black; 
   
 }
 
@@ -111,11 +113,14 @@ div.active-question {
   float: none;
 }
 
+/* .question .flip-card-back{
+  background-color: red;
+} */
 /* Style the back side */
 .flip-card-back {
-  background-color: dodgerblue;
   color: white;
   transform: rotateY(180deg);
+  
 }
 
 /* Style for the cards grid */
@@ -179,12 +184,26 @@ div.active-question {
 }
 
 .active { 
-  
   border: orangered 5px; 
-
 }
 
 .card-input-element{
   margin-top: 5px;
   margin-left: 5px;
+}
+
+
+.hero-image {
+ 
+  position: relative;
+}
+
+div.question{
+  background-image: url("https://www.tec.ac.cr/system/files/media/img/main/persona-depositando-boleta-votacion-.jpg");
+  background-color: #cccccc;
+  /* height: 500px; */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: screen;
 }
