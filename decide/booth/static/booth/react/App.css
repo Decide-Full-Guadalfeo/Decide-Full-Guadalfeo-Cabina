@@ -12,16 +12,19 @@ body {
   height: 100%;
 }
 nav.menu {
-  height: 10%;
+  height: 5%;
 }
 #react-root {
-  height: 90%;
- 
+  height: 95%;
 }
-.App,
-.App > div:nth-child(2) {
+.App{
   height: 100%;
- 
+}
+.App > :nth-child(1) {
+  height: 10%;
+}
+.App > :nth-child(2) {
+  height: 90%;
 }
 div#voting-body > .row:nth-child(1) {
   height: 10%;

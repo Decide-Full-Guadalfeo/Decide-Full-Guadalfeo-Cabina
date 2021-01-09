@@ -224,3 +224,39 @@ class GetVotingUser(APIView):
             }
 
             return Response(context, HTTP_200_OK)
+
+class GetGenresByIds(APIView):
+    def post(self, request):
+
+        # Check for user logged
+        if request.user.id is None:
+            messages.error(request, 'You must be logged to access there!')
+            return redirect('auth_login')
+        else:
+            # Check for token to see if user is valid
+
+            try:
+                tk = Token.objects.get(user=request.user)
+            except ObjectDoesNotExist:
+                messages.error(request, 'User not valid!')
+                return redirect('auth_login')
+
+
+            genres = []
+
+            for id in request.data:
+
+                try:
+                    user = User.objects.get(id=id)
+                    voting_user = VotingUser.objects.get(user=user)
+                    genres.append(voting_user.sexo)
+                except ObjectDoesNotExist:
+                    messages.error(request, 'Finish setting your user account!')
+                    return redirect('decide_main')
+
+            # Add the parameters you need that are in User or VotingUser
+            context = {
+                'genres': genres,
+            }
+
+            return Response(context, HTTP_200_OK)
