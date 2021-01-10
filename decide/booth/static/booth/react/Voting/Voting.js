@@ -103,6 +103,7 @@ const Voting = ({ utils }) => {
   const closeAlert = () => {
     utils.setAlert({ lvl: null, msg: null });
   };
+  
 
   const sendVoting = async (event) => {
     event.preventDefault();
@@ -295,7 +296,10 @@ const Voting = ({ utils }) => {
             Prev
           </button>{" "}
         </div>
-
+        {/*<div className="col-4">
+        
+        <Modals/>
+    </div>*/}
         <div className="col-4">
           {" "}
           <button
@@ -380,6 +384,7 @@ const Voting = ({ utils }) => {
             )}
             {/* <div class="row">
               <div class="col"> */}
+              
             <div>
               <button id="voteButton" className="btn btn-outline-light ">
                 Vote
