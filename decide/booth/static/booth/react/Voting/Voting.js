@@ -184,14 +184,38 @@ const Voting = ({ utils }) => {
   }
 
   // COSAS DEL ESTILO
+  function updateButtons(question_to_update) {
+    // Si existe una pregunta posterior
+    if (question_to_update.next().hasClass("question")) {
+      $("button#next-question").css({
+        "display": "block",
+      });
+    }else{
+      $("button#next-question").css({
+        "display": "none",
+      });
+    }
+    if (question_to_update.prev().hasClass("question")) {
+      $("button#prev-question").css({
+        "display": "block",
+      });
+    }else{
+      $("button#prev-question").css({
+        "display": "none",
+      });
+    }
+  };
 
   //   show the first element, the others are hide by default
   $(document).ready(function () {
     // $(".App").addClass("container-fluid");
 
     $("div.question:first-of-type").addClass("active-question");
+    $("button#prev-question").css({
+      "display": "none",
+    });
     // $("#next-question").click(function () {
-
+    
     console.log("doc ready");
     if ($("#prev-question").length) {
       console.log("Element exists");
@@ -222,10 +246,12 @@ const Voting = ({ utils }) => {
       // console.log(index + ": " + $(this).text());
     });
 
-    $("#next-question").click(function () {
+    $("button#next-question").click(function () {
       console.log("next");
 
       var active_question = $("div.active-question");
+      updateButtons(active_question.next());
+
       if (active_question.next().hasClass("question")) {
         active_question.next().addClass("active-question");
         active_question.removeClass("active-question");
@@ -235,6 +261,8 @@ const Voting = ({ utils }) => {
       console.log("prev");
 
       var active_question = $("div.active-question");
+      updateButtons(active_question.prev());
+
       if (active_question.prev().hasClass("question")) {
         active_question.prev().addClass("active-question");
         active_question.removeClass("active-question");
@@ -377,7 +405,7 @@ const Voting = ({ utils }) => {
                                       name={o.desc}
                                       className="card-input-element"
                                       value={p.number}
-                                      required
+                                      
                                     />
                                     <h1>Candidato:</h1>
                                     <h1>{p.option}</h1>
