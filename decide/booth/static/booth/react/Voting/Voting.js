@@ -430,16 +430,6 @@ const Voting = ({ utils }) => {
                     ))}
                   </div>
                 </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">
-                    Bootstrap Checkbox Default
-                    <label class="checkbox">
-                      <input type="checkbox" />
-                      <span class="default"></span>
-                    </label>
-                  </li>
-                </ul>
-
               </div>
             )}
             {/* <div class="row">
