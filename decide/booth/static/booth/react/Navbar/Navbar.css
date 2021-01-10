@@ -14,3 +14,8 @@ nav.menu > span > h1{
 nav#voting-nav{
   display: none;
 }
+nav.menu a:visited {
+  background-color: whitesmoke;
+  color:rgb(173, 76, 173); 
+  border-bottom: 5px groove black;
+}

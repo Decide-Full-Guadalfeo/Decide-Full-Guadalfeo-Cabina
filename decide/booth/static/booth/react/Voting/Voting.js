@@ -199,7 +199,9 @@ const Voting = ({ utils }) => {
     }
     var colors = new Array(
       "#EF476F",
+      "#F78C6B",
       "#FFD166",
+      "#83D483",
       "#06D6A0",
       "#118AB2",
       "#073B4C"
