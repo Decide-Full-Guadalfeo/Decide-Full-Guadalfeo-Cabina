@@ -1,5 +1,9 @@
 "use strict";
-const { useState } = React;
+const { useState, useEffect } = React;
+
+let firstRender = true
+let votingType = null
+let alumList = null
 
 const Voting = ({ utils }) => {
   /*#################################################################*/
@@ -23,8 +27,8 @@ const Voting = ({ utils }) => {
 
   const getVotingType = () => {
     let res = "";
-    if (voting.tipo === "PV" && voting.question.length == 6) res = "primary";
-    else if (voting.tipo === "GV" && voting.question.length == 7)
+    if (voting.tipo === "PV") res = "primary";
+    else if (voting.tipo === "GV")
       res = "general";
     else {
       res = "error";
@@ -43,17 +47,17 @@ const Voting = ({ utils }) => {
   const encrypt = (options) => {
     const bigmsg = BigInt.fromJSONObject(options);
     const cipher = ElGamal.encrypt(bigpk, bigmsg);
-    return {'a': cipher.alpha.toString(), 'b': cipher.beta.toString()};
+    return { 'a': cipher.alpha.toString(), 'b': cipher.beta.toString() };
   };
 
   const encryptAll = (options) => {
     for (let o in options) {
       console.log(options[o])
-      if(Array.isArray(options[o])){
-        for (let p in options[o]){
+      if (Array.isArray(options[o])) {
+        for (let p in options[o]) {
           options[o][p] = encrypt(options[o][p].toString())
         }
-      }else if (dictionary[options[o]]) {
+      } else if (dictionary[options[o]]) {
         options[o] = encrypt(dictionary[options[o]])
       } else {
         options[o] = encrypt(options[o].toString())
@@ -170,17 +174,41 @@ const Voting = ({ utils }) => {
     }
   };
 
+  const filterQuestions = () => {
+    let res = []
+    let year = dictionary[utils.votingUserData.year]
+    year = year - 1
+    const q1 = voting.question[year]
+    const q2 = voting.question[5]
+    res.push(q1)
+    res.push(q2)
+    console.log(votingType)
+    if (votingType === "general") {
+      const q3 = voting.question[6]
+      res.push(q3)
+    }
+    voting.question = res
+    console.log(voting.question)
+    return res
+  }
+
   /*#####################################################*/
   /*####################### STATE #######################*/
   /*#####################################################*/
 
   /*############### FUNCTIONALITY ###############*/
-  const votingType = getVotingType();
-
-  let alumList = null;
-  if (votingType === "general") {
-    alumList = voting.question[6];
+  if (firstRender){
+    votingType = getVotingType();
+    filterQuestions()
+    if (votingType === "general") {
+      alumList = voting.question[2];
+    }
   }
+
+  useEffect(() =>{
+    firstRender = false
+  },[])
+  
 
   // COSAS DEL ESTILO
 
@@ -344,7 +372,7 @@ const Voting = ({ utils }) => {
         <div className="col">
           <form onSubmit={sendVoting}>
             {/* The 6 questions all votings have */}
-            {voting.question.slice(0, 6).map((o) => (
+            {voting.question.slice(0, 2).map((o) => (
               <div className="question" key={o.desc}>
                 <h2>{o.desc}</h2>
                 <div className="container">
