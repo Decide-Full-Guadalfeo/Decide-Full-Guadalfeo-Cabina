@@ -7,19 +7,19 @@ const Voting = ({ utils }) => {
   /*#################################################################*/
 
   const dictionary = {
-    "Man": "1",
-    "Woman": "2",
-    "Other": "3",
-    "Software": "1",
+    Man: "1",
+    Woman: "2",
+    Other: "3",
+    Software: "1",
     "Computer Technology": "2",
     "Information Technology": "3",
-    "Health": "4",
-    "First": "1",
-    "Second": "2",
-    "Third": "3",
-    "Fourth": "4",
-    "Master": "5"
-  }
+    Health: "4",
+    First: "1",
+    Second: "2",
+    Third: "3",
+    Fourth: "4",
+    Master: "5",
+  };
 
   const getVotingType = () => {
     let res = "";
@@ -43,25 +43,25 @@ const Voting = ({ utils }) => {
   const encrypt = (options) => {
     const bigmsg = BigInt.fromJSONObject(options);
     const cipher = ElGamal.encrypt(bigpk, bigmsg);
-    return {'a': cipher.alpha.toString(), 'b': cipher.beta.toString()};
+    return { a: cipher.alpha.toString(), b: cipher.beta.toString() };
   };
 
   const encryptAll = (options) => {
     for (let o in options) {
-      console.log(options[o])
-      if(Array.isArray(options[o])){
-        for (let p in options[o]){
-          options[o][p] = encrypt(options[o][p].toString())
+      console.log(options[o]);
+      if (Array.isArray(options[o])) {
+        for (let p in options[o]) {
+          options[o][p] = encrypt(options[o][p].toString());
         }
-      }else if (dictionary[options[o]]) {
-        options[o] = encrypt(dictionary[options[o]])
+      } else if (dictionary[options[o]]) {
+        options[o] = encrypt(dictionary[options[o]]);
       } else {
-        options[o] = encrypt(options[o].toString())
+        options[o] = encrypt(options[o].toString());
       }
     }
-    console.log(options)
-    return options
-  }
+    console.log(options);
+    return options;
+  };
 
   const getGenresByIds = async (ids) => {
     let res = null;
@@ -167,6 +167,7 @@ const Voting = ({ utils }) => {
         msg:
           "Solo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente",
       });
+      $("div.active-question").removeClass("active-question");
     }
   };
 
@@ -215,7 +216,7 @@ const Voting = ({ utils }) => {
         "background-color": colors[index],
         filter: "brightness(95%)",
       });
-      $(this).find('.flip-card-back') .css({
+      $(this).find(".flip-card-back").css({
         "background-color": colors[index],
       });
       // console.log(index + ": " + $(this).text());
@@ -349,9 +350,12 @@ const Voting = ({ utils }) => {
           <form onSubmit={sendVoting}>
             {/* The 6 questions all votings have */}
             {voting.question.slice(0, 6).map((o) => (
-              <div className="question" key={o.desc}>
-                <h2>{o.desc}</h2>
-                <div className="container">
+              <div className="question " key={o.desc}>
+                <div align="center">
+                  {" "}
+                  <h2>{o.desc}</h2>{" "}
+                </div>
+                <div className="container-fluid">
                   <div className="d-flex align-content-center flex-wrap ">
                     {o.options.map((p) => (
                       <div key={p.number}>
@@ -400,19 +404,42 @@ const Voting = ({ utils }) => {
             ))}
             {/* The alumn list */}
             {votingType === "general" && (
-              <div className="alum-list question">
-                <h2>{alumList.desc}</h2>
+              <div className="alum-list question" align="center">
+                <div>
+                  <h2>{alumList.desc}</h2>
+                </div>
+                <div className="container-fluid">
+                  <div className="d-flex align-content-center flex-wrap ">
+                    {alumList.options.map((p) => (
+                      <div key={p.number} class="p-3">
+                        {p.option.split("/")[0]}
+                        <label class="checkbox">
+                        <input
+                          type="checkbox"
+                          name={"o.desc"}
+                          value={parseInt(
+                            p.option.split("/")[1].replace(" ", "")
+                          )}
+                        />
+                      <span class="default"></span>
 
-                {alumList.options.map((p) => (
-                  <div key={p.number}>
-                    <input
-                      type="checkbox"
-                      name={"o.desc"}
-                      value={parseInt(p.option.split("/")[1].replace(" ", ""))}
-                    />
-                    {p.option.split("/")[0]}
+                        </label>
+                       
+                        
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    Bootstrap Checkbox Default
+                    <label class="checkbox">
+                      <input type="checkbox" />
+                      <span class="default"></span>
+                    </label>
+                  </li>
+                </ul>
+
               </div>
             )}
             {/* <div class="row">

@@ -37,6 +37,14 @@ form > div.question {
   height: 90%;
   margin-bottom: 1%;
 }
+
+div.question > div:nth-child(1){
+  height: 10%;
+}
+div.question > div:nth-child(2){
+  height: 90%;
+}
+
 form > button {
   height: 8%;
 }
