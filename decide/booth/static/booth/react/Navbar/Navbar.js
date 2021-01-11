@@ -16,12 +16,12 @@ const Navbar = ({ utils }) => {
 
   return (
     <div >
-      <nav class="navbar navbar-expand-lg navbar-dark" id="voting-nav">
+      <nav className="navbar navbar-expand-lg navbar-dark" id="voting-nav">
 
         {/* <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/navbar-logo.svg" alt="" /></a> */}
         <div>
           {" "}
-          <h1 class="white">Voting navbar</h1>{" "}
+          <h1 className="white">Voting navbar</h1>{" "}
         </div>
 
         {/* <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
