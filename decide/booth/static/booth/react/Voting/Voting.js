@@ -6,7 +6,6 @@ let firstRender = true
 let votingType = null
 let alumList = null
 
-
 const Voting = ({ utils }) => {
   /*#################################################################*/
   /*####################### UTILITY FUNCTIONS #######################*/
@@ -109,12 +108,15 @@ const Voting = ({ utils }) => {
     let res = {};
 
     let questions = document.getElementsByClassName("question");
+
+    let cont1 = 0
     for (let i = 0; i < questions.length; i++) {
       const titulo = questions[i].children[0].innerHTML;
       let inputs = questions[i].getElementsByTagName("input");
       for (let j = 0; j < inputs.length; j++) {
         if (inputs[j].checked) {
           res[titulo] = inputs[j].value;
+          cont1 = cont1 + 1
         }
       }
     }
@@ -127,21 +129,31 @@ const Voting = ({ utils }) => {
       let la = document.getElementsByClassName("alum-list");
       let alumns = [];
       let inputs = la[0].getElementsByTagName("input");
+      let cont2 = 0
 
       for (let j = 0; j < inputs.length; j++) {
-        if (inputs[j].checked) alumns.push(inputs[j].value);
+        if (inputs[j].checked){
+          alumns.push(inputs[j].value);
+          cont2 = cont2 + 1
+        } 
       }
       res[la[0].children[0].innerHTML] = alumns;
 
       const valid = await checkRestrictions(alumns);
-      if (!valid) res = false;
+      if (!valid || cont1 < 2 || cont2 === 0) res = false;
     }
 
     return res;
   };
 
   const closeAlert = () => {
-    utils.setAlert({ lvl: null, msg: null });
+    if(utils.alert.lvl === "error"){
+      utils.setAlert({ lvl: null, msg: null });
+      location.reload()
+    }else{
+      utils.setAlert({ lvl: null, msg: null });
+      location.replace("/booth")
+    }
   };
   
   const Modals = () => {
@@ -174,11 +186,10 @@ const Voting = ({ utils }) => {
       </div>
       <div className="modal-body">
         ¡Bienvenido al portal de votaciones de decide!
-        Para registrart tu voto, solo tienes que pulsar en una de las cartas,
-        y esta se girará para que puedas verla. Solo puedes elegir uno por votacion
-        hasta un total de 10 candidatos Y en la ultima pagina puedes modificar los
-        votos que has realizado. Recuerda que puedes votar a un maximo de 5 hombres y
-        5 mujeres. 
+        Para registrar tu voto, solo tienes que pulsar en una de las cartas,
+        y esta se girará para que puedas verla. Solo puedes elegir uno por votación
+        hasta un total de 10 candidatos. Recuerda que puedes votar a un máximo de
+        5 hombres y 5 mujeres. 
       </div>
       <div className="modal-footer">
         <button type="button" className="btn btn-secondary" data-dismiss="modal">Entendido, vamos allá</button>
@@ -229,7 +240,7 @@ const Voting = ({ utils }) => {
       utils.setAlert({
         lvl: "error",
         msg:
-          "Solo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente",
+          "No se puede votar en blanco.\nSólo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente.",
       });
       $("div.active-question").removeClass("active-question");
     }
@@ -538,10 +549,11 @@ const Voting = ({ utils }) => {
                         <label className="checkbox">
                         <input
                           type="checkbox"
-                          name={"o.desc"}
+                          name={alumList.desc}
                           value={parseInt(
                             p.option.split("/")[1].replace(" ", "")
                           )}
+                          
                         />
                       <span className="default"></span>
 
@@ -579,33 +591,3 @@ const Voting = ({ utils }) => {
   );
 };
 export default Voting;
-
-{
-  /* onChange={e => setObjeto(...objeto,{[o.desc]:p.number})}
-<h2>{voting.question.desc}</h2>
-            <form onSubmit={sendVoting}>
-                {voting.question.options.map(o => (
-                    <div key={o.number}>
-                        <input type="radio" onChange={e => setSelectedAnswer(o.number)} checked={selectedAnswer === o.number} />
-                        {o.option}
-                        <br />
-                    </div>
-                ))}
-                <button>Vote</button>
-            </form>
-            {o.options.map(p => (
-                        <div key={p.number}>
-                            <input type="radio" onChange={e => setSelectedAnswer(p.number)} checked={selectedAnswer === p.number} />
-                            {p.option}
-                            <br />
-                        </div>
-                    ))} */
-}
-{
-  /* <img
-                          src="img_avatar.png"
-                          alt="Avatar"
-                          style="width:300px;height:300px;"
-                        >
-                        </img> */
-}
