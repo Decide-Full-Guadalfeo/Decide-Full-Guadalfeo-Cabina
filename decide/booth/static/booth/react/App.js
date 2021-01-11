@@ -8,6 +8,41 @@ const { useState, useEffect } = React;
 const App = () => {
 
   /*#################################################################*/
+  /*############################ LANGUAGES ##########################*/
+  /*#################################################################*/
+
+  const en = {
+    current: "en",
+    prev: "Prev",
+    next: "Next",
+    vote: "Vote",
+    modal_button: "Voting guide",
+    modal_title: "Voting guide",
+    modal_body: "Welcome to the voting portal of Decide! To register "+
+    "your vote, click on the cards, and they will flip. You can only "+
+    "choose one per question. If this is a general voting in the final "+
+    "question, you can choose more than one, but a maximum of ten, and five men and five women.",
+    language_button: "Switch to spanish",
+    modal_close_button: "Ok, let's go!"
+
+  };
+  const es = {
+    current: "es",
+    prev: "Previo",
+    next: "Siguiente",
+    vote: "Votar",
+    modal_button: "Guía de votación",
+    modal_title: "Guía de votación",
+    modal_body: "¡Bienvenido al portal de votaciones de Decide! Para registrar " +
+      "tu voto, solo tienes que pulsar en una de las cartas, y esta se " +
+      "girará. Solo puedes elegir uno por " +
+      "pregunta. SI es una votación general, en la pregunta final puedes elegir más de uno,"+
+      " pero un máximo de 10 candidatos, 5 hombres y 5 mujeres.",
+    language_button: "Cambiar a inglés",
+    modal_close_button: "Entendido, ¡vamos allá!"
+  };
+
+  /*#################################################################*/
   /*####################### UTILITY FUNCTIONS #######################*/
   /*#################################################################*/
 
@@ -60,12 +95,21 @@ const App = () => {
       });
   };
 
+  const changeLanguage = () => {
+    if (lang.current === "es") {
+      setLang(en)
+    } else {
+      setLang(es)
+    }
+  }
+
   /*#####################################################*/
   /*####################### STATE #######################*/
   /*#####################################################*/
 
   const [votingUserData, setVotingUserData] = useState(null);
   const [alert, setAlert] = useState({ lvl: null, msg: null });
+  const [lang, setLang] = useState(es);
 
   /*#############################################################*/
   /*####################### FUNCTIONALITY #######################*/
@@ -76,7 +120,7 @@ const App = () => {
     getVotingUserData();
   }, []);
 
-  const utils = { alert, setAlert, post, votingUserData };
+  const utils = { alert, setAlert, post, votingUserData, lang };
 
   /*####################################################*/
   /*####################### VIEW #######################*/
@@ -86,9 +130,9 @@ const App = () => {
     <div className="App">
       <Navbar utils={utils} />
 
-      {/* <h1>Please vote {voting.id} - {voting.name}</h1> */}
-
       {votingUserData && <Voting utils={utils} />}
+
+      <button onClick={changeLanguage}>{lang.language_button}</button>
     </div>
   );
 };
