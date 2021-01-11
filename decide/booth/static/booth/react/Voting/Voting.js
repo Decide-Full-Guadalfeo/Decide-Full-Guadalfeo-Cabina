@@ -384,19 +384,13 @@ const Voting = ({ utils }) => {
                   <h2>{o.desc}</h2>{" "}
                 </div>
                 <div className="container-fluid">
-                  <div className="d-flex align-content-center flex-wrap ">
+                  <div className="d-flex justify-content-center flex-wrap ">
                     {o.options.map((p) => (
                       <div key={p.number}>
                         <div className="option p-3">
                           <div className="card-input">
                             <label>
-                              {/* <input
-                        type="radio"
-                        name="product"
-                        className="card-input-element"
-                        onChange={(e) => setSelectedAnswer(o.number)}
-                        checked={selectedAnswer === o.number}
-                      /> */}
+                              
                               <div className="flip-card">
                                 <div className="flip-card-inner">
                                   <div className="flip-card-front">
