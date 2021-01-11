@@ -6,6 +6,8 @@ let firstRender = true
 let votingType = null
 let alumList = null
 
+let voted = false;
+
 
 const Voting = ({ utils }) => {
   /*#################################################################*/
@@ -141,7 +143,9 @@ const Voting = ({ utils }) => {
   };
 
   const closeAlert = () => {
-    utils.setAlert({ lvl: null, msg: null });
+    window.location.href = "http://127.0.0.1:8000/booth/";
+    // window.location.replace("http://127.0.0.1:8000/booth/");
+    // utils.setAlert({ lvl: null, msg: null });
   };
   
   const Modals = () => {
@@ -225,6 +229,9 @@ const Voting = ({ utils }) => {
           utils.setAlert({ lvl: "error", msg: "Error: " + error });
         });
         $("div.active-question").removeClass("active-question");
+        voted = true;
+        console.log("voted on send vote: "+voted);
+
     } else {
       utils.setAlert({
         lvl: "error",
@@ -297,8 +304,14 @@ const Voting = ({ utils }) => {
   //   show the first element, the others are hide by default
   $(document).ready(function () {
     // $(".App").addClass("container-fluid");
+    if(voted = "false"){
+      console.log("voted false: "+ voted);
 
-    $("div.question:first-of-type").addClass("active-question");
+      $("div.question:first-of-type").addClass("active-question");
+    }else{
+      console.log("voted : "+ voted);
+
+    }
     $("button#prev-question").css({
       "display": "none",
     });
@@ -568,8 +581,8 @@ const Voting = ({ utils }) => {
           {utils.alert.lvl ? (
             <div className={"alert " + utils.alert.lvl}>
               <p>{utils.alert.msg}</p>
-              <button className="closeAlert" onClick={closeAlert}>
-                close
+              <button className=" btn btn-outline-dark " onClick={closeAlert}>
+                Volver a inicio
               </button>
             </div>
           ) : null}
