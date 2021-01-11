@@ -2,12 +2,11 @@
 
 const { useState, useEffect } = React;
 
-let firstRender = true
-let votingType = null
-let alumList = null
+let firstRender = true;
+let votingType = null;
+let alumList = null;
 
-let voted = false;
-
+let voted = null
 
 const Voting = ({ utils }) => {
   /*#################################################################*/
@@ -32,8 +31,7 @@ const Voting = ({ utils }) => {
   const getVotingType = () => {
     let res = "";
     if (voting.tipo === "PV") res = "primary";
-    else if (voting.tipo === "GV")
-      res = "general";
+    else if (voting.tipo === "GV") res = "general";
     else {
       res = "error";
       console.log("error"); //setAlert()
@@ -51,20 +49,18 @@ const Voting = ({ utils }) => {
   const encrypt = (options) => {
     const bigmsg = BigInt.fromJSONObject(options);
     const cipher = ElGamal.encrypt(bigpk, bigmsg);
-    return { 'a': cipher.alpha.toString(), 'b': cipher.beta.toString() };
-
+    return { a: cipher.alpha.toString(), b: cipher.beta.toString() };
   };
 
   const encryptAll = (options) => {
     for (let o in options) {
-      console.log(options[o])
+      console.log(options[o]);
       if (Array.isArray(options[o])) {
         for (let p in options[o]) {
-          options[o][p] = encrypt(options[o][p].toString())
+          options[o][p] = encrypt(options[o][p].toString());
         }
       } else if (dictionary[options[o]]) {
-        options[o] = encrypt(dictionary[options[o]])
-
+        options[o] = encrypt(dictionary[options[o]]);
       } else {
         options[o] = encrypt(options[o].toString());
       }
@@ -158,52 +154,75 @@ const Voting = ({ utils }) => {
       location.replace("/booth")
     }
   };
-  
+
   const Modals = () => {
     const [isOpen, setIsOpen] = useState(false);
-  
+
     const showModal = () => {
       setIsOpen(true);
     };
-  
+
     const hideModal = () => {
       setIsOpen(false);
     };
-  
+
     return (
       <div>
-        
-<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Bases de la votación
-</button>
+      {/* Aqui empieza */}
+        <button
+          type="button"
+          className="btn btn-outline-dark"
+          data-toggle="modal"
+          data-target="#exampleModal"
+        >
+          {utils.lang["modal_button"]}
 
-
-<div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div className="modal-dialog" role="document">
-    <div className="modal-content">
-      <div className="modal-header">
-        <h5 className="modal-title" id="exampleModalLabel">Bases de la votación</h5>
-        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          {/* Bases de la votación */}
         </button>
-      </div>
-      <div className="modal-body">
-        ¡Bienvenido al portal de votaciones de decide!
-        Para registrar tu voto, solo tienes que pulsar en una de las cartas,
-        y esta se girará para que puedas verla. Solo puedes elegir uno por votación
-        hasta un total de 10 candidatos. Recuerda que puedes votar a un máximo de
-        5 hombres y 5 mujeres. 
-      </div>
-      <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-dismiss="modal">Entendido, vamos allá</button>
-      </div>
-    </div>
-  </div>
-</div>
+
+        <div
+          className="modal fade"
+          id="exampleModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
+                {utils.lang["modal_title"]}
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+              {utils.lang["modal_body"]}
+                
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  {utils.lang["modal_close_button"]}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     );
   };
-
 
   const sendVoting = async (event) => {
     event.preventDefault();
@@ -213,6 +232,7 @@ const Voting = ({ utils }) => {
     if (options) {
 
       const v = encryptAll(options);
+
       setSendVotingAnimation(true);
       setTimeout(() => {
         setSendVotingAnimation(false);
@@ -232,12 +252,12 @@ const Voting = ({ utils }) => {
               lvl: "success",
               msg: "Conglatulations! Your vote has been sent",
             });
-           }, 1700);
-           
+          }, 1700);
         })
         .catch((error) => {
           utils.setAlert({ lvl: "error", msg: "Error: " + error });
         });
+
         $("div.active-question").removeClass("active-question");
         voted = true;
         console.log("voted on send vote: "+voted);
@@ -253,63 +273,66 @@ const Voting = ({ utils }) => {
   };
 
   const filterQuestions = () => {
-    let res = []
-    let year = dictionary[utils.votingUserData.year]
-    year = year - 1
-    const q1 = voting.question[year]
-    const q2 = voting.question[5]
-    res.push(q1)
-    res.push(q2)
-    console.log(votingType)
+    let res = [];
+    let year = dictionary[utils.votingUserData.year];
+    year = year - 1;
+    const q1 = voting.question[year];
+    const q2 = voting.question[5];
+    res.push(q1);
+    res.push(q2);
+    console.log(votingType);
     if (votingType === "general") {
-      const q3 = voting.question[6]
-      res.push(q3)
+      const q3 = voting.question[6];
+      res.push(q3);
     }
-    voting.question = res
-    console.log(voting.question)
-    return res
-  }
+    voting.question = res;
+    console.log(voting.question);
+    return res;
+  };
 
   /*#####################################################*/
   /*####################### STATE #######################*/
   /*#####################################################*/
-  const[sendVotingAnimation, setSendVotingAnimation] = useState(false);
+  const [sendVotingAnimation, setSendVotingAnimation] = useState(false);
+
+  /*#############################################*/
   /*############### FUNCTIONALITY ###############*/
-  if (firstRender){
+  /*#############################################*/
+
+  if (firstRender) {
     votingType = getVotingType();
-    filterQuestions()
+    filterQuestions();
     if (votingType === "general") {
       alumList = voting.question[2];
     }
   }
 
-  useEffect(() =>{
-    firstRender = false
-  },[])
-  
+  useEffect(() => {
+    firstRender = false;
+  }, []);
 
   // COSAS DEL ESTILO
   function updateButtons(question_to_update) {
     // Si existe una pregunta posterior
     if (question_to_update.next().hasClass("question")) {
       $("button#next-question").css({
-        "display": "block",
+        display: "block",
       });
-    }else{
+    } else {
       $("button#next-question").css({
-        "display": "none",
+        display: "none",
       });
     }
     if (question_to_update.prev().hasClass("question")) {
       $("button#prev-question").css({
-        "display": "block",
+        display: "block",
       });
-    }else{
+    } else {
       $("button#prev-question").css({
-        "display": "none",
+        display: "none",
       });
     }
-  };
+  }
 
   //   show the first element, the others are hide by default
   $(document).ready(function () {
@@ -321,18 +344,16 @@ const Voting = ({ utils }) => {
     }else{
       console.log("voted : "+ voted);
 
+
+    $("div.question:first-of-type").addClass("active-question");
+
     }
+
     $("button#prev-question").css({
-      "display": "none",
+      display: "none",
     });
     // $("#next-question").click(function () {
-    
-    console.log("doc ready");
-    if ($("#prev-question").length) {
-      console.log("Element exists");
-    } else {
-      console.log("Element doesnt exists");
-    }
+
     var colors = new Array(
       "#EF476F",
       "#F78C6B",
@@ -462,29 +483,30 @@ const Voting = ({ utils }) => {
         <button id="next-question">Next Question </button>
       </div> */}
       <div className="row justify-content-between align-items-center">
-        <div className="col-4">
+        <div className="col-3">
           <button
             id="prev-question"
             type="button"
             className="btn btn-outline-dark"
           >
-            Prev
+            {utils.lang["prev"]}
           </button>{" "}
         </div>
-        {<div className="col-4">
-        
-        {<Modals/>}
-    </div>}
-        <div className="col-4">
+        {<div className="col-3">{<Modals />}</div>}
+
+
+        <div className="col-3">
           {" "}
           <button
             id="next-question"
             type="button"
             className="btn btn-outline-dark"
           >
-            Next
+            {utils.lang["next"]}
+
           </button>
         </div>
+        
       </div>
 
       <div className="row">
@@ -492,27 +514,27 @@ const Voting = ({ utils }) => {
           <form onSubmit={sendVoting}>
             {/* The 6 questions all votings have */}
             {voting.question.slice(0, 2).map((o) => (
-
               <div className="question" key={o.desc}>
                 <div align="center">
                   {" "}
-                <h2>{o.desc}</h2>
-                 </div>
-                <div className="container-fluid">
 
-                  <div className="d-flex align-content-center flex-wrap ">
-                  {sendVotingAnimation &&
-                <div className="votingAnimation">
-                <a id="rotator"><img src="https://image.flaticon.com/icons/png/512/91/91848.png"/></a>
+                  <h2>{o.desc}</h2>
                 </div>
-                }
+                <div className="container-fluid">
+                  <div className="d-flex align-content-center flex-wrap ">
+                    {sendVotingAnimation && (
+                      <div className="votingAnimation">
+                        <a id="rotator">
+                          <img src="https://image.flaticon.com/icons/png/512/91/91848.png" />
+                        </a>
+                      </div>
+                    )}
 
                     {o.options.map((p) => (
                       <div key={p.number}>
                         <div className="option p-3">
                           <div className="card-input">
                             <label>
-                              
                               <div className="flip-card">
                                 <div className="flip-card-inner">
                                   <div className="flip-card-front">
@@ -521,7 +543,6 @@ const Voting = ({ utils }) => {
                                       name={o.desc}
                                       className="card-input-element"
                                       value={p.number}
-                                      
                                     />
                                     <h1>Candidato:</h1>
                                     <h1>{p.option}</h1>
@@ -544,7 +565,6 @@ const Voting = ({ utils }) => {
                     ))}
                   </div>
                 </div>
-                
               </div>
             ))}
             {/* The alumn list */}
@@ -568,10 +588,7 @@ const Voting = ({ utils }) => {
                           
                         />
                       <span className="default"></span>
-
                         </label>
-                       
-                        
                       </div>
                     ))}
                   </div>
@@ -580,10 +597,9 @@ const Voting = ({ utils }) => {
             )}
             {/* <div className="row">
               <div className="col"> */}
-              
             <div>
               <button id="voteButton" className="btn btn-outline-dark ">
-                Vote
+              {utils.lang["vote"]}
               </button>
             </div>
             {/* </div> */}
