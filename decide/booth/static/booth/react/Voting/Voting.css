@@ -188,3 +188,10 @@ div.active-question {
   margin-top: 5px;
   margin-left: 5px;
 }
+
+
+#exampleModal{
+  color: black;
+  border-top-right-radius: 10px !important;
+  border-top-left-radius: 10px !important;
+}
