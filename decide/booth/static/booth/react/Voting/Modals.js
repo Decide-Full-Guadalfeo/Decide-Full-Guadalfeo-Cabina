@@ -1,9 +1,9 @@
-import Voting from "./Voting";
+//NO FUNCIONA
 
 const { useState, useEffect } = React;
 
 const Modals = () => {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = useState(false);
   
     const showModal = () => {
       setIsOpen(true);
@@ -14,9 +14,10 @@ const Modals = () => {
     };
   
     return (
-      <>
-        <button onClick={showModal}>Display Modal</button>
+      <div>
+        <button >Display Modal</button>
         <Modal show={isOpen} onHide={hideModal}>
+        onClick={showModal}
           <Modal.Header>
             <Modal.Title>Hi</Modal.Title>
           </Modal.Header>
@@ -25,9 +26,8 @@ const Modals = () => {
             <button onClick={hideModal}>Cancel</button>
             <button>Save</button>
           </Modal.Footer>
-        </Modal>
-      </>
+    </Modal>
+      </div>
     );
-  };
-  const domContainer = document.querySelector('#react-root');
-  ReactDOM.render(<Modals/>, domContainer);
+};
+export default Modals;
