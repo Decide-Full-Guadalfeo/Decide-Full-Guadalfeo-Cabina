@@ -198,7 +198,7 @@ const Voting = ({ utils }) => {
 
     if (options) {
 
-      const v = encrypt(options);
+      const v = encryptAll(options);
       setSendVotingAnimation(true);
       setTimeout(() => {
         setSendVotingAnimation(false);
