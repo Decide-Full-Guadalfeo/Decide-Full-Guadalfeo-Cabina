@@ -158,21 +158,21 @@ const Voting = ({ utils }) => {
     return (
       <div>
         
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Bases de la votación
 </button>
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Bases de la votación</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div className="modal-dialog" role="document">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h5 className="modal-title" id="exampleModalLabel">Bases de la votación</h5>
+        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div className="modal-body">
         ¡Bienvenido al portal de votaciones de decide!
         Para registrart tu voto, solo tienes que pulsar en una de las cartas,
         y esta se girará para que puedas verla. Solo puedes elegir uno por votacion
@@ -180,8 +180,8 @@ const Voting = ({ utils }) => {
         votos que has realizado. Recuerda que puedes votar a un maximo de 5 hombres y
         5 mujeres. 
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Entendido, vamos allá</button>
+      <div className="modal-footer">
+        <button type="button" className="btn btn-secondary" data-dismiss="modal">Entendido, vamos allá</button>
       </div>
     </div>
   </div>
@@ -477,7 +477,7 @@ const Voting = ({ utils }) => {
                  </div>
                 <div className="container-fluid">
 
-                  <div class="d-flex align-content-center flex-wrap ">
+                  <div className="d-flex align-content-center flex-wrap ">
                   {sendVotingAnimation &&
                 <div className="votingAnimation">
                 <a id="rotator"><img src="https://image.flaticon.com/icons/png/512/91/91848.png"/></a>
@@ -533,9 +533,9 @@ const Voting = ({ utils }) => {
                 <div className="container-fluid">
                   <div className="d-flex align-content-center flex-wrap ">
                     {alumList.options.map((p) => (
-                      <div key={p.number} class="p-3">
+                      <div key={p.number} className="p-3">
                         {p.option.split("/")[0]}
-                        <label class="checkbox">
+                        <label className="checkbox">
                         <input
                           type="checkbox"
                           name={"o.desc"}
@@ -543,7 +543,7 @@ const Voting = ({ utils }) => {
                             p.option.split("/")[1].replace(" ", "")
                           )}
                         />
-                      <span class="default"></span>
+                      <span className="default"></span>
 
                         </label>
                        
@@ -554,8 +554,8 @@ const Voting = ({ utils }) => {
                 </div>
               </div>
             )}
-            {/* <div class="row">
-              <div class="col"> */}
+            {/* <div className="row">
+              <div className="col"> */}
               
             <div>
               <button id="voteButton" className="btn btn-outline-dark ">
