@@ -1,4 +1,5 @@
 "use strict";
+//import Modals from "./Modals";
 const { useState } = React;
 
 const Voting = ({ utils }) => {
@@ -104,6 +105,52 @@ const Voting = ({ utils }) => {
     utils.setAlert({ lvl: null, msg: null });
   };
   
+  const Modals = () => {
+    const [isOpen, setIsOpen] = useState(false);
+  
+    const showModal = () => {
+      setIsOpen(true);
+    };
+  
+    const hideModal = () => {
+      setIsOpen(false);
+    };
+  
+    return (
+      <div>
+        
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Bases de la votación
+</button>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Bases de la votación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ¡Bienvenido al portal de votaciones de decide!
+        Para registrart tu voto, solo tienes que pulsar en una de las cartas,
+        y esta se girará para que puedas verla. Solo puedes elegir uno por votacion
+        hasta un total de 10 candidatos Y en la ultima pagina puedes modificar los
+        votos que has realizado. Recuerda que puedes votar a un maximo de 5 hombres y
+        5 mujeres. 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Entendido, vamos allá</button>
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+    );
+  };
+
 
   const sendVoting = async (event) => {
     event.preventDefault();
@@ -296,10 +343,10 @@ const Voting = ({ utils }) => {
             Prev
           </button>{" "}
         </div>
-        {/*<div className="col-4">
+        {<div className="col-4">
         
-        <Modals/>
-    </div>*/}
+        {<Modals/>}
+    </div>}
         <div className="col-4">
           {" "}
           <button
