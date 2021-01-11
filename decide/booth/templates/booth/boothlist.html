@@ -6,23 +6,49 @@
     integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
 <link type="text/css" rel="stylesheet" href="{% static "index/menu.css" %}" />
+<link type="text/css" rel="stylesheet" href="{% static "index/boothlist.css" %}" />
+
 {% endblock %}
 
 {% block content %}
 
 {% include "index/menu.html" %}
-
-{% if msg%}
-{{msg}}
-{% endif %}
-
-{% for v in votings %}  
-    <ul>
-        <a href={{v.id}}>{{v.name}}</a>
-    </ul>
-{% endfor %}
-
-{% endblock %}
+<div id="content" class="container-fluid">
+    <div class="row">
+        {% if msg%}
+        {{msg}}
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col ">
+            <div class="question">
+                <div align="center">
+                    <h2>Active votings: </h2>
+                  </div>
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-center flex-wrap ">
+                            {% for v in votings %}  
+                            <div class="option p-3">
+                                <div class="card-input">
+                                    <div class="flip-card">
+                                    <div class="flip-card-inner">
+                                        <div class="flip-card-front pt-5">
+                                        <h1>{{v.name}}:</h1>
+                                        <a id="link" href={{v.id}}> <h2> Click aquí </h2></a>
+                                        </div>                   
+                                    </div>
+                                    </div>
+                                <br />
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
 
 {% block extrabody %}
 
