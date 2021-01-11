@@ -13,19 +13,19 @@ const Voting = ({ utils }) => {
   /*#################################################################*/
 
   const dictionary = {
-    "Man": "1",
-    "Woman": "2",
-    "Other": "3",
-    "Software": "1",
+    Man: "1",
+    Woman: "2",
+    Other: "3",
+    Software: "1",
     "Computer Technology": "2",
     "Information Technology": "3",
-    "Health": "4",
-    "First": "1",
-    "Second": "2",
-    "Third": "3",
-    "Fourth": "4",
-    "Master": "5"
-  }
+    Health: "4",
+    First: "1",
+    Second: "2",
+    Third: "3",
+    Fourth: "4",
+    Master: "5",
+  };
 
   const getVotingType = () => {
     let res = "";
@@ -50,6 +50,7 @@ const Voting = ({ utils }) => {
     const bigmsg = BigInt.fromJSONObject(options);
     const cipher = ElGamal.encrypt(bigpk, bigmsg);
     return { 'a': cipher.alpha.toString(), 'b': cipher.beta.toString() };
+
   };
 
   const encryptAll = (options) => {
@@ -61,13 +62,14 @@ const Voting = ({ utils }) => {
         }
       } else if (dictionary[options[o]]) {
         options[o] = encrypt(dictionary[options[o]])
+
       } else {
-        options[o] = encrypt(options[o].toString())
+        options[o] = encrypt(options[o].toString());
       }
     }
-    console.log(options)
-    return options
-  }
+    console.log(options);
+    return options;
+  };
 
   const getGenresByIds = async (ids) => {
     let res = null;
@@ -195,7 +197,13 @@ const Voting = ({ utils }) => {
     const options = await getInput();
 
     if (options) {
-      const v = encryptAll(options);
+
+      const v = encrypt(options);
+      setSendVotingAnimation(true);
+      setTimeout(() => {
+        setSendVotingAnimation(false);
+      }, 3000);
+
       const data = {
         vote: v,
         voting: voting.id,
@@ -205,21 +213,25 @@ const Voting = ({ utils }) => {
       utils
         .post("/gateway/store/", data)
         .then((data) => {
-          utils.setAlert({
-            lvl: "success",
-            msg: "Conglatulations! Your vote has been sent",
-          });
-          $("div.active-question").removeClass("active-question");
+          setTimeout(() => {
+            utils.setAlert({
+              lvl: "success",
+              msg: "Conglatulations! Your vote has been sent",
+            });
+           }, 1700);
+           
         })
         .catch((error) => {
           utils.setAlert({ lvl: "error", msg: "Error: " + error });
         });
+        $("div.active-question").removeClass("active-question");
     } else {
       utils.setAlert({
         lvl: "error",
         msg:
           "Solo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente",
       });
+      $("div.active-question").removeClass("active-question");
     }
   };
 
@@ -244,7 +256,7 @@ const Voting = ({ utils }) => {
   /*#####################################################*/
   /*####################### STATE #######################*/
   /*#####################################################*/
-
+  const[sendVotingAnimation, setSendVotingAnimation] = useState(false);
   /*############### FUNCTIONALITY ###############*/
   if (firstRender){
     votingType = getVotingType();
@@ -260,14 +272,38 @@ const Voting = ({ utils }) => {
   
 
   // COSAS DEL ESTILO
+  function updateButtons(question_to_update) {
+    // Si existe una pregunta posterior
+    if (question_to_update.next().hasClass("question")) {
+      $("button#next-question").css({
+        "display": "block",
+      });
+    }else{
+      $("button#next-question").css({
+        "display": "none",
+      });
+    }
+    if (question_to_update.prev().hasClass("question")) {
+      $("button#prev-question").css({
+        "display": "block",
+      });
+    }else{
+      $("button#prev-question").css({
+        "display": "none",
+      });
+    }
+  };
 
   //   show the first element, the others are hide by default
   $(document).ready(function () {
     // $(".App").addClass("container-fluid");
 
     $("div.question:first-of-type").addClass("active-question");
+    $("button#prev-question").css({
+      "display": "none",
+    });
     // $("#next-question").click(function () {
-
+    
     console.log("doc ready");
     if ($("#prev-question").length) {
       console.log("Element exists");
@@ -276,7 +312,9 @@ const Voting = ({ utils }) => {
     }
     var colors = new Array(
       "#EF476F",
+      "#F78C6B",
       "#FFD166",
+      "#83D483",
       "#06D6A0",
       "#118AB2",
       "#073B4C"
@@ -286,18 +324,22 @@ const Voting = ({ utils }) => {
     $(".question").each(function (index) {
       // console.log(index + ": " + $(this).text());
       // console.log(index + ": " + colors[index]);
-
       $(this).css({
         "background-color": colors[index],
         filter: "brightness(95%)",
       });
+      $(this).find(".flip-card-back").css({
+        "background-color": colors[index],
+      });
       // console.log(index + ": " + $(this).text());
     });
 
-    $("#next-question").click(function () {
+    $("button#next-question").click(function () {
       console.log("next");
 
       var active_question = $("div.active-question");
+      updateButtons(active_question.next());
+
       if (active_question.next().hasClass("question")) {
         active_question.next().addClass("active-question");
         active_question.removeClass("active-question");
@@ -307,6 +349,8 @@ const Voting = ({ utils }) => {
       console.log("prev");
 
       var active_question = $("div.active-question");
+      updateButtons(active_question.prev());
+
       if (active_question.prev().hasClass("question")) {
         active_question.prev().addClass("active-question");
         active_question.removeClass("active-question");
@@ -399,7 +443,7 @@ const Voting = ({ utils }) => {
           <button
             id="prev-question"
             type="button"
-            className="btn btn-outline-light"
+            className="btn btn-outline-dark"
           >
             Prev
           </button>{" "}
@@ -413,7 +457,7 @@ const Voting = ({ utils }) => {
           <button
             id="next-question"
             type="button"
-            className="btn btn-outline-light"
+            className="btn btn-outline-dark"
           >
             Next
           </button>
@@ -425,22 +469,27 @@ const Voting = ({ utils }) => {
           <form onSubmit={sendVoting}>
             {/* The 6 questions all votings have */}
             {voting.question.slice(0, 2).map((o) => (
+
               <div className="question" key={o.desc}>
+                <div align="center">
+                  {" "}
                 <h2>{o.desc}</h2>
-                <div className="container">
-                  <div className="d-flex align-content-center flex-wrap ">
+                 </div>
+                <div className="container-fluid">
+
+                  <div class="d-flex align-content-center flex-wrap ">
+                  {sendVotingAnimation &&
+                <div className="votingAnimation">
+                <a id="rotator"><img src="https://image.flaticon.com/icons/png/512/91/91848.png"/></a>
+                </div>
+                }
+
                     {o.options.map((p) => (
                       <div key={p.number}>
                         <div className="option p-3">
                           <div className="card-input">
                             <label>
-                              {/* <input
-                        type="radio"
-                        name="product"
-                        className="card-input-element"
-                        onChange={(e) => setSelectedAnswer(o.number)}
-                        checked={selectedAnswer === o.number}
-                      /> */}
+                              
                               <div className="flip-card">
                                 <div className="flip-card-inner">
                                   <div className="flip-card-front">
@@ -449,7 +498,7 @@ const Voting = ({ utils }) => {
                                       name={o.desc}
                                       className="card-input-element"
                                       value={p.number}
-                                      required
+                                      
                                     />
                                     <h1>Candidato:</h1>
                                     <h1>{p.option}</h1>
@@ -472,30 +521,44 @@ const Voting = ({ utils }) => {
                     ))}
                   </div>
                 </div>
+                
               </div>
             ))}
             {/* The alumn list */}
             {votingType === "general" && (
-              <div className="alum-list question">
-                <h2>{alumList.desc}</h2>
+              <div className="alum-list question" align="center">
+                <div>
+                  <h2>{alumList.desc}</h2>
+                </div>
+                <div className="container-fluid">
+                  <div className="d-flex align-content-center flex-wrap ">
+                    {alumList.options.map((p) => (
+                      <div key={p.number} class="p-3">
+                        {p.option.split("/")[0]}
+                        <label class="checkbox">
+                        <input
+                          type="checkbox"
+                          name={"o.desc"}
+                          value={parseInt(
+                            p.option.split("/")[1].replace(" ", "")
+                          )}
+                        />
+                      <span class="default"></span>
 
-                {alumList.options.map((p) => (
-                  <div key={p.number}>
-                    <input
-                      type="checkbox"
-                      name={"o.desc"}
-                      value={parseInt(p.option.split("/")[1].replace(" ", ""))}
-                    />
-                    {p.option.split("/")[0]}
+                        </label>
+                       
+                        
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
               </div>
             )}
             {/* <div class="row">
               <div class="col"> */}
               
             <div>
-              <button id="voteButton" className="btn btn-outline-light ">
+              <button id="voteButton" className="btn btn-outline-dark ">
                 Vote
               </button>
             </div>
