@@ -6,12 +6,9 @@ let firstRender = true
 let votingType = null
 let alumList = null
 
-<<<<<<< HEAD
-=======
 let voted = false;
 
 
->>>>>>> 3096b7bf26ae9205dffe4b6ba41f6ce98cc43cfd
 const Voting = ({ utils }) => {
   /*#################################################################*/
   /*####################### UTILITY FUNCTIONS #######################*/
@@ -153,7 +150,6 @@ const Voting = ({ utils }) => {
   };
 
   const closeAlert = () => {
-<<<<<<< HEAD
     if(utils.alert.lvl === "error"){
       utils.setAlert({ lvl: null, msg: null });
       location.reload()
@@ -161,11 +157,6 @@ const Voting = ({ utils }) => {
       utils.setAlert({ lvl: null, msg: null });
       location.replace("/booth")
     }
-=======
-    window.location.href = "http://127.0.0.1:8000/booth/";
-    // window.location.replace("http://127.0.0.1:8000/booth/");
-    // utils.setAlert({ lvl: null, msg: null });
->>>>>>> 3096b7bf26ae9205dffe4b6ba41f6ce98cc43cfd
   };
   
   const Modals = () => {
@@ -602,7 +593,11 @@ const Voting = ({ utils }) => {
             <div className={"alert " + utils.alert.lvl}>
               <p>{utils.alert.msg}</p>
               <button className=" btn btn-outline-dark " onClick={closeAlert}>
-                Volver a inicio
+                {
+                  utils.alert.lvl === "error"
+                  ? 'Empezar de nuevo'
+                  : 'Volver a inicio'
+                }
               </button>
             </div>
           ) : null}
