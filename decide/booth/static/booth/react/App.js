@@ -36,7 +36,7 @@ const App = () => {
     modal_body: "¡Bienvenido al portal de votaciones de Decide! Para registrar " +
       "tu voto, solo tienes que pulsar en una de las cartas, y esta se " +
       "girará. Solo puedes elegir uno por " +
-      "pregunta. SI es una votación general, en la pregunta final puedes elegir más de uno,"+
+      "pregunta. Si es una votación general, en la pregunta final puedes elegir más de uno,"+
       " pero un máximo de 10 candidatos, 5 hombres y 5 mujeres.",
     language_button: "Cambiar a inglés",
     modal_close_button: "Entendido, ¡vamos allá!"
