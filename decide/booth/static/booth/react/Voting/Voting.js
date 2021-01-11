@@ -6,9 +6,14 @@ let firstRender = true;
 let votingType = null;
 let alumList = null;
 
+
 let lang= {
   curren: "en",
 };
+
+let voted = false;
+
+
 
 const Voting = ({ utils }) => {
   /*#################################################################*/
@@ -141,12 +146,15 @@ const Voting = ({ utils }) => {
     let res = {};
 
     let questions = document.getElementsByClassName("question");
+
+    let cont1 = 0
     for (let i = 0; i < questions.length; i++) {
       const titulo = questions[i].children[0].innerHTML;
       let inputs = questions[i].getElementsByTagName("input");
       for (let j = 0; j < inputs.length; j++) {
         if (inputs[j].checked) {
           res[titulo] = inputs[j].value;
+          cont1 = cont1 + 1
         }
       }
     }
@@ -159,21 +167,31 @@ const Voting = ({ utils }) => {
       let la = document.getElementsByClassName("alum-list");
       let alumns = [];
       let inputs = la[0].getElementsByTagName("input");
+      let cont2 = 0
 
       for (let j = 0; j < inputs.length; j++) {
-        if (inputs[j].checked) alumns.push(inputs[j].value);
+        if (inputs[j].checked){
+          alumns.push(inputs[j].value);
+          cont2 = cont2 + 1
+        } 
       }
       res[la[0].children[0].innerHTML] = alumns;
 
       const valid = await checkRestrictions(alumns);
-      if (!valid) res = false;
+      if (!valid || cont1 < 2 || cont2 === 0) res = false;
     }
 
     return res;
   };
 
   const closeAlert = () => {
-    utils.setAlert({ lvl: null, msg: null });
+    if(utils.alert.lvl === "error"){
+      utils.setAlert({ lvl: null, msg: null });
+      location.reload()
+    }else{
+      utils.setAlert({ lvl: null, msg: null });
+      location.replace("/booth")
+    }
   };
 
   const Modals = () => {
@@ -189,6 +207,7 @@ const Voting = ({ utils }) => {
 
     return (
       <div>
+      {/* Aqui empieza */}
         <button
           type="button"
           className="btn btn-outline-dark"
@@ -239,6 +258,36 @@ const Voting = ({ utils }) => {
             </div>
           </div>
         </div>
+
+      {/*       
+<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Bases de la votación
+</button>
+
+
+<div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div className="modal-dialog" role="document">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h5 className="modal-title" id="exampleModalLabel">Bases de la votación</h5>
+        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div className="modal-body">
+        ¡Bienvenido al portal de votaciones de decide!
+        Para registrar tu voto, solo tienes que pulsar en una de las cartas,
+        y esta se girará para que puedas verla. Solo puedes elegir uno por votación
+        hasta un total de 10 candidatos. Recuerda que puedes votar a un máximo de
+        5 hombres y 5 mujeres. 
+      </div>
+      <div className="modal-footer">
+        <button type="button" className="btn btn-secondary" data-dismiss="modal">Entendido, vamos allá</button>
+      </div>
+    </div>
+  </div>
+</div>*/}
+
       </div>
     );
   };
@@ -249,7 +298,9 @@ const Voting = ({ utils }) => {
     const options = await getInput();
 
     if (options) {
-      const v = encrypt(options);
+
+      const v = encryptAll(options);
+
       setSendVotingAnimation(true);
       setTimeout(() => {
         setSendVotingAnimation(false);
@@ -274,12 +325,16 @@ const Voting = ({ utils }) => {
         .catch((error) => {
           utils.setAlert({ lvl: "error", msg: "Error: " + error });
         });
-      $("div.active-question").removeClass("active-question");
+
+        $("div.active-question").removeClass("active-question");
+        voted = true;
+        console.log("voted on send vote: "+voted);
+
     } else {
       utils.setAlert({
         lvl: "error",
         msg:
-          "Solo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente",
+          "No se puede votar en blanco.\nSólo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente.",
       });
       $("div.active-question").removeClass("active-question");
     }
@@ -357,10 +412,19 @@ const Voting = ({ utils }) => {
   //   show the first element, the others are hide by default
   $(document).ready(function () {
     // $(".App").addClass("container-fluid");
+    if(voted = "false"){
+      console.log("voted false: "+ voted);
+
+      $("div.question:first-of-type").addClass("active-question");
+    }else{
+      console.log("voted : "+ voted);
 
     // lang = $.extend({}, es);
 
     $("div.question:first-of-type").addClass("active-question");
+
+    }
+
     $("button#prev-question").css({
       display: "none",
     });
@@ -547,6 +611,7 @@ const Voting = ({ utils }) => {
               <div className="question" key={o.desc}>
                 <div align="center">
                   {" "}
+
                   <h2>{o.desc}</h2>
                 </div>
                 <div className="container-fluid">
@@ -608,14 +673,15 @@ const Voting = ({ utils }) => {
                       <div key={p.number} className="p-3">
                         {p.option.split("/")[0]}
                         <label className="checkbox">
-                          <input
-                            type="checkbox"
-                            name={"o.desc"}
-                            value={parseInt(
-                              p.option.split("/")[1].replace(" ", "")
-                            )}
-                          />
-                          <span className="default"></span>
+                        <input
+                          type="checkbox"
+                          name={alumList.desc}
+                          value={parseInt(
+                            p.option.split("/")[1].replace(" ", "")
+                          )}
+                          
+                        />
+                      <span className="default"></span>
                         </label>
                       </div>
                     ))}
@@ -625,7 +691,6 @@ const Voting = ({ utils }) => {
             )}
             {/* <div className="row">
               <div className="col"> */}
-
             <div>
               <button id="voteButton" className="btn btn-outline-dark ">
               {lang["vote"]}
@@ -637,8 +702,12 @@ const Voting = ({ utils }) => {
           {utils.alert.lvl ? (
             <div className={"alert " + utils.alert.lvl}>
               <p>{utils.alert.msg}</p>
-              <button className="closeAlert" onClick={closeAlert}>
-                close
+              <button className=" btn btn-outline-dark " onClick={closeAlert}>
+                {
+                  utils.alert.lvl === "error"
+                  ? 'Empezar de nuevo'
+                  : 'Volver a inicio'
+                }
               </button>
             </div>
           ) : null}
@@ -648,33 +717,3 @@ const Voting = ({ utils }) => {
   );
 };
 export default Voting;
-
-{
-  /* onChange={e => setObjeto(...objeto,{[o.desc]:p.number})}
-<h2>{voting.question.desc}</h2>
-            <form onSubmit={sendVoting}>
-                {voting.question.options.map(o => (
-                    <div key={o.number}>
-                        <input type="radio" onChange={e => setSelectedAnswer(o.number)} checked={selectedAnswer === o.number} />
-                        {o.option}
-                        <br />
-                    </div>
-                ))}
-                <button>Vote</button>
-            </form>
-            {o.options.map(p => (
-                        <div key={p.number}>
-                            <input type="radio" onChange={e => setSelectedAnswer(p.number)} checked={selectedAnswer === p.number} />
-                            {p.option}
-                            <br />
-                        </div>
-                    ))} */
-}
-{
-  /* <img
-                          src="img_avatar.png"
-                          alt="Avatar"
-                          style="width:300px;height:300px;"
-                        >
-                        </img> */
-}
