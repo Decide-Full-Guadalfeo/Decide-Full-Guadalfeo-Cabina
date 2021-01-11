@@ -6,7 +6,9 @@ let firstRender = true;
 let votingType = null;
 let alumList = null;
 
-let lang;
+let lang= {
+  curren: "en",
+};
 
 const Voting = ({ utils }) => {
   /*#################################################################*/
@@ -410,14 +412,14 @@ const Voting = ({ utils }) => {
         active_question.removeClass("active-question");
       }
     });
-    // $("button#change-language").click(function () {
-    //   if(lang["current"] = "es"){
-    //     lang = en;
-    //   }else{
-    //     lang = es;
-    //   }
-    //   console.log(lang);
-    // });
+    $("button#change-language").click(function () {
+      if(lang["current"] = "es"){
+        lang = en;
+      }else{
+        lang = es;
+      }
+      console.log(lang);
+    });
 
     // $( "option" ).each( function(option) {
     //   console.log('do something with this list item', option);
@@ -512,7 +514,7 @@ const Voting = ({ utils }) => {
         </div>
         {<div className="col-3">{<Modals />}</div>}
 
-        {/* <div className="col-3">
+        <div className="col-3">
           <button
             id="change-language"
             type="button"
@@ -521,7 +523,7 @@ const Voting = ({ utils }) => {
             {lang["language_button"]}
 
           </button>
-        </div> */}
+        </div>
 
         <div className="col-3">
           {" "}
