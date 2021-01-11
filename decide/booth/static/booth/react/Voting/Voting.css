@@ -192,8 +192,6 @@ div.active-question {
   margin-left: 5px;
 }
 
-
-
 div.question{
   background-image: url("https://www.newmexicopbs.org/productions/newmexicoinfocus/wp-content/uploads/2020/11/element5-digital-T9CXBZLUvic-unsplash.jpg");
   background-color: #cccccc;
@@ -224,3 +222,43 @@ div.alum-list.question > div.container-fluid > div > div{
 .checkbox input{display:none}
 .checkbox input:checked + span:after{-webkit-animation:check .8s;-moz-animation:check .8s;-o-animation:check .8s;animation:check .8s;border-color:#555}
 .checkbox input:checked + .default:after{border-color:#444}
+
+@-webkit-keyframes move
+{
+    from {
+        left: -500px;
+    }
+    to {
+        left: 3000px;
+    }
+}
+@keyframes move
+{
+    from {
+        left: -500px;
+    }
+    to {
+        left: 3000px;
+    }
+}
+
+a#rotator {
+    text-decoration: none;
+    left: 3000px;
+    position: absolute;
+   
+    -webkit-animation: move 4s;
+    animation: move 4s;
+}
+
+a#rotator img {
+    width: 70%; 
+    
+}
+
+.votingAnimation{
+
+  z-index: 4000;
+
+}
+
