@@ -234,9 +234,9 @@ const Voting = ({ utils }) => {
     event.preventDefault();
 
     const options = await getInput();
-
+    
     if (options) {
-
+      console.log(options);
       const v = encryptAll(options);
 
       setSendVotingAnimation(true);
@@ -420,15 +420,24 @@ const Voting = ({ utils }) => {
     // })
     $("input").on("click", function () {
       //flip-card, flip-card-inner, flip-card-front, input
-      if ($(this).parent().parent().parent().hasClass("flipped")) {
+      var this_card = $(this).parent().parent().parent();
+      // div (container de cartas), div, option, card-input, label, flip-card
+      var this_question = this_card.parent().parent().parent().parent().parent();
+      // console.log(this_question)
+      if (this_card.hasClass("flipped")) {
+        this_card.removeClass("flipped");
+        $(this).prop('checked', false);
         console.log($("input:checked").val() + " is checked!");
 
-        $(".flip-card.flipped").removeClass("flipped");
+
       } else {
+        var flipped_card = $( this_question ).find( "div.flip-card.flipped" )
+        flipped_card.removeClass("flipped");
+        flipped_card.prop('checked', false);
         console.log($("input:checked").val() + " is checked!");
+        // $(this_question+ " div.flip-card.flipped").removeClass("flipped");
 
-        $(".flip-card.flipped").removeClass("flipped");
-        $("input:checked").parent().parent().parent().addClass("flipped");
+        this_card.addClass("flipped");
       }
       // console.log($("input:checked").val() + " is checked!");
       // $("#log").html;
