@@ -131,25 +131,27 @@ const Voting = ({ utils }) => {
       let cont2 = 0
 
       for (let j = 0; j < inputs.length; j++) {
-        if (inputs[j].checked){
+        if (inputs[j].checked) {
           alumns.push(inputs[j].value);
           cont2 = cont2 + 1
-        } 
+        }
       }
       res[la[0].children[0].innerHTML] = alumns;
 
       const valid = await checkRestrictions(alumns);
       if (!valid || cont1 < 2 || cont2 === 0) res = false;
-    }
 
+    } else {
+      if (cont1 < 2) res = false;
+    }
     return res;
   };
 
   const closeAlert = () => {
-    if(utils.alert.lvl === "error"){
+    if (utils.alert.lvl === "error") {
       utils.setAlert({ lvl: null, msg: null });
       location.reload()
-    }else{
+    } else {
       utils.setAlert({ lvl: null, msg: null });
       location.replace("/booth")
     }
@@ -168,7 +170,7 @@ const Voting = ({ utils }) => {
 
     return (
       <div>
-      {/* Aqui empieza */}
+        {/* Aqui empieza */}
         <button
           type="button"
           className="btn btn-outline-dark"
@@ -192,7 +194,7 @@ const Voting = ({ utils }) => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">
-                {utils.lang["modal_title"]}
+                  {utils.lang["modal_title"]}
                 </h5>
                 <button
                   type="button"
@@ -204,8 +206,8 @@ const Voting = ({ utils }) => {
                 </button>
               </div>
               <div className="modal-body">
-              {utils.lang["modal_body"]}
-                
+                {utils.lang["modal_body"]}
+
               </div>
               <div className="modal-footer">
                 <button
@@ -258,16 +260,24 @@ const Voting = ({ utils }) => {
           utils.setAlert({ lvl: "error", msg: "Error: " + error });
         });
 
-        $("div.active-question").removeClass("active-question");
-        voted = true;
-        console.log("voted on send vote: "+voted);
+      $("div.active-question").removeClass("active-question");
+      voted = true;
+      console.log("voted on send vote: " + voted);
 
     } else {
-      utils.setAlert({
-        lvl: "error",
-        msg:
-          "No se puede votar en blanco.\nSólo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente.",
-      });
+      if (votingType === "general") {
+        utils.setAlert({
+          lvl: "error",
+          msg:
+            "No se puede votar en blanco.\nSólo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente.",
+        });
+      } else {
+        utils.setAlert({
+          lvl: "error",
+          msg:
+            "No se pueden dejar respuestas en blanco.",
+        });
+      }
       $("div.active-question").removeClass("active-question");
     }
   };
@@ -337,15 +347,15 @@ const Voting = ({ utils }) => {
   //   show the first element, the others are hide by default
   $(document).ready(function () {
     // $(".App").addClass("container-fluid");
-    if(voted = "false"){
-      console.log("voted false: "+ voted);
+    if (voted = "false") {
+      console.log("voted false: " + voted);
 
       $("div.question:first-of-type").addClass("active-question");
-    }else{
-      console.log("voted : "+ voted);
+    } else {
+      console.log("voted : " + voted);
 
 
-    $("div.question:first-of-type").addClass("active-question");
+      $("div.question:first-of-type").addClass("active-question");
 
     }
 
@@ -506,7 +516,7 @@ const Voting = ({ utils }) => {
 
           </button>
         </div>
-        
+
       </div>
 
       <div className="row">
@@ -522,13 +532,6 @@ const Voting = ({ utils }) => {
                 </div>
                 <div className="container-fluid">
                   <div className="d-flex align-content-center flex-wrap ">
-                    {sendVotingAnimation && (
-                      <div className="votingAnimation">
-                        <a id="rotator">
-                          <img src="https://image.flaticon.com/icons/png/512/91/91848.png" />
-                        </a>
-                      </div>
-                    )}
 
                     {o.options.map((p) => (
                       <div key={p.number}>
@@ -549,10 +552,9 @@ const Voting = ({ utils }) => {
                                   </div>
 
                                   <div className="flip-card-back">
-                                    <h1>Candidato 1</h1>
-                                    <p>Algo del candidato</p>
-                                    <p>{o.option}</p>
-                                    <p>Has elegido el candidato:</p>
+                                    <h4>Seleccionaste:</h4>
+                                    <br></br>
+                                    <h3><strong>{p.option}</strong></h3>
                                   </div>
                                 </div>
                               </div>
@@ -579,15 +581,15 @@ const Voting = ({ utils }) => {
                       <div key={p.number} className="p-3">
                         {p.option.split("/")[0]}
                         <label className="checkbox">
-                        <input
-                          type="checkbox"
-                          name={alumList.desc}
-                          value={parseInt(
-                            p.option.split("/")[1].replace(" ", "")
-                          )}
-                          
-                        />
-                      <span className="default"></span>
+                          <input
+                            type="checkbox"
+                            name={alumList.desc}
+                            value={parseInt(
+                              p.option.split("/")[1].replace(" ", "")
+                            )}
+
+                          />
+                          <span className="default"></span>
                         </label>
                       </div>
                     ))}
@@ -597,11 +599,20 @@ const Voting = ({ utils }) => {
             )}
             {/* <div className="row">
               <div className="col"> */}
-            <div>
-              <button id="voteButton" className="btn btn-outline-dark ">
-              {utils.lang["vote"]}
-              </button>
-            </div>
+           { sendVotingAnimation && (
+              <div className="votingAnimation">
+                <a id="rotator">
+                  <img src="https://image.flaticon.com/icons/png/512/91/91848.png"/>
+                  <img className="voteImage" src="https://www.cair.com/wp-content/uploads/2018/08/vote-image.png"/>
+                </a>
+                <div>
+                )};
+                <button className="voteButton">
+                
+                  {utils.lang["vote"]}
+                </button>
+              </div>
+            
             {/* </div> */}
             {/* </div> */}
           </form>
@@ -611,8 +622,8 @@ const Voting = ({ utils }) => {
               <button className=" btn btn-outline-dark " onClick={closeAlert}>
                 {
                   utils.alert.lvl === "error"
-                  ? 'Empezar de nuevo'
-                  : 'Volver a inicio'
+                    ? 'Empezar de nuevo'
+                    : 'Volver a inicio'
                 }
               </button>
             </div>
