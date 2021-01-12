@@ -14,12 +14,6 @@ float: none;
 margin-top: 40px;
 }
 
-.card-input>h1{
-  text-align: center;
-  margin: 0 auto;
-  float: none;
-}
-
 /* ############################################## QUESTIONS DISPLAY ANIMATION #################################*/
 
 .question {
@@ -30,7 +24,6 @@ margin-top: 40px;
 .question>h2{
   color: black;
   font-weight: bold;
-  
   text-align: center;
 }
 div.active-question {
@@ -104,11 +97,11 @@ div.active-question {
 /* Style for the cards grid */
 
 .alert {
-
+  text-align: center;
   border: solid black 3px;
-  opacity: 0.95;
+  opacity: 0.88;
   width: 25%;
-  height: 20%;
+  height: 22%;
   position: absolute;
   top: 0;
   left: 0;
@@ -116,38 +109,59 @@ div.active-question {
   bottom: 0;
   margin: auto;
   
-    }
-    .alert.success {
-      background-color: #46D014;
-      color: black;
-    }
+}
+.alert.success {
+  background-color: #419523;
+  width: 25%;
+  height: 15%;
+  color: black;
+}
+.alert.success button{
+  margin-top: 20px;
+}
+
+.alert.error {
+  background-color: #7e241a;
+  color: whitesmoke;
+}
+
+.alert.errorGeneral {
+  background-color: #7e241a;
+  color: whitesmoke;
+}
+.alert.errorPrimary {
+  background-color: #7e241a;
+  width: 25%;
+  height: 15%;
+  color: whitesmoke;
+}
+.alert.errorPrimary button{
+  margin-top: 20px;
+}
+.alert button{
+  color: black;
+  background-color: whitesmoke;
+}
+.closeAlert {
+    width: 15%;
+    background-color: white;
+    color: black;
+    border: 3px solid #555555;
+    border-radius: 10%;
+    text-align: center;
+}
     
-    .alert.danger {
-      background-color: #DA2E1A;
-      color: black;
-    } 
-    .alert.error {
-      background-color: #DA2E1A;
-      color: black;
-    } 
-    .closeAlert {
-      width: 15%;
-      background-color: white;
-      color: black;
-      border: 3px solid #555555;
-      border-radius: 10%;
-      text-align: center;
-    }
-    
-    .closeAlert:hover {
-      background-color: #555555;
-      color: white;
-    }
-  
-    .alert>p{
-      margin-top: 5px;
-      font-weight: bold;
-    }
+.closeAlert:hover {
+  background-color: #555555;
+  color: white;
+}
+
+.alert>p{
+
+    text-align: justify;
+    margin-top: 5px;
+    font-weight: bold;
+}
 
 #next-question{
   float: right;
@@ -167,6 +181,9 @@ div.active-question {
 .card-input-element{
   margin-top: 5px;
   margin-left: 15px;
+}
+.modal-body{
+  text-align: justify;
 }
 
 #exampleModal{
@@ -259,13 +276,24 @@ a#rotator img {
 .languageImg{
   width: 50px;
   height: 40px;
+  margin-bottom: 1  5px;
  
 }
 .languageButton{
+  float: right;
   border: none;
   background-color: whitesmoke;
 }
-.languageButton::selection{
+.languageButton:focus{
   border: none;
   background-color: whitesmoke;
+  outline: 0;
+}
+.moda{
+
+float: left;
+}
+.but{
+  margin-left: 20px;
+  float: right;
 }

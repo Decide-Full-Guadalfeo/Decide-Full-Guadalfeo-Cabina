@@ -4,10 +4,7 @@ html,
 body {
   height: 100%;
 }
-nav.menu {
-  padding-top: 1% ;
-  height: 6%;
-}
+
 #react-root {
   height: 92%;
 }

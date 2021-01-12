@@ -57,7 +57,7 @@ const Voting = ({ utils }) => {
 
   const encryptAll = (options) => {
     for (let o in options) {
-     
+
       if (Array.isArray(options[o])) {
         for (let p in options[o]) {
           options[o][p] = encrypt(options[o][p].toString());
@@ -116,12 +116,12 @@ const Voting = ({ utils }) => {
 
     let cont1 = 0
     for (let i = 0; i < questions.length; i++) {
-      const titulo = questions[i].children[0].innerHTML.replace(" <h2>","").replace("</h2>","");
+      const titulo = questions[i].children[0].innerHTML.replace(" <h2>", "").replace("</h2>", "");
       let inputs = questions[i].getElementsByTagName("input");
       for (let j = 0; j < inputs.length; j++) {
         if (inputs[j].checked) {
           res[titulo] = inputs[j].value;
-        
+
           cont1 = cont1 + 1
         }
       }
@@ -156,7 +156,7 @@ const Voting = ({ utils }) => {
   };
 
   const closeAlert = () => {
-    if (utils.alert.lvl === "error") {
+    if (utils.alert.lvl === "errorGeneral" || utils.alert.lvl === "errorPrimary" || utils.alert.lvl === "error" ) {
       utils.setAlert({ lvl: null, msg: null });
       location.reload()
     } else {
@@ -267,12 +267,12 @@ const Voting = ({ utils }) => {
     } else {
       if (votingType === "general") {
         utils.setAlert({
-          lvl: "error",
+          lvl: "errorGeneral",
           msg: utils.lang["bigError"],
         });
       } else {
         utils.setAlert({
-          lvl: "error",
+          lvl: "errorPrimary",
           msg: utils.lang["blankError"],
         });
       }
@@ -287,13 +287,13 @@ const Voting = ({ utils }) => {
     const q2 = voting.question[5];
     res.push(q1);
     res.push(q2);
-   
+
     if (votingType === "general") {
       const q3 = voting.question[6];
       res.push(q3);
     }
     voting.question = res;
-    
+
     return res;
   };
 
@@ -317,16 +317,14 @@ const Voting = ({ utils }) => {
   useEffect(() => {
     firstRender = false;
     $(document).ready(function () {
-      // $(".App").addClass("container-fluid");
-    
+
       $("div.question:first-of-type").addClass("active-question")
-  
+
       $("button#prev-question").css({
         display: "none",
       });
-      // $("#next-question").click(function () {
-  
-      var colors = new Array( 
+
+      var colors = new Array(
         "#233C66",
         "#4E2366",
         "#701C30",
@@ -336,9 +334,9 @@ const Voting = ({ utils }) => {
         "#08806D"
       );
       // new colors = ["#EF476F","#FFD166","#06D6A0","#118AB2","#073B4C"];
-  
+
       $(".question").each(function (index) {
-       
+
         $(this).css({
           "background-color": colors[index],
           filter: "brightness(90%)",
@@ -347,49 +345,49 @@ const Voting = ({ utils }) => {
           "background-color": colors[index],
         });
       });
-  
+
       $("button#next-question").click(function () {
         var active_question = $("div.active-question");
         updateButtons(active_question.next());
-  
+
         if (active_question.next().hasClass("question")) {
           active_question.removeClass("active-question");
           active_question.next().addClass("active-question");
-          
+
         }
       });
       $("button#prev-question").click(function () {
-      
+
         var active_question = $("div.active-question");
         updateButtons(active_question.prev());
-  
+
         if (active_question.prev().hasClass("question")) {
           active_question.removeClass("active-question");
           active_question.prev().addClass("active-question");
-          
+
         }
       });
-  
+
       $("input").on("click", function () {
-       
+
         var this_card = $(this).parent().parent().parent();
-        
+
         var this_question = this_card.parent().parent().parent().parent().parent();
-     
+
         if (this_card.hasClass("flipped")) {
           this_card.removeClass("flipped");
           $(this).prop('checked', false);
-         
+
         } else {
-          var flipped_card = $( this_question ).find( "div.flip-card.flipped" )
+          var flipped_card = $(this_question).find("div.flip-card.flipped")
           flipped_card.removeClass("flipped");
           flipped_card.prop('checked', false);
 
           this_card.addClass("flipped");
         }
-        
+
       });
-  
+
     });
   }, []);
 
@@ -417,20 +415,22 @@ const Voting = ({ utils }) => {
   }
 
   //   show the first element, the others are hide by default
-  
+
   /*############### RETURN ###############*/
   return (
     <div id="voting-body" className="voting container-fluid">
-      
+
       <div className="row justify-content-between align-items-center">
         <div className="col-3">
           <button id="prev-question" type="button" className="btn btn-outline-dark">
             {utils.lang["prev"]}
           </button>{" "}
         </div>
-        {<div className="col-3">{<Modals />}</div>}
-        <div>
-        <button className="languageButton" onClick={utils.changeLanguage}><img className="languageImg" src={utils.lang["language_button"]}/></button>
+        <div >
+          <div className="moda">{<Modals />}</div>
+        <div className="but">
+          <button className="languageButton" onClick={utils.changeLanguage}><img className="languageImg" src={utils.lang["language_button"]} /></button>
+          </div>
         </div>
         <div className="col-3">
           {" "}
@@ -447,7 +447,7 @@ const Voting = ({ utils }) => {
       <div className="row">
         <div className="col">
           <form onSubmit={sendVoting}>
-         
+
             {voting.question.slice(0, 2).map((o) => (
               <div className="question" key={o.desc}>
                 <div align="center">
@@ -456,13 +456,13 @@ const Voting = ({ utils }) => {
                 </div>
                 <div className="container-fluid ">
                   <div className="boxesDiv">
-                  { sendVotingAnimation && (
-              <div className="votingAnimation">
-                <a id="rotator">
-                  <img src="https://image.flaticon.com/icons/png/512/91/91848.png"/>
-                </a>
-                </div>
-                )}
+                    {sendVotingAnimation && (
+                      <div className="votingAnimation">
+                        <a id="rotator">
+                          <img src="https://image.flaticon.com/icons/png/512/91/91848.png" />
+                        </a>
+                      </div>
+                    )}
                     {o.options.map((p) => (
                       <div key={p.number}>
                         <div className="option p-3">
@@ -478,7 +478,7 @@ const Voting = ({ utils }) => {
                                       value={p.number}
                                     />
                                     <h4>{utils.lang["cand"]}</h4>
-                                    <br/>
+                                    <br />
                                     <h3>{p.option}</h3>
                                   </div>
 
@@ -507,13 +507,13 @@ const Voting = ({ utils }) => {
                   <h2>{alumList.desc}</h2>
                 </div>
                 <div className="container-fluid">
-                { sendVotingAnimation && (
-              <div className="votingAnimation">
-                <a id="rotator">
-                  <img src="https://image.flaticon.com/icons/png/512/91/91848.png"/>
-                </a>
-                </div>
-                )}
+                  {sendVotingAnimation && (
+                    <div className="votingAnimation">
+                      <a id="rotator">
+                        <img src="https://image.flaticon.com/icons/png/512/91/91848.png" />
+                      </a>
+                    </div>
+                  )}
                   <div className="d-flex align-content-center flex-wrap ">
                     {alumList.options.map((p) => (
                       <div key={p.number} className="p-3">
@@ -525,7 +525,6 @@ const Voting = ({ utils }) => {
                             value={parseInt(
                               p.option.split("/")[1].replace(" ", "")
                             )}
-
                           />
                           <span className="default"></span>
                         </label>
@@ -535,35 +534,30 @@ const Voting = ({ utils }) => {
                 </div>
               </div>
             )}
-            {/* <div className="row">
-              <div className="col"> */}
-        
-                <div>
-                <button id="voteButton" className="btn btn-outline-dark">
-                
-                  {utils.lang["vote"]}
-                </button>
-              </div>
-            
-            {/* </div> */}
-            {/* </div> */}
-          </form>
-          </div>
-          {utils.alert.lvl ? (
-            <div className={"alert " + utils.alert.lvl}>
-              <p>{utils.alert.msg}</p>
-              <button className=" btn btn-outline-dark " onClick={closeAlert}>
-                {
-                  utils.alert.lvl === "error"
-                    ? 'Empezar de nuevo'
-                    : 'Volver a inicio'
-                }
+            <div>
+              <button id="voteButton" className="btn btn-outline-dark">
+
+                {utils.lang["vote"]}
               </button>
             </div>
-          ) : null}
+
+          </form>
         </div>
+        {utils.alert.lvl ? (
+          <div className={"alert " + utils.alert.lvl}>
+            <p>{utils.alert.msg}</p>
+            <button className=" btn btn-outline-dark " onClick={closeAlert}>
+              {
+                utils.alert.lvl === "error" || utils.alert.lvl === "errorGeneral" || utils.alert.lvl === "errorPrimary"
+                  ? utils.lang["empezar"]
+                  : utils.lang["volver"]
+              }
+            </button>
+          </div>
+        ) : null}
       </div>
-    
+    </div>
+
   );
 };
 export default Voting;

@@ -1,6 +1,4 @@
 import Voting from "./Voting/Voting";
-import Navbar from "./Navbar/Navbar";
-
 const { useState, useEffect } = React;
 
 const App = () => {
@@ -28,6 +26,8 @@ const App = () => {
     congratulations: "Congratulations! Your vote has been sent.",
     blankError: "Please, do not leave empty questions",
     bigError:"Please, do not leave empty questions.\nIf this is a general voting in the final question, you can choose more than one, but a maximum of ten and five men and five women",
+    volver: "Return to index",
+    empezar: "Start again"
   };
   const es = {
     current: "es",
@@ -49,6 +49,8 @@ const App = () => {
     congratulations: "¡Enhorabuena! Tu voto ha sido enviado.",
     blankError: "Por favor, no deje preguntas vacías",
     bigError:"Por favor, no deje preguntas vacías.\nSólo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente.",
+    volver: "Volver al inicio",
+    empezar: "Empezar de nuevo"
 
   };
 
@@ -139,10 +141,8 @@ const App = () => {
 
   return (
     <div className="App">
-      <Navbar utils={utils} />
-      
+      <div></div>
       {votingUserData && <Voting utils={utils} />}
-
     </div>
   );
 };
