@@ -59,8 +59,8 @@ div.active-question {
   overflow: hidden;
 
   background-color: transparent;
-  width: 12vw;
-  height: 32vh;
+  width: 20vw;
+  height: 20vh;
   border-radius: 5px;
   perspective: 1000px;
 }
@@ -98,7 +98,7 @@ div.active-question {
 .flip-card-front {
   margin: 0 auto;
   float: none;
-  background-color: white;
+  background-color: rgba(85, 85, 85, 0.418);
   color: black;
 }
 
@@ -267,8 +267,5 @@ a#rotator img {
 
   z-index: 4000;
 
-}
-hr.linea {
-  border-top: 1px solid white;
 }
 
