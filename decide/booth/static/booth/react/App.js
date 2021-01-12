@@ -1,8 +1,4 @@
 import Voting from "./Voting/Voting";
-import Navbar from "./Navbar/Navbar";
-import i18n from "i18next";
-
-
 const { useState, useEffect } = React;
 
 const App = () => {
@@ -22,9 +18,16 @@ const App = () => {
     "your vote, click on the cards, and they will flip. You can only "+
     "choose one per question. If this is a general voting in the final "+
     "question, you can choose more than one, but a maximum of ten, and five men and five women.",
-    language_button: "Switch to spanish",
-    modal_close_button: "Ok, let's go!"
-
+    language_button: "https://images.vexels.com/media/users/3/164598/isolated/preview/ae39cafd26e1b3739a0265ad7e65ebdc-icono-de-idioma-de-la-bandera-de-espa-ntilde-a-by-vexels.png",
+    modal_close_button: "Ok, let's go!",
+    cand: "Candidate",
+    select: "You selected:",
+    internalError: "Internal error",
+    congratulations: "Congratulations! Your vote has been sent.",
+    blankError: "Please, do not leave empty questions",
+    bigError:"Please, do not leave empty questions.\nIf this is a general voting in the final question, you can choose more than one, but a maximum of ten and five men and five women",
+    volver: "Return to index",
+    empezar: "Start again"
   };
   const es = {
     current: "es",
@@ -38,8 +41,17 @@ const App = () => {
       "girará. Solo puedes elegir uno por " +
       "pregunta. Si es una votación general, en la pregunta final puedes elegir más de uno,"+
       " pero un máximo de 10 candidatos, 5 hombres y 5 mujeres.",
-    language_button: "Cambiar a inglés",
-    modal_close_button: "Entendido, ¡vamos allá!"
+    language_button: "https://images.vexels.com/media/users/3/163965/isolated/lists/5bb2c926d53cc59030477ec3ecb6d26a-england-flag-language-icon.png",
+    modal_close_button: "Entendido, ¡vamos allá!",
+    cand: "Candidato",
+    select: "Seleccionaste:",
+    internalError: "Error interno",
+    congratulations: "¡Enhorabuena! Tu voto ha sido enviado.",
+    blankError: "Por favor, no deje preguntas vacías",
+    bigError:"Por favor, no deje preguntas vacías.\nSólo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente.",
+    volver: "Volver al inicio",
+    empezar: "Empezar de nuevo"
+
   };
 
   /*#################################################################*/
@@ -101,6 +113,7 @@ const App = () => {
     } else {
       setLang(es)
     }
+    
   }
 
   /*#####################################################*/
@@ -120,7 +133,7 @@ const App = () => {
     getVotingUserData();
   }, []);
 
-  const utils = { alert, setAlert, post, votingUserData, lang };
+  const utils = { alert, setAlert, post, votingUserData, lang, changeLanguage };
 
   /*####################################################*/
   /*####################### VIEW #######################*/
@@ -128,11 +141,8 @@ const App = () => {
 
   return (
     <div className="App">
-      <Navbar utils={utils} />
-
+      <div></div>
       {votingUserData && <Voting utils={utils} />}
-
-      <button onClick={changeLanguage}>{lang.language_button}</button>
     </div>
   );
 };

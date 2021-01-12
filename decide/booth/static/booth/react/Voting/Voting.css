@@ -1,34 +1,17 @@
-/* #####################################################ADJUSTING TO SCREEN SIZE #################################*/
-
-/* @media (min-width: 576px) {  }
-@media (min-width: 768px) {  }
-@media (min-width: 992px) { }
-@media (min-width: 1200px) {  } */
-
-
-
 .option {
-  /* width: 70%; */
-  /* background: #EEE;
-    margin: 10px auto; */
-    text-align: center;
-    transition: all 0.5s ease;
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  text-align: center;
+  transition: all 0.5s ease;
+  position: relative;
+  display: block;
+  margin: auto;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .container{
 margin:auto;
 float: none;
-margin-top: 70px;
-}
-
-.card-input>h1{
-  text-align: center;
-  margin: 0 auto;
-  float: none;
+margin-top: 40px;
 }
 
 /* ############################################## QUESTIONS DISPLAY ANIMATION #################################*/
@@ -41,7 +24,6 @@ margin-top: 70px;
 .question>h2{
   color: black;
   font-weight: bold;
-  margin-top: 20px;
   text-align: center;
 }
 div.active-question {
@@ -58,8 +40,8 @@ div.active-question {
 .flip-card {
   
   background-color: transparent;
-  width: 20vw;
-  height: 20vh;
+  width: 16vw;
+  height: 25vh;
   border-radius: 30px;
   perspective: 1000px;
 }
@@ -84,7 +66,6 @@ div.active-question {
 .flip-card-front,
 .flip-card-back {
   position: absolute;
-  padding:2%;
   width: 100%;
   height: 100%;
   -webkit-backface-visibility: hidden;
@@ -96,39 +77,31 @@ div.active-question {
 .flip-card-front {
   margin: 0 auto;
   float: none;
-  background-color: rgba(85, 85, 85, 0.9);
-  color: black;
+  background-color: rgb(58, 58, 58);
+  color: white;
 }
-
+.flip-card-front>h4,
+.flip-card-back>h4 {
+  margin-top: 20px;
+}
 .flip-card-front:hover {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
 }
 
-.flip-card-front>h1{
-  font-size: 30px ;
-  text-align: center;
-  margin: 0 auto;
-  float: none;
-}
-
-/* .question .flip-card-back{
-  background-color: red;
-} */
 /* Style the back side */
 .flip-card-back {
   color: white;
   transform: rotateY(180deg);
-  
 }
 
 /* Style for the cards grid */
 
 .alert {
-
+  text-align: center;
   border: solid black 3px;
-  opacity: 0.95;
+  opacity: 0.88;
   width: 25%;
-  height: 20%;
+  height: 22%;
   position: absolute;
   top: 0;
   left: 0;
@@ -136,50 +109,69 @@ div.active-question {
   bottom: 0;
   margin: auto;
   
-    }
-    .alert.success {
-      background-color: #46D014;
-      color: black;
-    }
+}
+.alert.success {
+  background-color: #419523;
+  width: 25%;
+  height: 15%;
+  color: black;
+}
+.alert.success button{
+  margin-top: 20px;
+}
+
+.alert.error {
+  background-color: #7e241a;
+  color: whitesmoke;
+}
+
+.alert.errorGeneral {
+  background-color: #7e241a;
+  color: whitesmoke;
+}
+.alert.errorPrimary {
+  background-color: #7e241a;
+  width: 25%;
+  height: 15%;
+  color: whitesmoke;
+}
+.alert.errorPrimary button{
+  margin-top: 20px;
+}
+.alert button{
+  color: black;
+  background-color: whitesmoke;
+}
+.closeAlert {
+    width: 15%;
+    background-color: white;
+    color: black;
+    border: 3px solid #555555;
+    border-radius: 10%;
+    text-align: center;
+}
     
-    .alert.danger {
-      background-color: #DA2E1A;
-      color: black;
-    } 
-    .alert.error {
-      background-color: #DA2E1A;
-      color: black;
-    } 
-    .closeAlert {
-      width: 15%;
-      background-color: white;
-      color: black;
-      border: 3px solid #555555;
-      border-radius: 10%;
-      text-align: center;
-    }
-    
-    .closeAlert:hover {
-      background-color: #555555;
-      color: white;
-    }
-  
-    .alert>p{
-      margin-top: 5px;
-      font-weight: bold;
-    }
+.closeAlert:hover {
+  background-color: #555555;
+  color: white;
+}
+
+.alert>p{
+
+    text-align: justify;
+    margin-top: 5px;
+    font-weight: bold;
+}
 
 #next-question{
   float: right;
   margin :auto;
   right: 0 !important;
-  
 }
 
 #voteButton{
   margin: 0 auto;
   float: none;
-  
 }
 
 .active { 
@@ -188,9 +180,11 @@ div.active-question {
 
 .card-input-element{
   margin-top: 5px;
-  margin-left: 5px;
+  margin-left: 15px;
 }
-
+.modal-body{
+  text-align: justify;
+}
 
 #exampleModal{
   color: black;
@@ -200,7 +194,8 @@ div.active-question {
 
 div.question{
   background-image: url("https://www.newmexicopbs.org/productions/newmexicoinfocus/wp-content/uploads/2020/11/element5-digital-T9CXBZLUvic-unsplash.jpg");
-  background-color: #cccccc;
+
+  background-color: #3E3D3C;
   /* height: 500px; */
   background-position: center;
   background-repeat: no-repeat;
@@ -208,20 +203,34 @@ div.question{
   background-blend-mode: screen;
   box-shadow: 0 0 8px 1px #cccccc inset;
 }
-
+div.question>div>h2{
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
 
 div.alum-list.question > div.container-fluid > div > div{
   margin:1%;
   border: 2px solid #555;
   border-radius:4px;
-  background-color: rgba(85, 85, 85, 0.418);
+  background-color: rgb(58, 58, 58);
+  align-items: center;
+  color: whitesmoke;
+
+}
+
+.boxesDiv{
+  align-content: center;
+  flex-wrap: wrap;
+  display: flex;
+  padding-top: 20px;
+  
 }
 
 @keyframes check {0% {height: 0;width: 0;}
 25% {height: 0;width: 10px;}
 50% {height: 20px;width: 10px;}
 }
-.checkbox{background-color:#fff;display:inline-block;height:28px;margin:0 .25em;width:28px;border-radius:4px;border:1px solid #ccc;float:right}
+.checkbox{background-color:#fff;display:inline-block;height:28px;margin:0 .25em;width:28px;border-radius:4px;border:1px solid #ccc;float:right;margin-left: 10px;}
 .checkbox span{display:block;height:28px;position:relative;width:28px;padding:0}
 .checkbox span:after{-moz-transform:scaleX(-1) rotate(135deg);-ms-transform:scaleX(-1) rotate(135deg);-webkit-transform:scaleX(-1) rotate(135deg);transform:scaleX(-1) rotate(135deg);-moz-transform-origin:left top;-ms-transform-origin:left top;-webkit-transform-origin:left top;transform-origin:left top;border-right:4px solid #fff;border-top:4px solid #fff;content:'';display:block;height:20px;left:3px;position:absolute;top:15px;width:10px}
 .checkbox span:hover:after{border-color:#999}
@@ -252,19 +261,39 @@ a#rotator {
     text-decoration: none;
     left: 3000px;
     position: absolute;
-   
     -webkit-animation: move 4s;
     animation: move 4s;
 }
 
 a#rotator img {
-    width: 70%; 
-    
+    width: 100%; 
 }
 
 .votingAnimation{
-
   z-index: 4000;
-
 }
 
+.languageImg{
+  width: 50px;
+  height: 40px;
+  margin-bottom: 1  5px;
+ 
+}
+.languageButton{
+  float: right;
+  border: none;
+  background-color: whitesmoke;
+}
+.languageButton:focus{
+  border: none;
+  background-color: whitesmoke;
+  outline: 0;
+}
+.moda{
+
+float: left;
+}
+.but{
+  margin-left: 20px;
+  float: right;
+}

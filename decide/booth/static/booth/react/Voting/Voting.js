@@ -6,7 +6,7 @@ let firstRender = true;
 let votingType = null;
 let alumList = null;
 
-let voted = null
+
 
 const Voting = ({ utils }) => {
   /*#################################################################*/
@@ -34,7 +34,10 @@ const Voting = ({ utils }) => {
     else if (voting.tipo === "GV") res = "general";
     else {
       res = "error";
-      console.log("error"); //setAlert()
+      utils.setAlert({
+        lvl: "error",
+        msg: utils.lang["internalError"],
+      });
     }
 
     return res;
@@ -54,7 +57,7 @@ const Voting = ({ utils }) => {
 
   const encryptAll = (options) => {
     for (let o in options) {
-      console.log(options[o]);
+
       if (Array.isArray(options[o])) {
         for (let p in options[o]) {
           options[o][p] = encrypt(options[o][p].toString());
@@ -78,7 +81,10 @@ const Voting = ({ utils }) => {
         res = result;
       })
       .catch((error) => {
-        console.log(error); //this.showAlert("danger", '{% trans "Error: " %}' + error);
+        utils.setAlert({
+          lvl: "error",
+          msg: utils.lang["internalError"],
+        });
       });
 
     return res.genres;
@@ -110,11 +116,12 @@ const Voting = ({ utils }) => {
 
     let cont1 = 0
     for (let i = 0; i < questions.length; i++) {
-      const titulo = questions[i].children[0].innerHTML;
+      const titulo = questions[i].children[0].innerHTML.replace(" <h2>", "").replace("</h2>", "");
       let inputs = questions[i].getElementsByTagName("input");
       for (let j = 0; j < inputs.length; j++) {
         if (inputs[j].checked) {
           res[titulo] = inputs[j].value;
+
           cont1 = cont1 + 1
         }
       }
@@ -139,9 +146,6 @@ const Voting = ({ utils }) => {
       res[la[0].children[0].innerHTML] = alumns;
 
       const valid = await checkRestrictions(alumns);
-      console.log(cont1)
-      console.log("====")
-      console.log(cont2)
       cont1 = cont1 - cont2;
       if (!valid || cont1 < 2 || cont2 === 0) res = false;
 
@@ -152,7 +156,7 @@ const Voting = ({ utils }) => {
   };
 
   const closeAlert = () => {
-    if (utils.alert.lvl === "error") {
+    if (utils.alert.lvl === "errorGeneral" || utils.alert.lvl === "errorPrimary" || utils.alert.lvl === "error" ) {
       utils.setAlert({ lvl: null, msg: null });
       location.reload()
     } else {
@@ -214,11 +218,7 @@ const Voting = ({ utils }) => {
 
               </div>
               <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-dismiss="modal"
-                >
+                <button type="button" className="btn btn-secondary" data-dismiss="modal">
                   {utils.lang["modal_close_button"]}
                 </button>
               </div>
@@ -256,7 +256,7 @@ const Voting = ({ utils }) => {
           setTimeout(() => {
             utils.setAlert({
               lvl: "success",
-              msg: "Conglatulations! Your vote has been sent",
+              msg: utils.lang["congratulations"],
             });
           }, 1700);
         })
@@ -264,25 +264,18 @@ const Voting = ({ utils }) => {
           utils.setAlert({ lvl: "error", msg: "Error: " + error });
         });
 
-      $("div.active-question").removeClass("active-question");
-      voted = true;
-      console.log("voted on send vote: " + voted);
-
     } else {
       if (votingType === "general") {
         utils.setAlert({
-          lvl: "error",
-          msg:
-            "No se puede votar en blanco.\nSólo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente.",
+          lvl: "errorGeneral",
+          msg: utils.lang["bigError"],
         });
       } else {
         utils.setAlert({
-          lvl: "error",
-          msg:
-            "No se pueden dejar respuestas en blanco.",
+          lvl: "errorPrimary",
+          msg: utils.lang["blankError"],
         });
       }
-      $("div.active-question").removeClass("active-question");
     }
   };
 
@@ -294,13 +287,13 @@ const Voting = ({ utils }) => {
     const q2 = voting.question[5];
     res.push(q1);
     res.push(q2);
-    console.log(votingType);
+
     if (votingType === "general") {
       const q3 = voting.question[6];
       res.push(q3);
     }
     voting.question = res;
-    console.log(voting.question);
+
     return res;
   };
 
@@ -323,6 +316,79 @@ const Voting = ({ utils }) => {
 
   useEffect(() => {
     firstRender = false;
+    $(document).ready(function () {
+
+      $("div.question:first-of-type").addClass("active-question")
+
+      $("button#prev-question").css({
+        display: "none",
+      });
+
+      var colors = new Array(
+        "#233C66",
+        "#4E2366",
+        "#701C30",
+        "#A62D05",
+        "#7D610E",
+        "#42690D",
+        "#08806D"
+      );
+      // new colors = ["#EF476F","#FFD166","#06D6A0","#118AB2","#073B4C"];
+
+      $(".question").each(function (index) {
+
+        $(this).css({
+          "background-color": colors[index],
+          filter: "brightness(90%)",
+        });
+        $(this).find(".flip-card-back").css({
+          "background-color": colors[index],
+        });
+      });
+
+      $("button#next-question").click(function () {
+        var active_question = $("div.active-question");
+        updateButtons(active_question.next());
+
+        if (active_question.next().hasClass("question")) {
+          active_question.removeClass("active-question");
+          active_question.next().addClass("active-question");
+
+        }
+      });
+      $("button#prev-question").click(function () {
+
+        var active_question = $("div.active-question");
+        updateButtons(active_question.prev());
+
+        if (active_question.prev().hasClass("question")) {
+          active_question.removeClass("active-question");
+          active_question.prev().addClass("active-question");
+
+        }
+      });
+
+      $("input").on("click", function () {
+
+        var this_card = $(this).parent().parent().parent();
+
+        var this_question = this_card.parent().parent().parent().parent().parent();
+
+        if (this_card.hasClass("flipped")) {
+          this_card.removeClass("flipped");
+          $(this).prop('checked', false);
+
+        } else {
+          var flipped_card = $(this_question).find("div.flip-card.flipped")
+          flipped_card.removeClass("flipped");
+          flipped_card.prop('checked', false);
+
+          this_card.addClass("flipped");
+        }
+
+      });
+
+    });
   }, []);
 
   // COSAS DEL ESTILO
@@ -349,166 +415,23 @@ const Voting = ({ utils }) => {
   }
 
   //   show the first element, the others are hide by default
-  $(document).ready(function () {
-    // $(".App").addClass("container-fluid");
-    if (voted = "false") {
-      console.log("voted false: " + voted);
-
-      $("div.question:first-of-type").addClass("active-question");
-    } else {
-      console.log("voted : " + voted);
-
-
-      $("div.question:first-of-type").addClass("active-question");
-
-    }
-
-    $("button#prev-question").css({
-      display: "none",
-    });
-    // $("#next-question").click(function () {
-
-    var colors = new Array(
-      "#EF476F",
-      "#F78C6B",
-      "#FFD166",
-      "#83D483",
-      "#06D6A0",
-      "#118AB2",
-      "#073B4C"
-    );
-    // new colors = ["#EF476F","#FFD166","#06D6A0","#118AB2","#073B4C"];
-
-    $(".question").each(function (index) {
-      // console.log(index + ": " + $(this).text());
-      // console.log(index + ": " + colors[index]);
-      $(this).css({
-        "background-color": colors[index],
-        filter: "brightness(95%)",
-      });
-      $(this).find(".flip-card-back").css({
-        "background-color": colors[index],
-      });
-      // console.log(index + ": " + $(this).text());
-    });
-
-    $("button#next-question").click(function () {
-      console.log("next");
-
-      var active_question = $("div.active-question");
-      updateButtons(active_question.next());
-
-      if (active_question.next().hasClass("question")) {
-        active_question.next().addClass("active-question");
-        active_question.removeClass("active-question");
-      }
-    });
-    $("button#prev-question").click(function () {
-      console.log("prev");
-
-      var active_question = $("div.active-question");
-      updateButtons(active_question.prev());
-
-      if (active_question.prev().hasClass("question")) {
-        active_question.prev().addClass("active-question");
-        active_question.removeClass("active-question");
-      }
-    });
-
-    // $( "option" ).each( function(option) {
-    //   console.log('do something with this list item', option);
-    // })
-    $("input").on("click", function () {
-      //flip-card, flip-card-inner, flip-card-front, input
-      if ($(this).parent().parent().parent().hasClass("flipped")) {
-        console.log($("input:checked").val() + " is checked!");
-
-        $(".flip-card.flipped").removeClass("flipped");
-      } else {
-        console.log($("input:checked").val() + " is checked!");
-
-        $(".flip-card.flipped").removeClass("flipped");
-        $("input:checked").parent().parent().parent().addClass("flipped");
-      }
-      // console.log($("input:checked").val() + " is checked!");
-      // $("#log").html;
-    });
-  });
-  // BUTTONS NOT WORKING
-
-  // For the flip effect, not working
-  // $(".flip-card").click(function () {
-  //   console.log("clicked");
-  //   $(".flip-card.flipped").removeClass("flipped");
-  //   $(this).addClass("flipped");
-  // });
-
-  // $(".flip-card.flipped").click(function () {
-  //   $(this).removeClass("flipped");
-  // });
-
-  // $(function () {
-  //   $(window).on("wheel", function (e) {
-  //     var delta = e.originalEvent.deltaY;
-
-  //     if (delta > 0) {
-  //       var active_question = $("div.active-question");
-
-  //       if (active_question.next().hasClass("question")) {
-  //         active_question.next().addClass("active-question");
-  //         active_question.removeClass("active-question");
-  //       }
-  //       console.log("scrolled downs");
-  //       // $("html, body").animate(
-  //       //   {
-  //       //     // scrollTop: $("#candidatura2").offset().top,
-  //       //     scrollTop: $(window).scrollTop() + window.innerHeight,
-  //       //   },
-  //       //   1000
-  //       // );
-  //     } else {
-  //       // $("div.active-question").prev().addClass("active-question");
-  //       // $("div.active-question").removeClass("active-question");
-  //       var active_question = $("div.active-question");
-  //       if (active_question.prev().hasClass("question")) {
-  //         active_question.prev().addClass("active-question");
-  //         active_question.removeClass("active-question");
-  //       }
-  //       console.log("scrolled up");
-
-  //       // upscroll code
-  //       // $("html, body").animate(
-  //       //   {
-  //       //     // scrollTop: $("#candidatura1").offset().top,
-  //       //     scrollTop: $(window).scrollTop() - window.innerHeight,
-  //       //   },
-  //       //   1000
-  //       // );
-  //     }
-  //     return false; // this line is only added so the whole page won't scroll in the demo
-  //   });
-  // });
 
   /*############### RETURN ###############*/
   return (
     <div id="voting-body" className="voting container-fluid">
-      {/* <div>
-        <button id="prev-question">Prev Question </button>
-        <button id="next-question">Next Question </button>
-      </div> */}
+
       <div className="row justify-content-between align-items-center">
         <div className="col-3">
-          <button
-            id="prev-question"
-            type="button"
-            className="btn btn-outline-dark"
-          >
+          <button id="prev-question" type="button" className="btn btn-outline-dark">
             {utils.lang["prev"]}
           </button>{" "}
         </div>
-        {<div className="col-3">{<Modals />}</div>}
-
-
+        <div >
+          <div className="moda">{<Modals />}</div>
+        <div className="but">
+          <button className="languageButton" onClick={utils.changeLanguage}><img className="languageImg" src={utils.lang["language_button"]} /></button>
+          </div>
+        </div>
         <div className="col-3">
           {" "}
           <button
@@ -524,23 +447,22 @@ const Voting = ({ utils }) => {
       <div className="row">
         <div className="col">
           <form onSubmit={sendVoting}>
-            {/* The 6 questions all votings have */}
+
             {voting.question.slice(0, 2).map((o) => (
               <div className="question" key={o.desc}>
                 <div align="center">
                   {" "}
                   <h2>{o.desc}</h2>
                 </div>
-                <div className="container-fluid">
-                  <div className="d-flex align-content-center flex-wrap ">
-                  { sendVotingAnimation && (
-              <div className="votingAnimation">
-                <a id="rotator">
-                  <img src="https://image.flaticon.com/icons/png/512/91/91848.png"/>
-                  
-                </a>
-                </div>
-                )}
+                <div className="container-fluid ">
+                  <div className="boxesDiv">
+                    {sendVotingAnimation && (
+                      <div className="votingAnimation">
+                        <a id="rotator">
+                          <img src="https://image.flaticon.com/icons/png/512/91/91848.png" />
+                        </a>
+                      </div>
+                    )}
                     {o.options.map((p) => (
                       <div key={p.number}>
                         <div className="option p-3">
@@ -555,12 +477,13 @@ const Voting = ({ utils }) => {
                                       className="card-input-element"
                                       value={p.number}
                                     />
-                                    <h1>Candidato:</h1>
-                                    <h1>{p.option}</h1>
+                                    <h4>{utils.lang["cand"]}</h4>
+                                    <br />
+                                    <h3>{p.option}</h3>
                                   </div>
 
                                   <div className="flip-card-back">
-                                    <h4>Seleccionaste:</h4>
+                                    <h4>{utils.lang["select"]}</h4>
                                     <br></br>
                                     <h3><strong>{p.option}</strong></h3>
                                   </div>
@@ -584,6 +507,13 @@ const Voting = ({ utils }) => {
                   <h2>{alumList.desc}</h2>
                 </div>
                 <div className="container-fluid">
+                  {sendVotingAnimation && (
+                    <div className="votingAnimation">
+                      <a id="rotator">
+                        <img src="https://image.flaticon.com/icons/png/512/91/91848.png" />
+                      </a>
+                    </div>
+                  )}
                   <div className="d-flex align-content-center flex-wrap ">
                     {alumList.options.map((p) => (
                       <div key={p.number} className="p-3">
@@ -595,7 +525,6 @@ const Voting = ({ utils }) => {
                             value={parseInt(
                               p.option.split("/")[1].replace(" ", "")
                             )}
-
                           />
                           <span className="default"></span>
                         </label>
@@ -605,35 +534,30 @@ const Voting = ({ utils }) => {
                 </div>
               </div>
             )}
-            {/* <div className="row">
-              <div className="col"> */}
-        
-                <div>
-                <button id="voteButton" className="btn btn-outline-dark">
-                
-                  {utils.lang["vote"]}
-                </button>
-              </div>
-            
-            {/* </div> */}
-            {/* </div> */}
-          </form>
-          </div>
-          {utils.alert.lvl ? (
-            <div className={"alert " + utils.alert.lvl}>
-              <p>{utils.alert.msg}</p>
-              <button className=" btn btn-outline-dark " onClick={closeAlert}>
-                {
-                  utils.alert.lvl === "error"
-                    ? 'Empezar de nuevo'
-                    : 'Volver a inicio'
-                }
+            <div>
+              <button id="voteButton" className="btn btn-outline-dark">
+
+                {utils.lang["vote"]}
               </button>
             </div>
-          ) : null}
+
+          </form>
         </div>
+        {utils.alert.lvl ? (
+          <div className={"alert " + utils.alert.lvl}>
+            <p>{utils.alert.msg}</p>
+            <button className=" btn btn-outline-dark " onClick={closeAlert}>
+              {
+                utils.alert.lvl === "error" || utils.alert.lvl === "errorGeneral" || utils.alert.lvl === "errorPrimary"
+                  ? utils.lang["empezar"]
+                  : utils.lang["volver"]
+              }
+            </button>
+          </div>
+        ) : null}
       </div>
-    
+    </div>
+
   );
 };
 export default Voting;
