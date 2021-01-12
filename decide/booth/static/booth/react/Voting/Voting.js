@@ -327,13 +327,13 @@ const Voting = ({ utils }) => {
       // $("#next-question").click(function () {
   
       var colors = new Array( 
-        "#EF476F",
-        "#F78C6B",
-        "#FFD166",
-        "#83D483",
-        "#06D6A0",
-        "#118AB2",
-        "#073B4C"
+        "#233C66",
+        "#4E2366",
+        "#701C30",
+        "#A62D05",
+        "#7D610E",
+        "#42690D",
+        "#08806D"
       );
       // new colors = ["#EF476F","#FFD166","#06D6A0","#118AB2","#073B4C"];
   
@@ -418,14 +418,10 @@ const Voting = ({ utils }) => {
 
   //   show the first element, the others are hide by default
   
-  
   /*############### RETURN ###############*/
   return (
     <div id="voting-body" className="voting container-fluid">
-      {/* <div>
-        <button id="prev-question">Prev Question </button>
-        <button id="next-question">Next Question </button>
-      </div> */}
+      
       <div className="row justify-content-between align-items-center">
         <div className="col-3">
           <button id="prev-question" type="button" className="btn btn-outline-dark">
@@ -451,7 +447,7 @@ const Voting = ({ utils }) => {
       <div className="row">
         <div className="col">
           <form onSubmit={sendVoting}>
-            {/* The 6 questions all votings have */}
+         
             {voting.question.slice(0, 2).map((o) => (
               <div className="question" key={o.desc}>
                 <div align="center">

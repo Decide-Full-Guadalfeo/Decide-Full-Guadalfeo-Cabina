@@ -1,7 +1,5 @@
 import Voting from "./Voting/Voting";
 import Navbar from "./Navbar/Navbar";
-import i18n from "i18next";
-
 
 const { useState, useEffect } = React;
 
