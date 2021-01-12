@@ -103,6 +103,26 @@ const Voting = ({ utils }) => {
     return res;
   };
 
+ /* let questionss = document.getElementsByClassName("question");
+  console.log(questionss)
+  console.log("here bobo o que")
+  console.log(questionss.length)
+  for (let i = 0; i < questionss.length; i++) {
+    console.log("que nooo")
+    const titulos = questionss[i].children[0].innerHTML;
+    let inputss = questionss[i].getElementsByTagName("input");
+    console.log(inputss)
+    for (let j = 0; j < inputs.length; j++) {
+      /*if (inputs[j].checked) {
+        res[titulo] = inputs[j].value;
+        cont1 = cont1 + 1
+      }
+      console.log(j)
+      console.log(input[j])
+      console.log(inputs[j].value)
+    }
+  }*/
+
   const getInput = async () => {
     let res = {};
 
@@ -139,9 +159,6 @@ const Voting = ({ utils }) => {
       res[la[0].children[0].innerHTML] = alumns;
 
       const valid = await checkRestrictions(alumns);
-      console.log(cont1)
-      console.log("====")
-      console.log(cont2)
       cont1 = cont1 - cont2;
       if (!valid || cont1 < 2 || cont2 === 0) res = false;
 
@@ -366,7 +383,7 @@ const Voting = ({ utils }) => {
     });
     // $("#next-question").click(function () {
 
-    var colors = new Array(
+    var colors = new Array( 
       "#EF476F",
       "#F78C6B",
       "#FFD166",
@@ -497,17 +514,13 @@ const Voting = ({ utils }) => {
       </div> */}
       <div className="row justify-content-between align-items-center">
         <div className="col-3">
-          <button
-            id="prev-question"
-            type="button"
-            className="btn btn-outline-dark"
-          >
+          <button id="prev-question" type="button" className="btn btn-outline-dark">
             {utils.lang["prev"]}
           </button>{" "}
         </div>
         {<div className="col-3">{<Modals />}</div>}
         <div>
-        <button onClick={utils.changeLanguage}><img className="languageImg" src={utils.lang["language_button"]}/></button>
+        <button className="languageButton" onClick={utils.changeLanguage}><img className="languageImg" src={utils.lang["language_button"]}/></button>
         </div>
         <div className="col-3">
           {" "}

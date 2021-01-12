@@ -278,4 +278,13 @@ a#rotator img {
 .languageImg{
   width: 50px;
   height: 40px;
+ 
+}
+.languageButton{
+  border: none;
+  background-color: whitesmoke;
+}
+.languageButton::selection{
+  border: none;
+  background-color: whitesmoke;
 }
