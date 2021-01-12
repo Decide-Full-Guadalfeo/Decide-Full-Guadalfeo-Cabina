@@ -23,7 +23,6 @@ class VotingView(generics.ListCreateAPIView):
             version = settings.DEFAULT_VERSION
         if version == 'v2':
             self.serializer_class = SimpleVotingSerializer
-
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
