@@ -176,15 +176,10 @@ div.active-question {
   
 }
 
-.voteButton{
+#voteButton{
   margin: 0 auto;
   float: none;
   
-}
-
-.voteImage{
-    width: 50px;
-    height: 40px;
 }
 
 .active { 

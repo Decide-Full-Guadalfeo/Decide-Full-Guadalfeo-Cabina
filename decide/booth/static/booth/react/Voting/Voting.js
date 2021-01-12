@@ -139,6 +139,10 @@ const Voting = ({ utils }) => {
       res[la[0].children[0].innerHTML] = alumns;
 
       const valid = await checkRestrictions(alumns);
+      console.log(cont1)
+      console.log("====")
+      console.log(cont2)
+      cont1 = cont1 - cont2;
       if (!valid || cont1 < 2 || cont2 === 0) res = false;
 
     } else {
@@ -516,9 +520,7 @@ const Voting = ({ utils }) => {
 
           </button>
         </div>
-
       </div>
-
       <div className="row">
         <div className="col">
           <form onSubmit={sendVoting}>
@@ -527,12 +529,18 @@ const Voting = ({ utils }) => {
               <div className="question" key={o.desc}>
                 <div align="center">
                   {" "}
-
                   <h2>{o.desc}</h2>
                 </div>
                 <div className="container-fluid">
                   <div className="d-flex align-content-center flex-wrap ">
-
+                  { sendVotingAnimation && (
+              <div className="votingAnimation">
+                <a id="rotator">
+                  <img src="https://image.flaticon.com/icons/png/512/91/91848.png"/>
+                  
+                </a>
+                </div>
+                )}
                     {o.options.map((p) => (
                       <div key={p.number}>
                         <div className="option p-3">
@@ -599,15 +607,9 @@ const Voting = ({ utils }) => {
             )}
             {/* <div className="row">
               <div className="col"> */}
-           { sendVotingAnimation && (
-              <div className="votingAnimation">
-                <a id="rotator">
-                  <img src="https://image.flaticon.com/icons/png/512/91/91848.png"/>
-                  <img className="voteImage" src="https://www.cair.com/wp-content/uploads/2018/08/vote-image.png"/>
-                </a>
+        
                 <div>
-                )};
-                <button className="voteButton">
+                <button id="voteButton" className="btn btn-outline-dark">
                 
                   {utils.lang["vote"]}
                 </button>
@@ -616,6 +618,7 @@ const Voting = ({ utils }) => {
             {/* </div> */}
             {/* </div> */}
           </form>
+          </div>
           {utils.alert.lvl ? (
             <div className={"alert " + utils.alert.lvl}>
               <p>{utils.alert.msg}</p>
@@ -630,7 +633,7 @@ const Voting = ({ utils }) => {
           ) : null}
         </div>
       </div>
-    </div>
+    
   );
 };
 export default Voting;
