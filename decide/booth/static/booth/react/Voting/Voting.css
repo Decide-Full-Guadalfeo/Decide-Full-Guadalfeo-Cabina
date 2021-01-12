@@ -14,15 +14,17 @@
     text-align: center;
     transition: all 0.5s ease;
     position: relative;
-    display: flex;
+    display: block;
+    margin: auto;
     flex-wrap: wrap;
     justify-content: center;
-}
+    
+  }
 
 .container{
 margin:auto;
 float: none;
-margin-top: 70px;
+margin-top: 40px;
 }
 
 .card-input>h1{
@@ -41,7 +43,7 @@ margin-top: 70px;
 .question>h2{
   color: black;
   font-weight: bold;
-  margin-top: 20px;
+  
   text-align: center;
 }
 div.active-question {
@@ -84,7 +86,7 @@ div.active-question {
 .flip-card-front,
 .flip-card-back {
   position: absolute;
-  padding:2%;
+  
   width: 100%;
   height: 100%;
   -webkit-backface-visibility: hidden;
@@ -173,13 +175,11 @@ div.active-question {
   float: right;
   margin :auto;
   right: 0 !important;
-  
 }
 
 #voteButton{
   margin: 0 auto;
   float: none;
-  
 }
 
 .active { 
@@ -188,9 +188,8 @@ div.active-question {
 
 .card-input-element{
   margin-top: 5px;
-  margin-left: 5px;
+  margin-left: 15px;
 }
-
 
 #exampleModal{
   color: black;
@@ -208,13 +207,25 @@ div.question{
   background-blend-mode: screen;
   box-shadow: 0 0 8px 1px #cccccc inset;
 }
-
+div.question>div>h2{
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
 
 div.alum-list.question > div.container-fluid > div > div{
   margin:1%;
   border: 2px solid #555;
   border-radius:4px;
   background-color: rgba(85, 85, 85, 0.418);
+  align-items: center;
+}
+
+.boxesDiv{
+  align-content: center;
+  flex-wrap: wrap;
+  display: flex;
+  padding-top: 20px;
+  padding-left: 4%!important;
 }
 
 @keyframes check {0% {height: 0;width: 0;}
@@ -252,19 +263,19 @@ a#rotator {
     text-decoration: none;
     left: 3000px;
     position: absolute;
-   
     -webkit-animation: move 4s;
     animation: move 4s;
 }
 
 a#rotator img {
-    width: 70%; 
-    
+    width: 100%; 
 }
 
 .votingAnimation{
-
   z-index: 4000;
-
 }
 
+.languageImg{
+  width: 50px;
+  height: 40px;
+}

@@ -357,10 +357,8 @@ const Voting = ({ utils }) => {
       $("div.question:first-of-type").addClass("active-question");
     } else {
       console.log("voted : " + voted);
-
-
+      
       $("div.question:first-of-type").addClass("active-question");
-
     }
 
     $("button#prev-question").css({
@@ -384,10 +382,11 @@ const Voting = ({ utils }) => {
       // console.log(index + ": " + colors[index]);
       $(this).css({
         "background-color": colors[index],
-        filter: "brightness(95%)",
+        filter: "brightness(90%)",
       });
       $(this).find(".flip-card-back").css({
         "background-color": colors[index],
+        
       });
       // console.log(index + ": " + $(this).text());
     });
@@ -507,8 +506,9 @@ const Voting = ({ utils }) => {
           </button>{" "}
         </div>
         {<div className="col-3">{<Modals />}</div>}
-
-
+        <div>
+        <button onClick={utils.changeLanguage}><img className="languageImg" src={utils.lang["language_button"]}/></button>
+        </div>
         <div className="col-3">
           {" "}
           <button
@@ -531,13 +531,12 @@ const Voting = ({ utils }) => {
                   {" "}
                   <h2>{o.desc}</h2>
                 </div>
-                <div className="container-fluid">
-                  <div className="d-flex align-content-center flex-wrap ">
+                <div className="container-fluid ">
+                  <div className="boxesDiv">
                   { sendVotingAnimation && (
               <div className="votingAnimation">
                 <a id="rotator">
                   <img src="https://image.flaticon.com/icons/png/512/91/91848.png"/>
-                  
                 </a>
                 </div>
                 )}
@@ -555,12 +554,13 @@ const Voting = ({ utils }) => {
                                       className="card-input-element"
                                       value={p.number}
                                     />
-                                    <h1>Candidato:</h1>
-                                    <h1>{p.option}</h1>
+                                    <h4>{utils.lang["cand"]}</h4>
+                                    <br/>
+                                    <h3>{p.option}</h3>
                                   </div>
 
                                   <div className="flip-card-back">
-                                    <h4>Seleccionaste:</h4>
+                                    <h4>{utils.lang["select"]}</h4>
                                     <br></br>
                                     <h3><strong>{p.option}</strong></h3>
                                   </div>
