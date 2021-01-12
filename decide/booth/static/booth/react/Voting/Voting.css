@@ -192,6 +192,13 @@ div.active-question {
   margin-left: 5px;
 }
 
+
+#exampleModal{
+  color: black;
+  border-top-right-radius: 10px !important;
+  border-top-left-radius: 10px !important;
+}
+
 div.question{
   background-image: url("https://www.newmexicopbs.org/productions/newmexicoinfocus/wp-content/uploads/2020/11/element5-digital-T9CXBZLUvic-unsplash.jpg");
   background-color: #cccccc;

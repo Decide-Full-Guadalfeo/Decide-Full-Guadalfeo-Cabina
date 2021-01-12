@@ -1,6 +1,14 @@
 "use strict";
-//import logo from './separador.png';
-const { useState } = React;
+
+
+const { useState, useEffect } = React;
+
+let firstRender = true;
+let votingType = null;
+let alumList = null;
+
+let voted = null
+
 
 const Voting = ({ utils }) => {
   /*#################################################################*/
@@ -24,9 +32,8 @@ const Voting = ({ utils }) => {
 
   const getVotingType = () => {
     let res = "";
-    if (voting.tipo === "PV" && voting.question.length == 6) res = "primary";
-    else if (voting.tipo === "GV" && voting.question.length == 7)
-      res = "general";
+    if (voting.tipo === "PV") res = "primary";
+    else if (voting.tipo === "GV") res = "general";
     else {
       res = "error";
       console.log("error"); //setAlert()
@@ -102,12 +109,15 @@ const Voting = ({ utils }) => {
     let res = {};
 
     let questions = document.getElementsByClassName("question");
+
+    let cont1 = 0
     for (let i = 0; i < questions.length; i++) {
       const titulo = questions[i].children[0].innerHTML;
       let inputs = questions[i].getElementsByTagName("input");
       for (let j = 0; j < inputs.length; j++) {
         if (inputs[j].checked) {
           res[titulo] = inputs[j].value;
+          cont1 = cont1 + 1
         }
       }
     }
@@ -120,21 +130,100 @@ const Voting = ({ utils }) => {
       let la = document.getElementsByClassName("alum-list");
       let alumns = [];
       let inputs = la[0].getElementsByTagName("input");
+      let cont2 = 0
 
       for (let j = 0; j < inputs.length; j++) {
-        if (inputs[j].checked) alumns.push(inputs[j].value);
+        if (inputs[j].checked){
+          alumns.push(inputs[j].value);
+          cont2 = cont2 + 1
+        } 
       }
       res[la[0].children[0].innerHTML] = alumns;
 
       const valid = await checkRestrictions(alumns);
-      if (!valid) res = false;
+      if (!valid || cont1 < 2 || cont2 === 0) res = false;
     }
 
     return res;
   };
 
   const closeAlert = () => {
-    utils.setAlert({ lvl: null, msg: null });
+    if(utils.alert.lvl === "error"){
+      utils.setAlert({ lvl: null, msg: null });
+      location.reload()
+    }else{
+      utils.setAlert({ lvl: null, msg: null });
+      location.replace("/booth")
+    }
+  };
+
+  const Modals = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const showModal = () => {
+      setIsOpen(true);
+    };
+
+    const hideModal = () => {
+      setIsOpen(false);
+    };
+
+    return (
+      <div>
+      {/* Aqui empieza */}
+        <button
+          type="button"
+          className="btn btn-outline-dark"
+          data-toggle="modal"
+          data-target="#exampleModal"
+        >
+          {utils.lang["modal_button"]}
+
+          {/* Bases de la votación */}
+        </button>
+
+        <div
+          className="modal fade"
+          id="exampleModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
+                {utils.lang["modal_title"]}
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+              {utils.lang["modal_body"]}
+                
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  {utils.lang["modal_close_button"]}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    );
   };
 
   const sendVoting = async (event) => {
@@ -144,7 +233,8 @@ const Voting = ({ utils }) => {
 
     if (options) {
 
-      const v = encrypt(options);
+      const v = encryptAll(options);
+
       setSendVotingAnimation(true);
       setTimeout(() => {
         setSendVotingAnimation(false);
@@ -164,18 +254,21 @@ const Voting = ({ utils }) => {
               lvl: "success",
               msg: "Conglatulations! Your vote has been sent",
             });
-           }, 1700);
-           
+          }, 1700);
         })
         .catch((error) => {
           utils.setAlert({ lvl: "error", msg: "Error: " + error });
         });
+
         $("div.active-question").removeClass("active-question");
+        voted = true;
+        console.log("voted on send vote: "+voted);
+
     } else {
       utils.setAlert({
         lvl: "error",
         msg:
-          "Solo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente",
+          "No se puede votar en blanco.\nSólo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente.",
       });
       $("div.active-question").removeClass("active-question");
     }
@@ -184,57 +277,88 @@ const Voting = ({ utils }) => {
 
   };
 
+  const filterQuestions = () => {
+    let res = [];
+    let year = dictionary[utils.votingUserData.year];
+    year = year - 1;
+    const q1 = voting.question[year];
+    const q2 = voting.question[5];
+    res.push(q1);
+    res.push(q2);
+    console.log(votingType);
+    if (votingType === "general") {
+      const q3 = voting.question[6];
+      res.push(q3);
+    }
+    voting.question = res;
+    console.log(voting.question);
+    return res;
+  };
+
   /*#####################################################*/
   /*####################### STATE #######################*/
   /*#####################################################*/
-  const[sendVotingAnimation, setSendVotingAnimation] = useState(false);
-  /*############### FUNCTIONALITY ###############*/
-  const votingType = getVotingType();
+  const [sendVotingAnimation, setSendVotingAnimation] = useState(false);
 
-  let alumList = null;
-  if (votingType === "general") {
-    alumList = voting.question[6];
+  /*#############################################*/
+  /*############### FUNCTIONALITY ###############*/
+  /*#############################################*/
+
+  if (firstRender) {
+    votingType = getVotingType();
+    filterQuestions();
+    if (votingType === "general") {
+      alumList = voting.question[2];
+    }
   }
+
+  useEffect(() => {
+    firstRender = false;
+  }, []);
 
   // COSAS DEL ESTILO
   function updateButtons(question_to_update) {
     // Si existe una pregunta posterior
     if (question_to_update.next().hasClass("question")) {
       $("button#next-question").css({
-        "display": "block",
+        display: "block",
       });
-    }else{
+    } else {
       $("button#next-question").css({
-        "display": "none",
+        display: "none",
       });
     }
     if (question_to_update.prev().hasClass("question")) {
       $("button#prev-question").css({
-        "display": "block",
+        display: "block",
       });
-    }else{
+    } else {
       $("button#prev-question").css({
-        "display": "none",
+        display: "none",
       });
     }
-  };
+  }
 
   //   show the first element, the others are hide by default
   $(document).ready(function () {
     // $(".App").addClass("container-fluid");
+    if(voted = "false"){
+      console.log("voted false: "+ voted);
+
+      $("div.question:first-of-type").addClass("active-question");
+    }else{
+      console.log("voted : "+ voted);
+
 
     $("div.question:first-of-type").addClass("active-question");
+
+    }
+
     $("button#prev-question").css({
-      "display": "none",
+      display: "none",
     });
     // $("#next-question").click(function () {
-    
-    console.log("doc ready");
-    if ($("#prev-question").length) {
-      console.log("Element exists");
-    } else {
-      console.log("Element doesnt exists");
-    }
+
     var colors = new Array(
       "#EF476F",
       "#F78C6B",
@@ -364,54 +488,58 @@ const Voting = ({ utils }) => {
         <button id="next-question">Next Question </button>
       </div> */}
       <div className="row justify-content-between align-items-center">
-        <div className="col-4">
+        <div className="col-3">
           <button
             id="prev-question"
             type="button"
             className="btn btn-outline-dark"
           >
-            Prev
+            {utils.lang["prev"]}
           </button>{" "}
         </div>
+        {<div className="col-3">{<Modals />}</div>}
 
-        <div className="col-4">
+
+        <div className="col-3">
           {" "}
           <button
             id="next-question"
             type="button"
             className="btn btn-outline-dark"
           >
-            Next
+            {utils.lang["next"]}
+
           </button>
         </div>
+        
       </div>
 
       <div className="row">
         <div className="col">
           <form onSubmit={sendVoting}>
             {/* The 6 questions all votings have */}
-            {voting.question.slice(0, 6).map((o) => (
-
+            {voting.question.slice(0, 2).map((o) => (
               <div className="question" key={o.desc}>
                 <div align="center">
                   {" "}
-                <h2>{o.desc}</h2>
-                 </div>
-                <div className="container-fluid">
 
-                  <div class="d-flex align-content-center flex-wrap ">
-                  {sendVotingAnimation &&
-                <div className="votingAnimation">
-                <a id="rotator"><img src="https://image.flaticon.com/icons/png/512/91/91848.png"/></a>
+                  <h2>{o.desc}</h2>
                 </div>
-                }
+                <div className="container-fluid">
+                  <div className="d-flex align-content-center flex-wrap ">
+                    {sendVotingAnimation && (
+                      <div className="votingAnimation">
+                        <a id="rotator">
+                          <img src="https://image.flaticon.com/icons/png/512/91/91848.png" />
+                        </a>
+                      </div>
+                    )}
 
                     {o.options.map((p) => (
                       <div key={p.number}>
                         <div className="option p-3">
                           <div className="card-input">
                             <label>
-                              
                               <div className="flip-card">
                                 <div className="flip-card-inner">
                                   <div className="flip-card-front">
@@ -420,7 +548,6 @@ const Voting = ({ utils }) => {
                                       name={o.desc}
                                       className="card-input-element"
                                       value={p.number}
-                                      
                                     />
                                     <h1>Candidate:</h1>
                                     <p>{p.option}</p>
@@ -457,7 +584,6 @@ const Voting = ({ utils }) => {
                     ))}
                   </div>
                 </div>
-                
               </div>
             ))}
             {/* The alumn list */}
@@ -469,32 +595,30 @@ const Voting = ({ utils }) => {
                 <div className="container-fluid">
                   <div className="d-flex align-content-center flex-wrap ">
                     {alumList.options.map((p) => (
-                      <div key={p.number} class="p-3">
+                      <div key={p.number} className="p-3">
                         {p.option.split("/")[0]}
-                        <label class="checkbox">
+                        <label className="checkbox">
                         <input
                           type="checkbox"
-                          name={"o.desc"}
+                          name={alumList.desc}
                           value={parseInt(
                             p.option.split("/")[1].replace(" ", "")
                           )}
+                          
                         />
-                      <span class="default"></span>
-
+                      <span className="default"></span>
                         </label>
-                       
-                        
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
             )}
-            {/* <div class="row">
-              <div class="col"> */}
+            {/* <div className="row">
+              <div className="col"> */}
             <div>
               <button id="voteButton" className="btn btn-outline-dark ">
-                Vote
+              {utils.lang["vote"]}
               </button>
             </div>
             {/* </div> */}
@@ -503,8 +627,12 @@ const Voting = ({ utils }) => {
           {utils.alert.lvl ? (
             <div className={"alert " + utils.alert.lvl}>
               <p>{utils.alert.msg}</p>
-              <button className="closeAlert" onClick={closeAlert}>
-                close
+              <button className=" btn btn-outline-dark " onClick={closeAlert}>
+                {
+                  utils.alert.lvl === "error"
+                  ? 'Empezar de nuevo'
+                  : 'Volver a inicio'
+                }
               </button>
             </div>
           ) : null}
@@ -514,33 +642,3 @@ const Voting = ({ utils }) => {
   );
 };
 export default Voting;
-
-{
-  /* onChange={e => setObjeto(...objeto,{[o.desc]:p.number})}
-<h2>{voting.question.desc}</h2>
-            <form onSubmit={sendVoting}>
-                {voting.question.options.map(o => (
-                    <div key={o.number}>
-                        <input type="radio" onChange={e => setSelectedAnswer(o.number)} checked={selectedAnswer === o.number} />
-                        {o.option}
-                        <br />
-                    </div>
-                ))}
-                <button>Vote</button>
-            </form>
-            {o.options.map(p => (
-                        <div key={p.number}>
-                            <input type="radio" onChange={e => setSelectedAnswer(p.number)} checked={selectedAnswer === p.number} />
-                            {p.option}
-                            <br />
-                        </div>
-                    ))} */
-}
-{
-  /* <img
-                          src="img_avatar.png"
-                          alt="Avatar"
-                          style="width:300px;height:300px;"
-                        >
-                        </img> */
-}
