@@ -6,7 +6,7 @@ let firstRender = true;
 let votingType = null;
 let alumList = null;
 
-let voted = null
+
 
 const Voting = ({ utils }) => {
   /*#################################################################*/
@@ -34,7 +34,10 @@ const Voting = ({ utils }) => {
     else if (voting.tipo === "GV") res = "general";
     else {
       res = "error";
-      console.log("error"); //setAlert()
+      utils.setAlert({
+        lvl: "error",
+        msg: utils.lang["internalError"],
+      });
     }
 
     return res;
@@ -54,7 +57,7 @@ const Voting = ({ utils }) => {
 
   const encryptAll = (options) => {
     for (let o in options) {
-      console.log(options[o]);
+     
       if (Array.isArray(options[o])) {
         for (let p in options[o]) {
           options[o][p] = encrypt(options[o][p].toString());
@@ -78,7 +81,10 @@ const Voting = ({ utils }) => {
         res = result;
       })
       .catch((error) => {
-        console.log(error); //this.showAlert("danger", '{% trans "Error: " %}' + error);
+        utils.setAlert({
+          lvl: "error",
+          msg: utils.lang["internalError"],
+        });
       });
 
     return res.genres;
@@ -103,26 +109,6 @@ const Voting = ({ utils }) => {
     return res;
   };
 
- /* let questionss = document.getElementsByClassName("question");
-  console.log(questionss)
-  console.log("here bobo o que")
-  console.log(questionss.length)
-  for (let i = 0; i < questionss.length; i++) {
-    console.log("que nooo")
-    const titulos = questionss[i].children[0].innerHTML;
-    let inputss = questionss[i].getElementsByTagName("input");
-    console.log(inputss)
-    for (let j = 0; j < inputs.length; j++) {
-      /*if (inputs[j].checked) {
-        res[titulo] = inputs[j].value;
-        cont1 = cont1 + 1
-      }
-      console.log(j)
-      console.log(input[j])
-      console.log(inputs[j].value)
-    }
-  }*/
-
   const getInput = async () => {
     let res = {};
 
@@ -130,11 +116,12 @@ const Voting = ({ utils }) => {
 
     let cont1 = 0
     for (let i = 0; i < questions.length; i++) {
-      const titulo = questions[i].children[0].innerHTML;
+      const titulo = questions[i].children[0].innerHTML.replace(" <h2>","").replace("</h2>","");
       let inputs = questions[i].getElementsByTagName("input");
       for (let j = 0; j < inputs.length; j++) {
         if (inputs[j].checked) {
           res[titulo] = inputs[j].value;
+        
           cont1 = cont1 + 1
         }
       }
@@ -231,11 +218,7 @@ const Voting = ({ utils }) => {
 
               </div>
               <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-dismiss="modal"
-                >
+                <button type="button" className="btn btn-secondary" data-dismiss="modal">
                   {utils.lang["modal_close_button"]}
                 </button>
               </div>
@@ -273,7 +256,7 @@ const Voting = ({ utils }) => {
           setTimeout(() => {
             utils.setAlert({
               lvl: "success",
-              msg: "Conglatulations! Your vote has been sent",
+              msg: utils.lang["congratulations"],
             });
           }, 1700);
         })
@@ -281,25 +264,18 @@ const Voting = ({ utils }) => {
           utils.setAlert({ lvl: "error", msg: "Error: " + error });
         });
 
-      $("div.active-question").removeClass("active-question");
-      voted = true;
-      console.log("voted on send vote: " + voted);
-
     } else {
       if (votingType === "general") {
         utils.setAlert({
           lvl: "error",
-          msg:
-            "No se puede votar en blanco.\nSólo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente.",
+          msg: utils.lang["bigError"],
         });
       } else {
         utils.setAlert({
           lvl: "error",
-          msg:
-            "No se pueden dejar respuestas en blanco.",
+          msg: utils.lang["blankError"],
         });
       }
-      $("div.active-question").removeClass("active-question");
     }
   };
 
@@ -311,13 +287,13 @@ const Voting = ({ utils }) => {
     const q2 = voting.question[5];
     res.push(q1);
     res.push(q2);
-    console.log(votingType);
+   
     if (votingType === "general") {
       const q3 = voting.question[6];
       res.push(q3);
     }
     voting.question = res;
-    console.log(voting.question);
+    
     return res;
   };
 
@@ -340,6 +316,81 @@ const Voting = ({ utils }) => {
 
   useEffect(() => {
     firstRender = false;
+    $(document).ready(function () {
+      // $(".App").addClass("container-fluid");
+    
+      $("div.question:first-of-type").addClass("active-question")
+  
+      $("button#prev-question").css({
+        display: "none",
+      });
+      // $("#next-question").click(function () {
+  
+      var colors = new Array( 
+        "#EF476F",
+        "#F78C6B",
+        "#FFD166",
+        "#83D483",
+        "#06D6A0",
+        "#118AB2",
+        "#073B4C"
+      );
+      // new colors = ["#EF476F","#FFD166","#06D6A0","#118AB2","#073B4C"];
+  
+      $(".question").each(function (index) {
+       
+        $(this).css({
+          "background-color": colors[index],
+          filter: "brightness(90%)",
+        });
+        $(this).find(".flip-card-back").css({
+          "background-color": colors[index],
+        });
+      });
+  
+      $("button#next-question").click(function () {
+        var active_question = $("div.active-question");
+        updateButtons(active_question.next());
+  
+        if (active_question.next().hasClass("question")) {
+          active_question.removeClass("active-question");
+          active_question.next().addClass("active-question");
+          
+        }
+      });
+      $("button#prev-question").click(function () {
+      
+        var active_question = $("div.active-question");
+        updateButtons(active_question.prev());
+  
+        if (active_question.prev().hasClass("question")) {
+          active_question.removeClass("active-question");
+          active_question.prev().addClass("active-question");
+          
+        }
+      });
+  
+      $("input").on("click", function () {
+       
+        var this_card = $(this).parent().parent().parent();
+        
+        var this_question = this_card.parent().parent().parent().parent().parent();
+     
+        if (this_card.hasClass("flipped")) {
+          this_card.removeClass("flipped");
+          $(this).prop('checked', false);
+         
+        } else {
+          var flipped_card = $( this_question ).find( "div.flip-card.flipped" )
+          flipped_card.removeClass("flipped");
+          flipped_card.prop('checked', false);
+
+          this_card.addClass("flipped");
+        }
+        
+      });
+  
+    });
   }, []);
 
   // COSAS DEL ESTILO
@@ -366,145 +417,8 @@ const Voting = ({ utils }) => {
   }
 
   //   show the first element, the others are hide by default
-  $(document).ready(function () {
-    // $(".App").addClass("container-fluid");
-    if (voted = "false") {
-      console.log("voted false: " + voted);
-
-      $("div.question:first-of-type").addClass("active-question");
-    } else {
-      console.log("voted : " + voted);
-      
-      $("div.question:first-of-type").addClass("active-question");
-    }
-
-    $("button#prev-question").css({
-      display: "none",
-    });
-    // $("#next-question").click(function () {
-
-    var colors = new Array( 
-      "#EF476F",
-      "#F78C6B",
-      "#FFD166",
-      "#83D483",
-      "#06D6A0",
-      "#118AB2",
-      "#073B4C"
-    );
-    // new colors = ["#EF476F","#FFD166","#06D6A0","#118AB2","#073B4C"];
-
-    $(".question").each(function (index) {
-      // console.log(index + ": " + $(this).text());
-      // console.log(index + ": " + colors[index]);
-      $(this).css({
-        "background-color": colors[index],
-        filter: "brightness(90%)",
-      });
-      $(this).find(".flip-card-back").css({
-        "background-color": colors[index],
-        
-      });
-      // console.log(index + ": " + $(this).text());
-    });
-
-    $("button#next-question").click(function () {
-      console.log("next");
-
-      var active_question = $("div.active-question");
-      updateButtons(active_question.next());
-
-      if (active_question.next().hasClass("question")) {
-        active_question.next().addClass("active-question");
-        active_question.removeClass("active-question");
-      }
-    });
-    $("button#prev-question").click(function () {
-      console.log("prev");
-
-      var active_question = $("div.active-question");
-      updateButtons(active_question.prev());
-
-      if (active_question.prev().hasClass("question")) {
-        active_question.prev().addClass("active-question");
-        active_question.removeClass("active-question");
-      }
-    });
-
-    // $( "option" ).each( function(option) {
-    //   console.log('do something with this list item', option);
-    // })
-    $("input").on("click", function () {
-      //flip-card, flip-card-inner, flip-card-front, input
-      if ($(this).parent().parent().parent().hasClass("flipped")) {
-        console.log($("input:checked").val() + " is checked!");
-
-        $(".flip-card.flipped").removeClass("flipped");
-      } else {
-        console.log($("input:checked").val() + " is checked!");
-
-        $(".flip-card.flipped").removeClass("flipped");
-        $("input:checked").parent().parent().parent().addClass("flipped");
-      }
-      // console.log($("input:checked").val() + " is checked!");
-      // $("#log").html;
-    });
-  });
-  // BUTTONS NOT WORKING
-
-  // For the flip effect, not working
-  // $(".flip-card").click(function () {
-  //   console.log("clicked");
-  //   $(".flip-card.flipped").removeClass("flipped");
-  //   $(this).addClass("flipped");
-  // });
-
-  // $(".flip-card.flipped").click(function () {
-  //   $(this).removeClass("flipped");
-  // });
-
-  // $(function () {
-  //   $(window).on("wheel", function (e) {
-  //     var delta = e.originalEvent.deltaY;
-
-  //     if (delta > 0) {
-  //       var active_question = $("div.active-question");
-
-  //       if (active_question.next().hasClass("question")) {
-  //         active_question.next().addClass("active-question");
-  //         active_question.removeClass("active-question");
-  //       }
-  //       console.log("scrolled downs");
-  //       // $("html, body").animate(
-  //       //   {
-  //       //     // scrollTop: $("#candidatura2").offset().top,
-  //       //     scrollTop: $(window).scrollTop() + window.innerHeight,
-  //       //   },
-  //       //   1000
-  //       // );
-  //     } else {
-  //       // $("div.active-question").prev().addClass("active-question");
-  //       // $("div.active-question").removeClass("active-question");
-  //       var active_question = $("div.active-question");
-  //       if (active_question.prev().hasClass("question")) {
-  //         active_question.prev().addClass("active-question");
-  //         active_question.removeClass("active-question");
-  //       }
-  //       console.log("scrolled up");
-
-  //       // upscroll code
-  //       // $("html, body").animate(
-  //       //   {
-  //       //     // scrollTop: $("#candidatura1").offset().top,
-  //       //     scrollTop: $(window).scrollTop() - window.innerHeight,
-  //       //   },
-  //       //   1000
-  //       // );
-  //     }
-  //     return false; // this line is only added so the whole page won't scroll in the demo
-  //   });
-  // });
-
+  
+  
   /*############### RETURN ###############*/
   return (
     <div id="voting-body" className="voting container-fluid">
@@ -597,6 +511,13 @@ const Voting = ({ utils }) => {
                   <h2>{alumList.desc}</h2>
                 </div>
                 <div className="container-fluid">
+                { sendVotingAnimation && (
+              <div className="votingAnimation">
+                <a id="rotator">
+                  <img src="https://image.flaticon.com/icons/png/512/91/91848.png"/>
+                </a>
+                </div>
+                )}
                   <div className="d-flex align-content-center flex-wrap ">
                     {alumList.options.map((p) => (
                       <div key={p.number} className="p-3">
