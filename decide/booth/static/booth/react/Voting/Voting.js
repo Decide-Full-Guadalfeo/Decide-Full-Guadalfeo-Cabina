@@ -418,15 +418,23 @@ const Voting = ({ utils }) => {
                                       value={p.number}
                                       
                                     />
-                                    <h1>Candidato:</h1>
-                                    <h1>{p.option}</h1>
+                                    
+                                    <h2>{p.option}</h2>
+                                    {/*<img src="logobn.png" alt="separador"></img>*/}
+                                    
                                   </div>
 
                                   <div className="flip-card-back">
-                                    <h1>Candidato 1</h1>
-                                    <p>Algo del candidato</p>
+                                    <p>You have chosen the candidate:</p>
                                     <p>{o.option}</p>
-                                    <p>Has elegido el candidato:</p>
+                                    {/*<img src="./separador.png" alt="separador"></img>*/}
+                                    <p>Gender:</p>
+                                    <p>{o.option}</p>
+                                    {/*<img src="./separador.png" alt="separador"></img>*/}
+                                    <p>Candidacy:</p>
+                                    <p>{o.option}</p>
+
+                                    {/*<img src="./separador.png" alt="separador"></img>*/}
                                   </div>
                                 </div>
                               </div>
