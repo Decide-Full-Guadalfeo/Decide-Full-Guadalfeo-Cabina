@@ -60,7 +60,7 @@ div.active-question {
 
   background-color: transparent;
   width: 12vw;
-  height: 30vh;
+  height: 32vh;
   border-radius: 5px;
   perspective: 1000px;
 }
@@ -260,5 +260,8 @@ a#rotator img {
 
   z-index: 4000;
 
+}
+hr.linea {
+  border-top: 1px solid white;
 }
 

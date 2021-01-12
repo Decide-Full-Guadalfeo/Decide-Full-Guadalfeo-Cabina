@@ -1,4 +1,5 @@
 "use strict";
+//import logo from './separador.png';
 const { useState } = React;
 
 const Voting = ({ utils }) => {
@@ -178,6 +179,9 @@ const Voting = ({ utils }) => {
       });
       $("div.active-question").removeClass("active-question");
     }
+
+    //console.log(separador);
+
   };
 
   /*#####################################################*/
@@ -418,21 +422,27 @@ const Voting = ({ utils }) => {
                                       value={p.number}
                                       
                                     />
-                                    
-                                    <h2>{p.option}</h2>
-                                    {/*<img src="logobn.png" alt="separador"></img>*/}
+                                    <h1>Candidate:</h1>
+                                    <p>{p.option}</p>
+                                    <img src="https://www.us.es/sites/default/files/2019-05/marca-US-bn.jpg" alt="logo"></img>
                                     
                                   </div>
 
                                   <div className="flip-card-back">
-                                    <p>You have chosen the candidate:</p>
-                                    <p>{o.option}</p>
+                                    <h1>Your choice:</h1>
+                                    <p>{p.option}</p>
                                     {/*<img src="./separador.png" alt="separador"></img>*/}
-                                    <p>Gender:</p>
                                     <p>{o.option}</p>
+                                    <hr class="linea"></hr>
+                                    <hr class="linea"></hr>
+                                    <hr class="linea"></hr>
+                                    <hr class="linea"></hr>
                                     {/*<img src="./separador.png" alt="separador"></img>*/}
-                                    <p>Candidacy:</p>
-                                    <p>{o.option}</p>
+                                    {/*<p>Candidacy:</p>
+                                    <p>{o.option}</p>*/}
+                                    {/*<p>Gender:</p>
+                                    <p>{o.option}</p>*/}
+                                    
 
                                     {/*<img src="./separador.png" alt="separador"></img>*/}
                                   </div>
