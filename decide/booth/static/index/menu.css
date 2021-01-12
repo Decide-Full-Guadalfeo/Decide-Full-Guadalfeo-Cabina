@@ -1,53 +1,21 @@
-*{
-    margin: 0px;
-    padding: 0px;
-    font-family: sans-serif;
+.navbar {
+  /* height: 8vh; */
+  background-color: #00b894;
 }
 
-.menu a
-{
-    color: white;
-    text-decoration: none;
+nav.menu {
+  background-color: #00b894;
+  color:rgb(0, 0, 0); 
+  border-bottom: 5px groove black;
 }
-
-.menu a:visited
-{
-    color:white;
+nav.menu > span > h1{
+  font-size: 2.0rem;
 }
-
-.menu a:hover
-{
-    text-decoration: underline;
+nav#voting-nav{
+  display: none;
 }
-
-.menu
-{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    background-color: #00b894;
-    height: 75px;
-    color: white;
-}
-
-.menu span
-{
-    flex-grow: 1;
-    padding: 10px;
-    align-self: center;
-}
-
-.menu ul
-{
-    direction: lt;
-    display: flex;
-    flex-grow: 1;
-    align-self: center;
-    justify-content: flex-end;
-    list-style-type: none;
-}
-
-.menu ul li
-{
-    padding: 10px;
+nav.menu a:visited {
+  background-color: whitesmoke;
+  color:rgb(173, 76, 173); 
+  border-bottom: 5px groove black;
 }
