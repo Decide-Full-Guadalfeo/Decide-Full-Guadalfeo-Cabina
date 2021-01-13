@@ -13,6 +13,7 @@
 .menu a:visited
 {
     color:white;
+
 }
 
 .menu a:hover
@@ -28,6 +29,7 @@
     background-color: #00b894;
     height: 75px;
     color: white;
+
 }
 
 .menu span
@@ -51,3 +53,6 @@
 {
     padding: 10px;
 }
+
+
+

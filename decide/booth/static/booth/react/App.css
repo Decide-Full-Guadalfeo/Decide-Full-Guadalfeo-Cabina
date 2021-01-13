@@ -5,6 +5,10 @@ body {
   height: 100%;
 }
 
+nav.menu {
+  padding-top: 1% ;
+  height: 6%;
+}
 #react-root {
   height: 92%;
 }
@@ -48,7 +52,6 @@ form > button {
 }
 
 .container-fluid {
- 
   height: 100%;
 }
 
@@ -56,7 +59,21 @@ form > button {
   overflow-y: auto;
 }
 body{
-  
+  height: 100%;
+  overflow-y: hidden;
+}
+
+
+/* ############# THIS IS FOR THE STYLE ########### */
+/*
+.App {
+  /* background-color: rgb(65, 65, 65);
+  background-color: whitesmoke; */
+/* } */
+
+body{
+  /* background-color: rgb(87, 82, 82); */
+  /* color: rgb(245, 235, 235); */
   background-color: whitesmoke;
   color: rgb(0, 0, 0);
 }

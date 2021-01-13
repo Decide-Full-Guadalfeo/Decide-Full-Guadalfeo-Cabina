@@ -8,6 +8,7 @@ let alumList = null;
 
 
 
+
 const Voting = ({ utils }) => {
   /*#################################################################*/
   /*####################### UTILITY FUNCTIONS #######################*/
@@ -38,6 +39,7 @@ const Voting = ({ utils }) => {
         lvl: "error",
         msg: utils.lang["internalError"],
       });
+
     }
 
     return res;
@@ -85,6 +87,7 @@ const Voting = ({ utils }) => {
           lvl: "error",
           msg: utils.lang["internalError"],
         });
+
       });
 
     return res.genres;
@@ -117,12 +120,14 @@ const Voting = ({ utils }) => {
     let cont1 = 0
     for (let i = 0; i < questions.length; i++) {
       const titulo = questions[i].children[0].innerHTML.replace(" <h2>", "").replace("</h2>", "");
+
       let inputs = questions[i].getElementsByTagName("input");
       for (let j = 0; j < inputs.length; j++) {
         if (inputs[j].checked) {
           res[titulo] = inputs[j].value;
 
           cont1 = cont1 + 1
+
         }
       }
     }
@@ -142,6 +147,7 @@ const Voting = ({ utils }) => {
           alumns.push(inputs[j].value);
           cont2 = cont2 + 1
         }
+
       }
       res[la[0].children[0].innerHTML] = alumns;
 
@@ -152,6 +158,7 @@ const Voting = ({ utils }) => {
     } else {
       if (cont1 < 2) res = false;
     }
+
     return res;
   };
 
@@ -228,6 +235,7 @@ const Voting = ({ utils }) => {
 
       </div>
     );
+
   };
 
   const sendVoting = async (event) => {
@@ -238,6 +246,7 @@ const Voting = ({ utils }) => {
     if (options) {
 
       const v = encryptAll(options);
+
 
       setSendVotingAnimation(true);
       setTimeout(() => {
@@ -259,6 +268,7 @@ const Voting = ({ utils }) => {
               msg: utils.lang["congratulations"],
             });
           }, 1700);
+
         })
         .catch((error) => {
           utils.setAlert({ lvl: "error", msg: "Error: " + error });
@@ -295,6 +305,7 @@ const Voting = ({ utils }) => {
     voting.question = res;
 
     return res;
+
   };
 
   /*#####################################################*/
@@ -390,6 +401,7 @@ const Voting = ({ utils }) => {
     });
   }, []);
 
+
   // COSAS DEL ESTILO
   function updateButtons(question_to_update) {
     // Si existe una pregunta posterior
@@ -400,6 +412,7 @@ const Voting = ({ utils }) => {
     } else {
       $("button#next-question").css({
         display: "none",
+
       });
     }
     if (question_to_update.prev().hasClass("question")) {
@@ -414,6 +427,7 @@ const Voting = ({ utils }) => {
   }
 
   //   show the first element, the others are hide by default
+
 
   /*############### RETURN ###############*/
   return (
@@ -432,6 +446,7 @@ const Voting = ({ utils }) => {
           </div>
         </div>
         <div className="col-3">
+
           {" "}
           <button
             id="next-question"
@@ -462,11 +477,13 @@ const Voting = ({ utils }) => {
                         </a>
                       </div>
                     )}
+
                     {o.options.map((p) => (
                       <div key={p.number}>
                         <div className="option p-3">
                           <div className="card-input">
                             <label>
+
                               <div className="flip-card">
                                 <div className="flip-card-inner">
                                   <div className="flip-card-front">
@@ -476,15 +493,29 @@ const Voting = ({ utils }) => {
                                       className="card-input-element"
                                       value={p.number}
                                     />
-                                    <h4>{utils.lang["cand"]}</h4>
-                                    <br />
-                                    <h3>{p.option}</h3>
+                                    <h1>Candidate:</h1>
+                                    <p>{p.option}</p>
+                                    <img src="https://www.us.es/sites/default/files/2019-05/marca-US-bn.jpg" alt="logo"></img>
+                                    
                                   </div>
 
                                   <div className="flip-card-back">
-                                    <h4>{utils.lang["select"]}</h4>
-                                    <br></br>
-                                    <h3><strong>{p.option}</strong></h3>
+                                    <h1>Your choice:</h1>
+                                    <p>{p.option}</p>
+                                    {/*<img src="./separador.png" alt="separador"></img>*/}
+                                    <p>{o.option}</p>
+                                    <hr class="linea"></hr>
+                                    <hr class="linea"></hr>
+                                    <hr class="linea"></hr>
+                                    <hr class="linea"></hr>
+                                    {/*<img src="./separador.png" alt="separador"></img>*/}
+                                    {/*<p>Candidacy:</p>
+                                    <p>{o.option}</p>*/}
+                                    {/*<p>Gender:</p>
+                                    <p>{o.option}</p>*/}
+                                    
+
+                                    {/*<img src="./separador.png" alt="separador"></img>*/}
                                   </div>
                                 </div>
                               </div>
@@ -497,6 +528,7 @@ const Voting = ({ utils }) => {
                     ))}
                   </div>
                 </div>
+
               </div>
             ))}
             {/* The alumn list */}
@@ -527,6 +559,7 @@ const Voting = ({ utils }) => {
                           />
                           <span className="default"></span>
                         </label>
+
                       </div>
                     ))}
                   </div>
@@ -560,3 +593,4 @@ const Voting = ({ utils }) => {
   );
 };
 export default Voting;
+
