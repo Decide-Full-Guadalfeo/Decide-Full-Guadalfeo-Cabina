@@ -4,6 +4,7 @@ html,
 body {
   height: 100%;
 }
+
 nav.menu {
   padding-top: 1% ;
   height: 6%;
@@ -34,6 +35,7 @@ form {
   height: 100%;
 }
 form > div.question {
+
   height: 90%;
   margin-bottom: 1%;
 }
@@ -50,6 +52,13 @@ form > button {
 }
 
 .container-fluid {
+  height: 100%;
+}
+
+.question{
+  overflow-y: auto;
+}
+body{
   height: 100%;
   overflow-y: hidden;
 }

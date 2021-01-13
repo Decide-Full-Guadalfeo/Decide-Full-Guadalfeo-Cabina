@@ -1,6 +1,13 @@
 "use strict";
-//import logo from './separador.png';
-const { useState } = React;
+
+const { useState, useEffect } = React;
+
+let firstRender = true;
+let votingType = null;
+let alumList = null;
+
+
+
 
 const Voting = ({ utils }) => {
   /*#################################################################*/
@@ -24,12 +31,15 @@ const Voting = ({ utils }) => {
 
   const getVotingType = () => {
     let res = "";
-    if (voting.tipo === "PV" && voting.question.length == 6) res = "primary";
-    else if (voting.tipo === "GV" && voting.question.length == 7)
-      res = "general";
+    if (voting.tipo === "PV") res = "primary";
+    else if (voting.tipo === "GV") res = "general";
     else {
       res = "error";
-      console.log("error"); //setAlert()
+      utils.setAlert({
+        lvl: "error",
+        msg: utils.lang["internalError"],
+      });
+
     }
 
     return res;
@@ -49,7 +59,7 @@ const Voting = ({ utils }) => {
 
   const encryptAll = (options) => {
     for (let o in options) {
-      console.log(options[o]);
+
       if (Array.isArray(options[o])) {
         for (let p in options[o]) {
           options[o][p] = encrypt(options[o][p].toString());
@@ -73,7 +83,11 @@ const Voting = ({ utils }) => {
         res = result;
       })
       .catch((error) => {
-        console.log(error); //this.showAlert("danger", '{% trans "Error: " %}' + error);
+        utils.setAlert({
+          lvl: "error",
+          msg: utils.lang["internalError"],
+        });
+
       });
 
     return res.genres;
@@ -102,12 +116,18 @@ const Voting = ({ utils }) => {
     let res = {};
 
     let questions = document.getElementsByClassName("question");
+
+    let cont1 = 0
     for (let i = 0; i < questions.length; i++) {
-      const titulo = questions[i].children[0].innerHTML;
+      const titulo = questions[i].children[0].innerHTML.replace(" <h2>", "").replace("</h2>", "");
+
       let inputs = questions[i].getElementsByTagName("input");
       for (let j = 0; j < inputs.length; j++) {
         if (inputs[j].checked) {
           res[titulo] = inputs[j].value;
+
+          cont1 = cont1 + 1
+
         }
       }
     }
@@ -120,21 +140,102 @@ const Voting = ({ utils }) => {
       let la = document.getElementsByClassName("alum-list");
       let alumns = [];
       let inputs = la[0].getElementsByTagName("input");
+      let cont2 = 0
 
       for (let j = 0; j < inputs.length; j++) {
-        if (inputs[j].checked) alumns.push(inputs[j].value);
+        if (inputs[j].checked) {
+          alumns.push(inputs[j].value);
+          cont2 = cont2 + 1
+        }
+
       }
       res[la[0].children[0].innerHTML] = alumns;
 
       const valid = await checkRestrictions(alumns);
-      if (!valid) res = false;
+      cont1 = cont1 - cont2;
+      if (!valid || cont1 < 2 || cont2 === 0) res = false;
+
+    } else {
+      if (cont1 < 2) res = false;
     }
 
     return res;
   };
 
   const closeAlert = () => {
-    utils.setAlert({ lvl: null, msg: null });
+    if (utils.alert.lvl === "errorGeneral" || utils.alert.lvl === "errorPrimary" || utils.alert.lvl === "error" ) {
+      utils.setAlert({ lvl: null, msg: null });
+      location.reload()
+    } else {
+      utils.setAlert({ lvl: null, msg: null });
+      location.replace("/booth")
+    }
+  };
+
+  const Modals = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const showModal = () => {
+      setIsOpen(true);
+    };
+
+    const hideModal = () => {
+      setIsOpen(false);
+    };
+
+    return (
+      <div>
+        {/* Aqui empieza */}
+        <button
+          type="button"
+          className="btn btn-outline-dark"
+          data-toggle="modal"
+          data-target="#exampleModal"
+        >
+          {utils.lang["modal_button"]}
+
+          {/* Bases de la votación */}
+        </button>
+
+        <div
+          className="modal fade"
+          id="exampleModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
+                  {utils.lang["modal_title"]}
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                {utils.lang["modal_body"]}
+
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" data-dismiss="modal">
+                  {utils.lang["modal_close_button"]}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    );
+
   };
 
   const sendVoting = async (event) => {
@@ -144,7 +245,9 @@ const Voting = ({ utils }) => {
 
     if (options) {
 
-      const v = encrypt(options);
+      const v = encryptAll(options);
+
+
       setSendVotingAnimation(true);
       setTimeout(() => {
         setSendVotingAnimation(false);
@@ -162,256 +265,225 @@ const Voting = ({ utils }) => {
           setTimeout(() => {
             utils.setAlert({
               lvl: "success",
-              msg: "Conglatulations! Your vote has been sent",
+              msg: utils.lang["congratulations"],
             });
-           }, 1700);
-           
+          }, 1700);
+
         })
         .catch((error) => {
           utils.setAlert({ lvl: "error", msg: "Error: " + error });
         });
-        $("div.active-question").removeClass("active-question");
-    } else {
-      utils.setAlert({
-        lvl: "error",
-        msg:
-          "Solo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente",
-      });
-      $("div.active-question").removeClass("active-question");
-    }
 
-    //console.log(separador);
+    } else {
+      if (votingType === "general") {
+        utils.setAlert({
+          lvl: "errorGeneral",
+          msg: utils.lang["bigError"],
+        });
+      } else {
+        utils.setAlert({
+          lvl: "errorPrimary",
+          msg: utils.lang["blankError"],
+        });
+      }
+    }
+  };
+
+  const filterQuestions = () => {
+    let res = [];
+    let year = dictionary[utils.votingUserData.year];
+    year = year - 1;
+    const q1 = voting.question[year];
+    const q2 = voting.question[5];
+    res.push(q1);
+    res.push(q2);
+
+    if (votingType === "general") {
+      const q3 = voting.question[6];
+      res.push(q3);
+    }
+    voting.question = res;
+
+    return res;
 
   };
 
   /*#####################################################*/
   /*####################### STATE #######################*/
   /*#####################################################*/
-  const[sendVotingAnimation, setSendVotingAnimation] = useState(false);
-  /*############### FUNCTIONALITY ###############*/
-  const votingType = getVotingType();
+  const [sendVotingAnimation, setSendVotingAnimation] = useState(false);
 
-  let alumList = null;
-  if (votingType === "general") {
-    alumList = voting.question[6];
+  /*#############################################*/
+  /*############### FUNCTIONALITY ###############*/
+  /*#############################################*/
+
+  if (firstRender) {
+    votingType = getVotingType();
+    filterQuestions();
+    if (votingType === "general") {
+      alumList = voting.question[2];
+    }
   }
+
+  useEffect(() => {
+    firstRender = false;
+    $(document).ready(function () {
+
+      $("div.question:first-of-type").addClass("active-question")
+
+      $("button#prev-question").css({
+        display: "none",
+      });
+
+      var colors = new Array(
+        "#DE8F7B",
+        "#E4A282",
+        "#E9B489",
+        "#E1C98D",
+        "#44b8AA",
+        "#439192",
+        "#426A7A"
+      );
+     
+      $(".question").each(function (index) {
+
+        $(this).css({
+          "background-color": colors[index],
+          filter: "brightness(90%)",
+        });
+        $(this).find(".flip-card-back").css({
+          "background-color": colors[index],
+        });
+      });
+
+      $("button#next-question").click(function () {
+        var active_question = $("div.active-question");
+        updateButtons(active_question.next());
+
+        if (active_question.next().hasClass("question")) {
+          active_question.removeClass("active-question");
+          active_question.next().addClass("active-question");
+
+        }
+      });
+      $("button#prev-question").click(function () {
+
+        var active_question = $("div.active-question");
+        updateButtons(active_question.prev());
+
+        if (active_question.prev().hasClass("question")) {
+          active_question.removeClass("active-question");
+          active_question.prev().addClass("active-question");
+
+        }
+      });
+
+      $("input").on("click", function () {
+
+        var this_card = $(this).parent().parent().parent();
+
+        var this_question = this_card.parent().parent().parent().parent().parent();
+
+        if (this_card.hasClass("flipped")) {
+          this_card.removeClass("flipped");
+          $(this).prop('checked', false);
+
+        } else {
+          var flipped_card = $(this_question).find("div.flip-card.flipped")
+          flipped_card.removeClass("flipped");
+          flipped_card.prop('checked', false);
+
+          this_card.addClass("flipped");
+        }
+
+      });
+
+    });
+  }, []);
+
 
   // COSAS DEL ESTILO
   function updateButtons(question_to_update) {
     // Si existe una pregunta posterior
     if (question_to_update.next().hasClass("question")) {
       $("button#next-question").css({
-        "display": "block",
+        display: "block",
       });
-    }else{
+    } else {
       $("button#next-question").css({
-        "display": "none",
+        display: "none",
+
       });
     }
     if (question_to_update.prev().hasClass("question")) {
       $("button#prev-question").css({
-        "display": "block",
+        display: "block",
       });
-    }else{
+    } else {
       $("button#prev-question").css({
-        "display": "none",
+        display: "none",
       });
     }
-  };
+  }
 
   //   show the first element, the others are hide by default
-  $(document).ready(function () {
-    // $(".App").addClass("container-fluid");
 
-    $("div.question:first-of-type").addClass("active-question");
-    $("button#prev-question").css({
-      "display": "none",
-    });
-    // $("#next-question").click(function () {
-    
-    console.log("doc ready");
-    if ($("#prev-question").length) {
-      console.log("Element exists");
-    } else {
-      console.log("Element doesnt exists");
-    }
-    var colors = new Array(
-      "#EF476F",
-      "#F78C6B",
-      "#FFD166",
-      "#83D483",
-      "#06D6A0",
-      "#118AB2",
-      "#073B4C"
-    );
-    // new colors = ["#EF476F","#FFD166","#06D6A0","#118AB2","#073B4C"];
-
-    $(".question").each(function (index) {
-      // console.log(index + ": " + $(this).text());
-      // console.log(index + ": " + colors[index]);
-      $(this).css({
-        "background-color": colors[index],
-        filter: "brightness(95%)",
-      });
-      $(this).find(".flip-card-back").css({
-        "background-color": colors[index],
-      });
-      // console.log(index + ": " + $(this).text());
-    });
-
-    $("button#next-question").click(function () {
-      console.log("next");
-
-      var active_question = $("div.active-question");
-      updateButtons(active_question.next());
-
-      if (active_question.next().hasClass("question")) {
-        active_question.next().addClass("active-question");
-        active_question.removeClass("active-question");
-      }
-    });
-    $("button#prev-question").click(function () {
-      console.log("prev");
-
-      var active_question = $("div.active-question");
-      updateButtons(active_question.prev());
-
-      if (active_question.prev().hasClass("question")) {
-        active_question.prev().addClass("active-question");
-        active_question.removeClass("active-question");
-      }
-    });
-
-    // $( "option" ).each( function(option) {
-    //   console.log('do something with this list item', option);
-    // })
-    $("input").on("click", function () {
-      //flip-card, flip-card-inner, flip-card-front, input
-      if ($(this).parent().parent().parent().hasClass("flipped")) {
-        console.log($("input:checked").val() + " is checked!");
-
-        $(".flip-card.flipped").removeClass("flipped");
-      } else {
-        console.log($("input:checked").val() + " is checked!");
-
-        $(".flip-card.flipped").removeClass("flipped");
-        $("input:checked").parent().parent().parent().addClass("flipped");
-      }
-      // console.log($("input:checked").val() + " is checked!");
-      // $("#log").html;
-    });
-  });
-  // BUTTONS NOT WORKING
-
-  // For the flip effect, not working
-  // $(".flip-card").click(function () {
-  //   console.log("clicked");
-  //   $(".flip-card.flipped").removeClass("flipped");
-  //   $(this).addClass("flipped");
-  // });
-
-  // $(".flip-card.flipped").click(function () {
-  //   $(this).removeClass("flipped");
-  // });
-
-  // $(function () {
-  //   $(window).on("wheel", function (e) {
-  //     var delta = e.originalEvent.deltaY;
-
-  //     if (delta > 0) {
-  //       var active_question = $("div.active-question");
-
-  //       if (active_question.next().hasClass("question")) {
-  //         active_question.next().addClass("active-question");
-  //         active_question.removeClass("active-question");
-  //       }
-  //       console.log("scrolled downs");
-  //       // $("html, body").animate(
-  //       //   {
-  //       //     // scrollTop: $("#candidatura2").offset().top,
-  //       //     scrollTop: $(window).scrollTop() + window.innerHeight,
-  //       //   },
-  //       //   1000
-  //       // );
-  //     } else {
-  //       // $("div.active-question").prev().addClass("active-question");
-  //       // $("div.active-question").removeClass("active-question");
-  //       var active_question = $("div.active-question");
-  //       if (active_question.prev().hasClass("question")) {
-  //         active_question.prev().addClass("active-question");
-  //         active_question.removeClass("active-question");
-  //       }
-  //       console.log("scrolled up");
-
-  //       // upscroll code
-  //       // $("html, body").animate(
-  //       //   {
-  //       //     // scrollTop: $("#candidatura1").offset().top,
-  //       //     scrollTop: $(window).scrollTop() - window.innerHeight,
-  //       //   },
-  //       //   1000
-  //       // );
-  //     }
-  //     return false; // this line is only added so the whole page won't scroll in the demo
-  //   });
-  // });
 
   /*############### RETURN ###############*/
   return (
     <div id="voting-body" className="voting container-fluid">
-      {/* <div>
-        <button id="prev-question">Prev Question </button>
-        <button id="next-question">Next Question </button>
-      </div> */}
+
       <div className="row justify-content-between align-items-center">
-        <div className="col-4">
-          <button
-            id="prev-question"
-            type="button"
-            className="btn btn-outline-dark"
-          >
-            Prev
+        <div className="col-3">
+          <button id="prev-question" type="button" className="btn btn-outline-dark">
+            {utils.lang["prev"]}
           </button>{" "}
         </div>
+        <div >
+          <div className="moda">{<Modals />}</div>
+        <div className="but">
+          <button className="languageButton" onClick={utils.changeLanguage}><img className="languageImg" src={utils.lang["language_button"]} /></button>
+          </div>
+        </div>
+        <div className="col-3">
 
-        <div className="col-4">
           {" "}
           <button
             id="next-question"
             type="button"
             className="btn btn-outline-dark"
           >
-            Next
+            {utils.lang["next"]}
+
           </button>
         </div>
       </div>
-
       <div className="row">
         <div className="col">
           <form onSubmit={sendVoting}>
-            {/* The 6 questions all votings have */}
-            {voting.question.slice(0, 6).map((o) => (
 
+            {voting.question.slice(0, 2).map((o) => (
               <div className="question" key={o.desc}>
                 <div align="center">
                   {" "}
-                <h2>{o.desc}</h2>
-                 </div>
-                <div className="container-fluid">
-
-                  <div class="d-flex align-content-center flex-wrap ">
-                  {sendVotingAnimation &&
-                <div className="votingAnimation">
-                <a id="rotator"><img src="https://image.flaticon.com/icons/png/512/91/91848.png"/></a>
+                  <h2>{o.desc}</h2>
                 </div>
-                }
+                <div className="container-fluid ">
+                  <div className="boxesDiv">
+                    {sendVotingAnimation && (
+                      <div className="votingAnimation">
+                        <a id="rotator">
+                          <img src="https://image.flaticon.com/icons/png/512/91/91848.png" />
+                        </a>
+                      </div>
+                    )}
 
                     {o.options.map((p) => (
                       <div key={p.number}>
                         <div className="option p-3">
                           <div className="card-input">
                             <label>
-                              
+
                               <div className="flip-card">
                                 <div className="flip-card-inner">
                                   <div className="flip-card-front">
@@ -420,7 +492,6 @@ const Voting = ({ utils }) => {
                                       name={o.desc}
                                       className="card-input-element"
                                       value={p.number}
-                                      
                                     />
                                     <h1>Candidate:</h1>
                                     <p>{p.option}</p>
@@ -457,7 +528,7 @@ const Voting = ({ utils }) => {
                     ))}
                   </div>
                 </div>
-                
+
               </div>
             ))}
             {/* The alumn list */}
@@ -467,80 +538,59 @@ const Voting = ({ utils }) => {
                   <h2>{alumList.desc}</h2>
                 </div>
                 <div className="container-fluid">
+                  {sendVotingAnimation && (
+                    <div className="votingAnimation">
+                      <a id="rotator">
+                        <img src="https://image.flaticon.com/icons/png/512/91/91848.png" />
+                      </a>
+                    </div>
+                  )}
                   <div className="d-flex align-content-center flex-wrap ">
                     {alumList.options.map((p) => (
-                      <div key={p.number} class="p-3">
+                      <div key={p.number} className="p-3">
                         {p.option.split("/")[0]}
-                        <label class="checkbox">
-                        <input
-                          type="checkbox"
-                          name={"o.desc"}
-                          value={parseInt(
-                            p.option.split("/")[1].replace(" ", "")
-                          )}
-                        />
-                      <span class="default"></span>
-
+                        <label className="checkbox">
+                          <input
+                            type="checkbox"
+                            name={alumList.desc}
+                            value={parseInt(
+                              p.option.split("/")[1].replace(" ", "")
+                            )}
+                          />
+                          <span className="default"></span>
                         </label>
-                       
-                        
+
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
             )}
-            {/* <div class="row">
-              <div class="col"> */}
             <div>
-              <button id="voteButton" className="btn btn-outline-dark ">
-                Vote
+              <button id="voteButton" className="btn btn-outline-dark">
+
+                {utils.lang["vote"]}
               </button>
             </div>
-            {/* </div> */}
-            {/* </div> */}
+
           </form>
-          {utils.alert.lvl ? (
-            <div className={"alert " + utils.alert.lvl}>
-              <p>{utils.alert.msg}</p>
-              <button className="closeAlert" onClick={closeAlert}>
-                close
-              </button>
-            </div>
-          ) : null}
         </div>
+        {utils.alert.lvl ? (
+          <div className={"alert " + utils.alert.lvl}>
+            <p>{utils.alert.msg}</p>
+            <button className=" btn btn-outline-dark " onClick={closeAlert}>
+              {
+                utils.alert.lvl === "error" || utils.alert.lvl === "errorGeneral" || utils.alert.lvl === "errorPrimary"
+                  ? utils.lang["empezar"]
+                  : utils.lang["volver"]
+              }
+            </button>
+          </div>
+        ) : null}
       </div>
     </div>
+
   );
 };
 export default Voting;
 
-{
-  /* onChange={e => setObjeto(...objeto,{[o.desc]:p.number})}
-<h2>{voting.question.desc}</h2>
-            <form onSubmit={sendVoting}>
-                {voting.question.options.map(o => (
-                    <div key={o.number}>
-                        <input type="radio" onChange={e => setSelectedAnswer(o.number)} checked={selectedAnswer === o.number} />
-                        {o.option}
-                        <br />
-                    </div>
-                ))}
-                <button>Vote</button>
-            </form>
-            {o.options.map(p => (
-                        <div key={p.number}>
-                            <input type="radio" onChange={e => setSelectedAnswer(p.number)} checked={selectedAnswer === p.number} />
-                            {p.option}
-                            <br />
-                        </div>
-                    ))} */
-}
-{
-  /* <img
-                          src="img_avatar.png"
-                          alt="Avatar"
-                          style="width:300px;height:300px;"
-                        >
-                        </img> */
-}

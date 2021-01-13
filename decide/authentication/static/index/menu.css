@@ -12,7 +12,8 @@
 
 .menu a:visited
 {
-    color:rgb(173, 76, 173);
+    color:white;
+
 }
 
 .menu a:hover
@@ -25,10 +26,10 @@
     width: 100%;
     display: flex;
     flex-direction: row;
+    background-color: #00b894;
+    height: 75px;
+    color: white;
 
-    background-color: whitesmoke;
-    color:rgb(0, 0, 0); 
-    border-bottom: 5px groove black;
 }
 
 .menu span
@@ -53,6 +54,5 @@
     padding: 10px;
 }
 
-nav.menu > span > h1{
-    font-size: 2.0rem;
-  }
+
+
