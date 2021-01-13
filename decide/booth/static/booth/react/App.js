@@ -1,7 +1,4 @@
 import Voting from "./Voting/Voting";
-
-import Navbar from "./Navbar/Navbar"
-
 const { useState, useEffect } = React;
 
 const App = () => {
@@ -68,7 +65,6 @@ const App = () => {
       for (var i = 0; i < cookies.length; i++) {
         var cookie = jQuery.trim(cookies[i]);
         if (cookie.substring(0, name.length + 1) === name + "=") {
-
           cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
           break;
         }
@@ -118,7 +114,6 @@ const App = () => {
       setLang(es)
     }
     
-
   }
 
   /*#####################################################*/
@@ -128,7 +123,6 @@ const App = () => {
   const [votingUserData, setVotingUserData] = useState(null);
   const [alert, setAlert] = useState({ lvl: null, msg: null });
   const [lang, setLang] = useState(es);
-
 
   /*#############################################################*/
   /*####################### FUNCTIONALITY #######################*/
@@ -141,13 +135,11 @@ const App = () => {
 
   const utils = { alert, setAlert, post, votingUserData, lang, changeLanguage };
 
-
   /*####################################################*/
   /*####################### VIEW #######################*/
   /*####################################################*/
 
   return (
-    
     <div className="App">
       <div></div>
       {votingUserData && <Voting utils={utils} />}
@@ -157,4 +149,3 @@ const App = () => {
 
 const domContainer = document.querySelector("#react-root");
 ReactDOM.render(<App />, domContainer);
-

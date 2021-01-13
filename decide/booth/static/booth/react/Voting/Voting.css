@@ -1,37 +1,17 @@
-
-/* #####################################################ADJUSTING TO SCREEN SIZE #################################*/
-
-/* @media (min-width: 576px) {  }
-@media (min-width: 768px) {  }
-@media (min-width: 992px) { }
-@media (min-width: 1200px) {  } */
-
-
-
 .option {
-  /* width: 70%; */
-  /* background: #EEE;
-    margin: 10px auto; */
-    text-align: center;
-    transition: all 0.5s ease;
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-
+  text-align: center;
+  transition: all 0.5s ease;
+  position: relative;
+  display: block;
+  margin: auto;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .container{
 margin:auto;
 float: none;
-
-margin-top: 70px;
-}
-
-.card-input>h1{
-  text-align: center;
-  margin: 0 auto;
-  float: none;
+margin-top: 40px;
 }
 
 /* ############################################## QUESTIONS DISPLAY ANIMATION #################################*/
@@ -44,7 +24,6 @@ margin-top: 70px;
 .question>h2{
   color: black;
   font-weight: bold;
-  margin-top: 20px;
   text-align: center;
 }
 div.active-question {
@@ -59,13 +38,11 @@ div.active-question {
 
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
-
-  overflow: hidden;
-
+  
   background-color: transparent;
-  width: 12vw;
-  height: 32vh;
-  border-radius: 5px;
+  width: 16vw;
+  height: 25vh;
+  border-radius: 30px;
   perspective: 1000px;
 }
 
@@ -75,12 +52,9 @@ div.active-question {
   width: 100%;
   height: 100%;
   text-align: center;
-
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
-
-  transition: transform 0.8s;
+  transition: transform 0.6s;
   transform-style: preserve-3d;
-
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
 }
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
@@ -92,50 +66,32 @@ div.active-question {
 .flip-card-front,
 .flip-card-back {
   position: absolute;
-
-  padding:2%;
   width: 100%;
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-
-
   border: 2px solid black; 
-  
 }
 
 /* Style the front side (fallback if image is missing) */
 .flip-card-front {
   margin: 0 auto;
   float: none;
-  background-color: white;
-  color: black;
+  background-color: rgb(58, 58, 58);
+  color: white;
 }
 .flip-card-front>h4,
 .flip-card-back>h4 {
   margin-top: 20px;
 }
-
 .flip-card-front:hover {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
 }
 
-
-.flip-card-front>h1{
-  font-size: 30px ;
-  text-align: center;
-  margin: 0 auto;
-  float: none;
-}
-
-/* .question .flip-card-back{
-  background-color: red;
-} */
 /* Style the back side */
 .flip-card-back {
   color: white;
   transform: rotateY(180deg);
-
 }
 
 /* Style for the cards grid */
@@ -146,7 +102,6 @@ div.active-question {
   opacity: 0.88;
   width: 25%;
   height: 22%;
-
   position: absolute;
   top: 0;
   left: 0;
@@ -208,12 +163,10 @@ div.active-question {
     font-weight: bold;
 }
 
-
 #next-question{
   float: right;
   margin :auto;
   right: 0 !important;
-
 }
 
 #voteButton{
@@ -241,12 +194,8 @@ div.active-question {
 
 div.question{
   background-image: url("https://i0.wp.com/www.pov21.com/wp-content/uploads/2020/10/element5-digital-T9CXBZLUvic-unsplash-1-e1604044339820.jpg?fit=2400%2C1200&ssl=1");
-  background-color: #3E3D3C;
-  margin-left: 5px;
-}
 
-div.question{
-  
+  background-color: #3E3D3C;
   /* height: 500px; */
   background-position: center;
   background-repeat: no-repeat;
@@ -258,7 +207,6 @@ div.question>div>h2{
   padding-top: 30px;
   padding-bottom: 30px;
 }
-
 
 div.alum-list.question > div.container-fluid > div > div{
   margin:1%;
@@ -277,7 +225,6 @@ div.alum-list.question > div.container-fluid > div > div{
   display: flex;
   padding-top: 20px;
   
-
 }
 
 @keyframes check {0% {height: 0;width: 0;}
@@ -285,7 +232,6 @@ div.alum-list.question > div.container-fluid > div > div{
 50% {height: 20px;width: 10px;}
 }
 .checkbox{background-color:#fff;display:inline-block;height:28px;margin:0 .25em;width:28px;border-radius:4px;border:1px solid #ccc;float:right;margin-left: 10px;}
-
 .checkbox span{display:block;height:28px;position:relative;width:28px;padding:0}
 .checkbox span:after{-moz-transform:scaleX(-1) rotate(135deg);-ms-transform:scaleX(-1) rotate(135deg);-webkit-transform:scaleX(-1) rotate(135deg);transform:scaleX(-1) rotate(135deg);-moz-transform-origin:left top;-ms-transform-origin:left top;-webkit-transform-origin:left top;transform-origin:left top;border-right:4px solid #fff;border-top:4px solid #fff;content:'';display:block;height:20px;left:3px;position:absolute;top:15px;width:10px}
 .checkbox span:hover:after{border-color:#999}
@@ -316,7 +262,6 @@ a#rotator {
     text-decoration: none;
     left: 3000px;
     position: absolute;
-
     -webkit-animation: move 4s;
     animation: move 4s;
 }
@@ -328,10 +273,6 @@ a#rotator img {
 .votingAnimation{
   z-index: 4000;
 }
-hr.linea {
-  border-top: 1px solid white;
-}
-
 
 .languageImg{
   width: 50px;
@@ -357,4 +298,3 @@ float: left;
   margin-left: 20px;
   float: right;
 }
-
