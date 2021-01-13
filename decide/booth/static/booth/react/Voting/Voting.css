@@ -19,8 +19,8 @@ margin-top: 40px;
 .question {
   overflow: auto;
   display: none;
-
 }
+
 .question>h2{
   color: black;
   font-weight: bold;
@@ -193,7 +193,7 @@ div.active-question {
 }
 
 div.question{
-  background-image: url("https://www.newmexicopbs.org/productions/newmexicoinfocus/wp-content/uploads/2020/11/element5-digital-T9CXBZLUvic-unsplash.jpg");
+  background-image: url("https://i0.wp.com/www.pov21.com/wp-content/uploads/2020/10/element5-digital-T9CXBZLUvic-unsplash-1-e1604044339820.jpg?fit=2400%2C1200&ssl=1");
 
   background-color: #3E3D3C;
   /* height: 500px; */
@@ -219,6 +219,7 @@ div.alum-list.question > div.container-fluid > div > div{
 }
 
 .boxesDiv{
+  
   align-content: center;
   flex-wrap: wrap;
   display: flex;
