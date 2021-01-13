@@ -325,16 +325,15 @@ const Voting = ({ utils }) => {
       });
 
       var colors = new Array(
-        "#233C66",
-        "#4E2366",
-        "#701C30",
-        "#A62D05",
-        "#7D610E",
-        "#42690D",
-        "#08806D"
+        "#DE8F7B",
+        "#E4A282",
+        "#E9B489",
+        "#E1C98D",
+        "#44b8AA",
+        "#439192",
+        "#426A7A"
       );
-      // new colors = ["#EF476F","#FFD166","#06D6A0","#118AB2","#073B4C"];
-
+     
       $(".question").each(function (index) {
 
         $(this).css({
