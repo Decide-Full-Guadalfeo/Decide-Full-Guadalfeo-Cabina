@@ -38,11 +38,13 @@ div.active-question {
 
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
-  
+
+  overflow: hidden;
+
   background-color: transparent;
-  width: 16vw;
-  height: 25vh;
-  border-radius: 30px;
+  width: 12vw;
+  height: 32vh;
+  border-radius: 5px;
   perspective: 1000px;
 }
 
@@ -77,8 +79,8 @@ div.active-question {
 .flip-card-front {
   margin: 0 auto;
   float: none;
-  background-color: rgb(58, 58, 58);
-  color: white;
+  background-color: white;
+  color: black;
 }
 .flip-card-front>h4,
 .flip-card-back>h4 {
@@ -92,6 +94,13 @@ div.active-question {
 .flip-card-back {
   color: white;
   transform: rotateY(180deg);
+}
+
+.flip-card-front>h1{
+  font-size: 30px ;
+  text-align: center;
+  margin: 0 auto;
+  float: none;
 }
 
 /* Style for the cards grid */
@@ -297,4 +306,8 @@ float: left;
 .but{
   margin-left: 20px;
   float: right;
+}
+
+hr.linea {
+  border-top: 1px solid white;
 }

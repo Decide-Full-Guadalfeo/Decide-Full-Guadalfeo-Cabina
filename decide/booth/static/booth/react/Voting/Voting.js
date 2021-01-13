@@ -476,6 +476,31 @@ const Voting = ({ utils }) => {
                                       className="card-input-element"
                                       value={p.number}
                                     />
+
+<h1>{utils.lang["cand"]}</h1>
+                                    <p>{p.option}</p>
+                                    <img src="https://www.us.es/sites/default/files/2019-05/marca-US-bn.jpg" alt="logo"></img>
+                                    
+                                  </div>
+
+                                  <div className="flip-card-back">
+                                    <h1>{utils.lang["select"]}</h1>
+                                    <p>{p.option}</p>
+                                    {/*<img src="./separador.png" alt="separador"></img>*/}
+                                    <p>{o.option}</p>
+                                    <hr class="linea"></hr>
+                                    <hr class="linea"></hr>
+                                    <hr class="linea"></hr>
+                                    <hr class="linea"></hr>
+                                    {/*<img src="./separador.png" alt="separador"></img>*/}
+                                    {/*<p>Candidacy:</p>
+                                    <p>{o.option}</p>*/}
+                                    {/*<p>Gender:</p>
+                                    <p>{o.option}</p>*/}
+                                    
+
+                                    {/*<img src="./separador.png" alt="separador"></img>
+                                  </div>
                                     <h4>{utils.lang["cand"]}</h4>
                                     <br />
                                     <h3>{p.option}</h3>
@@ -484,7 +509,7 @@ const Voting = ({ utils }) => {
                                   <div className="flip-card-back">
                                     <h4>{utils.lang["select"]}</h4>
                                     <br></br>
-                                    <h3><strong>{p.option}</strong></h3>
+                                    <h3><strong>{p.option}</strong></h3>*/}
                                   </div>
                                 </div>
                               </div>

@@ -44,7 +44,7 @@ const App = () => {
     language_button: "https://images.vexels.com/media/users/3/163965/isolated/lists/5bb2c926d53cc59030477ec3ecb6d26a-england-flag-language-icon.png",
     modal_close_button: "Entendido, ¡vamos allá!",
     cand: "Candidato",
-    select: "Seleccionaste:",
+    select: "Has elegido:",
     internalError: "Error interno",
     congratulations: "¡Enhorabuena! Tu voto ha sido enviado.",
     blankError: "Por favor, no deje preguntas vacías",
