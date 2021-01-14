@@ -63,7 +63,6 @@ div.question {
 .flip-card-front,
 .flip-card-back {
   position: absolute;
-  padding: 2%;
   width: 100%;
   height: 100%;
   -webkit-backface-visibility: hidden;
@@ -105,4 +104,18 @@ div.question {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+#myButton{
+  display: block;
+  margin: auto;
+  border: none;
+  background-color: transparent;
+  margin-bottom: 30px;
+}
+
+#myButton:focus{
+  border: none;
+  background-color: transparent;
+  outline: 0;
 }

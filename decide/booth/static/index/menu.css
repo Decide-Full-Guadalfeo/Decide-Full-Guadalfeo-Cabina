@@ -1,21 +1,53 @@
-.navbar {
-  /* height: 8vh; */
-  background-color: #00b894;
+*{
+  margin: 0px !important;
+  padding: 0px !important;
+  font-family: sans-serif !important;
 }
 
-nav.menu {
-  background-color: #00b894;
-  color:rgb(0, 0, 0); 
-  border-bottom: 5px groove black;
+.menu a
+{
+  color: white !important;
+  text-decoration: none !important;
 }
-nav.menu > span > h1{
-  font-size: 2.0rem;
+
+.menu a:visited
+{
+  color:white !important;
 }
-nav#voting-nav{
-  display: none;
+
+.menu a:hover
+{
+  text-decoration: underline !important;
 }
-nav.menu a:visited {
-  background-color: whitesmoke;
-  color:rgb(173, 76, 173); 
-  border-bottom: 5px groove black;
+
+.menu 
+{
+  width: 100% !important; 
+  display: flex !important;
+  flex-direction: row !important;
+  background-color: #00b894 !important;
+  height: 75px !important;
+  color: white !important;
+}
+
+.menu span
+{
+  flex-grow: 1 !important;
+  padding: 10px !important;
+  align-self: center !important;
+}
+
+.menu ul
+{
+  direction: lt !important;
+  display: flex !important;
+  flex-grow: 1 !important;
+  align-self: center !important;
+  justify-content: flex-end !important;
+  list-style-type: none !important;
+}
+
+.menu ul li
+{
+  padding: 10px !important;
 }
