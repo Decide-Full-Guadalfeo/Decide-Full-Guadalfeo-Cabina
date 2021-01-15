@@ -11,8 +11,8 @@ DATABASES = {
     }
 }
 
-STATIC_ROOT = '/app/static/'
-MEDIA_ROOT = '/app/static/media/'
+STATIC_ROOT = '/app/decide/static/'
+MEDIA_ROOT = '/app/decide/static/media/'
 ALLOWED_HOSTS = ['*']
 
 # Modules in use, commented modules that you won't use
