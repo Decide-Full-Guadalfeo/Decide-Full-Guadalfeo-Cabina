@@ -137,25 +137,12 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         c1.save()
         c2 = Census(voting_id=v2.id, voter_id=u1.id)
         c2.save()
-        """
-        c1 = Census(voting_id="3", voter_id="5")
-        c1.save()
-        c2 = Census(voting_id="4", voter_id="5")
-        c2.save()
-        c3 = Census(voting_id="5", voter_id="8")
-        c3.save()
-        c4 = Census(voting_id="7", voter_id="11")
-        c4.save()
-        c5 = Census(voting_id="9", voter_id="14")
-        c5.save()
-        c6 = Census(voting_id="11", voter_id="17")
-        c6.save()
-        """
+
         v1.candiancy = c
+        
         v1.save()
-        v2.save()       
+        v2.save()
             
-    
     def tearDown(self):           
         super().tearDown()
         self.driver.quit()
@@ -163,7 +150,6 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         
     
     def test_general_3qstions(self):
-        
         #Init
         self.driver.get(f'{self.live_server_url}')
         self.driver.set_window_size(1920, 1080)
@@ -190,8 +176,8 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
 
         #Close
         self.driver.close()
-        
-    
+
+
     def test_next_button(self):
         #Init
         self.driver.get(f'{self.live_server_url}')
@@ -220,6 +206,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         #Close
         self.driver.close()
     
+
     def test_prev_button(self):
         #Init
         self.driver.get(f'{self.live_server_url}')
@@ -249,10 +236,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         #Close
         self.driver.close()
         
-    
-    
-    
-    
+
     def test_primary_2qstions(self):
         #Init
         self.driver.get(f'{self.live_server_url}')
