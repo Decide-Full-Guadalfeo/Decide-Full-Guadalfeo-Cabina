@@ -131,8 +131,13 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         v1.create_pubkey()
         v1.start_date = timezone.now()  
         v2.create_pubkey()
-        v2.start_date = timezone.now()   
+        v2.start_date = timezone.now() 
 
+        c1 = Census(voting_id=v1.id, voter_id=u1.id)
+        c1.save()
+        c2 = Census(voting_id=v2.id, voter_id=u1.id)
+        c2.save()
+        """
         c1 = Census(voting_id="3", voter_id="5")
         c1.save()
         c2 = Census(voting_id="4", voter_id="5")
@@ -145,19 +150,20 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         c5.save()
         c6 = Census(voting_id="11", voter_id="17")
         c6.save()
-
+        """
         v1.candiancy = c
         v1.save()
         v2.save()       
             
-
+    
     def tearDown(self):           
         super().tearDown()
         self.driver.quit()
         self.base.tearDown()
         
-
+    
     def test_general_3qstions(self):
+        
         #Init
         self.driver.get(f'{self.live_server_url}')
         self.driver.set_window_size(1920, 1080)
@@ -184,6 +190,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
 
         #Close
         self.driver.close()
+        
     
     def test_next_button(self):
         #Init
@@ -295,5 +302,4 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
 
         #Close
         self.driver.close()
-    
     
