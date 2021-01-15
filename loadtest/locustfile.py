@@ -34,14 +34,14 @@ class DefVoters(SequentialTaskSet):
     @task
     def login(self):
         username, pwd = self.voter
-        self.token = self.client.post("/authentication/decide/login/", {
+        self.token = self.client.post("/authentication/login/", {
             "username": username,
             "password": pwd,
         }).json()
 
     @task
     def getuser(self):
-        self.usr= self.client.post("/authentication/decide/getuser/", self.token).json()
+        self.usr= self.client.post("/authentication/getuser/", self.token).json()
         print( str(self.user))
 
     @task
@@ -69,7 +69,7 @@ class DefCreateCandidatura(SequentialTaskSet):
     @task
     def login(self):
         username, pwd = 'root', 'complexpassword'
-        self.token = self.client.post("/authentication/decide/login/", {
+        self.token = self.client.post("/authentication/login/", {
             "username": username,
             "password": pwd,
         }).json()
@@ -96,7 +96,7 @@ class DefCreatePrimaryVoting(SequentialTaskSet):
     @task
     def login(self):
         username, pwd = 'root', 'complexpassword'
-        self.token = self.client.post("/authentication/decide/login/", {
+        self.token = self.client.post("/authentication/login/", {
             "username": username,
             "password": pwd,
         }).json()
@@ -134,7 +134,7 @@ class DefCreateGeneralVoting(SequentialTaskSet):
     @task
     def login(self):
         username, pwd = 'root', 'complexpassword'
-        self.token = self.client.post("/authentication/decide/login/", {
+        self.token = self.client.post("/authentication/login/", {
             "username": username,
             "password": pwd,
         }).json()

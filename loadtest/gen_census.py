@@ -17,14 +17,14 @@ def create_voters(filename):
         voters = json.loads(f.read())
 
     data = {'username': USER, 'password': PASS}
-    response = requests.post(HOST + '/authentication/decide/login/', data=data)
+    response = requests.post(HOST + '/authentication/login/', data=data)
     token = response.json()
 
     voters_pk = []
     invalid_voters = []
     for username, pwd in voters.items():
         token.update({'username': username, 'password': pwd})
-        response = requests.post(HOST + '/authentication/decide/register/', data=token)
+        response = requests.post(HOST + '/authentication/register/', data=token)
         if response.status_code == 201:
             voters_pk.append(response.json().get('user_pk'))
         else:
@@ -37,7 +37,7 @@ def add_census(voters_pk, voting_pk):
     Add to census all voters_pk in the voting_pk.
     """
     data = {'username': USER, 'password': PASS}
-    response = requests.post(HOST + '/authentication/decide/login/', data=data)
+    response = requests.post(HOST + '/authentication/login/', data=data)
     token = response.json()
 
     data2 = {'voters': voters_pk, 'voting_id': voting_pk}

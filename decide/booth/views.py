@@ -23,7 +23,7 @@ class BoothView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         vid = kwargs.get('voting_id', 0)
-        
+
         try:
             r = mods.get('voting', params={'id': vid})
     
@@ -86,8 +86,6 @@ class BoothListView(APIView):
                     except:
                         print('La votación con id', c.voting_id, 'ha sido borrada')
 
-            if len(votings) == 0:
-                msg= 'You dont have any votings'
 
         
         return render(request, 'booth/boothlist.html', {'msg':msg, 'votings':votings})
