@@ -261,7 +261,7 @@ const Voting = ({ utils }) => {
           }, 1700);
         })
         .catch((error) => {
-          utils.setAlert({ lvl: "error", msg: "Error: " + error });
+          utils.setAlert({ lvl: "error", msg: utils.lang["internalError"] });
         });
 
     } else {
@@ -351,6 +351,7 @@ const Voting = ({ utils }) => {
 
         }
       });
+      
       $("button#prev-question").click(function () {
 
         var active_question = $("div.active-question");
@@ -472,7 +473,7 @@ const Voting = ({ utils }) => {
                                       className="card-input-element"
                                       value={p.number}
                                     />
-
+                                    
                                     <h4>{utils.lang["cand"]}</h4><br/>
                                     <h3>{p.option.split(" / ")[0]}</h3>
                                     <img className="responsive" src="https://www.uco.es/investigacion/proyectos/SEBASENet/images/Logo_US.png" alt="logo"></img>
