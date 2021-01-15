@@ -23,7 +23,12 @@ class StoreView(generics.ListAPIView):
         return super().get(request)
 
     def post(self, request):
-        
+        """
+         * voting: id
+         * voter: id
+         * vote: { "a": int, "b": int }
+        """
+
         vid = request.data.get('voting')
         voting = mods.get('voting', params={'id': vid})
         if not voting or not isinstance(voting, list):
@@ -37,11 +42,12 @@ class StoreView(generics.ListAPIView):
 
         uid = request.data.get('voter')
         vote = request.data.get('vote')
+
         if not vid or not uid or not vote:
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
         # validating voter
-        token = request.data.get('token')
+        token = request.auth.key
         voter = mods.post('authentication', entry_point='/getuser/', json={'token': token})
         voter_id = voter.get('id', None)
         if not voter_id or voter_id != uid:
@@ -52,12 +58,14 @@ class StoreView(generics.ListAPIView):
         if perms.status_code == 401:
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
 
-        #################################################################
-        ########################## New encrypt ##########################
-        #################################################################
+        a = vote.get("a")
+        b = vote.get("b")
 
+        defs = { "a": a, "b": b }
         v, _ = Vote.objects.get_or_create(voting_id=vid, voter_id=uid,
-                                          data=vote)
+                                          defaults=defs)
+        v.a = a
+        v.b = b
 
         v.save()
 
