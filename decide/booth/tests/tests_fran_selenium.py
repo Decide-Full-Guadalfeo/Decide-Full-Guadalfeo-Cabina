@@ -323,7 +323,7 @@ class BoothTestCase(StaticLiveServerTestCase):
 
         self.base.tearDown()
 
-'''
+
     def test_general_5_woman(self):
         self.driver.get(f'{self.live_server_url}/')
         self.driver.set_window_size(1920, 1080)
@@ -501,4 +501,4 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(2)
 
         assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
-        '''
+        

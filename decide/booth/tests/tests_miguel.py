@@ -113,7 +113,7 @@ class BoothTestCase(APITestCase):
     def tearDown(self):
         self.client = None
 
-'''  
+  
     def test_voting_token_exist(self): #The token is created alongside with the user
         response = self.client.get('/authentication/decide/login/')
         data = {"username":"voter1","password": "password1234"}
@@ -129,4 +129,3 @@ class BoothTestCase(APITestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,'booth/boothlist.html')
-'''

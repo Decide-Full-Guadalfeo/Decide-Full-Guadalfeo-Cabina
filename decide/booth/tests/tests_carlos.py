@@ -113,7 +113,7 @@ class BoothTestCase(APITestCase):
 
     def tearDown(self):
         self.client = None
-'''
+
     def test_boothlist_login(self):
 
         response = self.client.get('/authentication/decide/login/')
@@ -133,7 +133,7 @@ class BoothTestCase(APITestCase):
 
         response = self.client.get('/booth/')
         self.assertRedirects(response, '/authentication/decide/login/', status_code=302, target_status_code=200, fetch_redirect_response=False)
-'''
+
   
 
         

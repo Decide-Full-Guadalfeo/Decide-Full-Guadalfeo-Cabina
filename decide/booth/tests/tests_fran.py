@@ -119,7 +119,7 @@ class BoothTestCase(APITestCase):
         self.client = None
 
 
-'''
+
     def test_boothlist_no_auth_user(self):
         #Login
         response = self.client.get('/authentication/decide/login/')
@@ -150,4 +150,4 @@ class BoothTestCase(APITestCase):
         response = self.client.get('/booth/', follow=True)
         
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response,'booth/boothlist.html')'''
+        self.assertTemplateUsed(response,'booth/boothlist.html')
