@@ -10,7 +10,7 @@ RUN pip install ipython
 
 WORKDIR /app
 
-RUN git clone https://github.com/Decide-Full-Guadalfeo/Decide-Full-Guadalfeo-Votaciones.git .
+RUN git clone https://github.com/Decide-Full-Guadalfeo/Decide-Full-Guadalfeo-Cabina.git .
 RUN pip install -r requirements.txt
 
 WORKDIR /app/decide
