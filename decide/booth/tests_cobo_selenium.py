@@ -21,11 +21,9 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
     def setUp(self):
         self.base = BaseTestCase()
         self.base.setUp()
-
         options = webdriver.ChromeOptions()
         options.headless = False
         self.driver = webdriver.Chrome(options=options)
-
         super().setUp()
 
         u1 = User(username='voter1', email='voter1@gmail.com')
@@ -44,7 +42,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
             representanteDelegadoMaster=u1)
         c.save()
 
-        q1 = Question(desc='Pregunta 1')
+        q1 = Question(desc='Pregunta 1 - PRIMERO')
         q1.save()
         qo1 = QuestionOption(number="1", option="Alvaro Aguilar / 1", question=q1)
         qo1.save()
@@ -53,7 +51,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         qo3 = QuestionOption(number="3", option="Andrea Solar / 3", question=q1)
         qo3.save()
 
-        q2 = Question(desc='Pregunta 2')
+        q2 = Question(desc='Pregunta 2 - SEGUNDO')
         q2.save()
         qo4 = QuestionOption(number="1", option="Alvaro Aguilar / 1", question=q2)
         qo4.save()
@@ -62,7 +60,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         qo6 = QuestionOption(number="3", option="Andrea Solar / 3", question=q2)
         qo6.save()
 
-        q3 = Question(desc='Pregunta 3')
+        q3 = Question(desc='Pregunta 3 - TERCERO')
         q3.save()
         qo7 = QuestionOption(number="1", option="Alvaro Aguilar / 1", question=q3)
         qo7.save()
@@ -71,7 +69,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         qo9 = QuestionOption(number="3", option="Andrea Solar / 3", question=q3)
         qo9.save()
 
-        q4 = Question(desc='Pregunta 4')
+        q4 = Question(desc='Pregunta 4 - CUARTO')
         q4.save()
         qo10 = QuestionOption(number="1", option="Alvaro Aguilar / 1", question=q4)
         qo10.save()
@@ -80,7 +78,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         qo12 = QuestionOption(number="3", option="Andrea Solar / 3", question=q4)
         qo12.save()
 
-        q5 = Question(desc='Pregunta 5')
+        q5 = Question(desc='Pregunta 5 - MASTER')
         q5.save()
         qo13 = QuestionOption(number="1", option="Alvaro Aguilar / 1", question=q5)
         qo13.save()
@@ -89,7 +87,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         qo15 = QuestionOption(number="3", option="Andrea Solar / 3", question=q5)
         qo15.save()
 
-        q6 = Question(desc='Pregunta 6')
+        q6 = Question(desc='Pregunta 6 - DELEGACION')
         q6.save()
         qo16 = QuestionOption(number="1", option="Alvaro Aguilar / 1", question=q6)
         qo16.save()
@@ -115,53 +113,167 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         v1.question.add(q4)
         v1.question.add(q5)
         v1.question.add(q6)
-        #v1.question.add(q7)
+
+        v2 = Voting(name="Votacion 2", desc="Descripcion 2", tipo='GV')
+        v2.save()
+        v2.question.add(q1)
+        v2.question.add(q2)
+        v2.question.add(q3)
+        v2.question.add(q4)
+        v2.question.add(q5)
+        v2.question.add(q6)
+        v2.question.add(q7)
 
         a1 = Auth(name=f'{self.live_server_url}', url=f'{self.live_server_url}', me=False)
         a1.save()
         v1.auths.add(a1)
+        v2.auths.add(a1)
 
         v1.create_pubkey()
-        v1.start_date = timezone.now()   
+        v1.start_date = timezone.now()  
+        v2.create_pubkey()
+        v2.start_date = timezone.now()   
 
         c1 = Census(voting_id="1", voter_id="3")
         c1.save()
+        c2 = Census(voting_id="2", voter_id="3")
+        c2.save()
 
         v1.candiancy = c
-        v1.save()        
+        v1.save()
+        v2.save()       
             
     def tearDown(self):           
         super().tearDown()
         self.driver.quit()
-
         self.base.tearDown()
-
-    def test_primary(self):
-        self.driver.get(f'{self.live_server_url}/')
+        
+    
+    def test_prev_button(self):
+        #Init
+        self.driver.get(f'{self.live_server_url}')
         self.driver.set_window_size(1920, 1080)
-        time.sleep(1)
+        time.sleep(0.5)
+        #Login
         self.driver.find_element(By.LINK_TEXT, "Login").click()
-        time.sleep(1)
+        time.sleep(0.5)
         self.driver.find_element(By.ID, "id_username").send_keys("voter1")
         self.driver.find_element(By.ID, "id_password").send_keys("113")
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
-        time.sleep(1)
-        self.driver.find_element(By.LINK_TEXT, "voter1").click()
-        time.sleep(3)
+        time.sleep(0.5)
+        #Go to Booth 1
         self.driver.get(f'{self.live_server_url}/booth/1')
-        time.sleep(3)
-        assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
-        #self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
-        time.sleep(3)
+        time.sleep(1)
+        #No Prev button at first
+        prev = self.driver.find_element(By.ID, "prev-question")
+        assert 'display: none' in prev.get_attribute('style')
+        #Prev button in the next question
         self.driver.find_element(By.ID, "next-question").click()
-        assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(2) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
-        #self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(2) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(2) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
-        time.sleep(3)
-        self.driver.find_element(By.ID, "voteButton").click()
-        time.sleep(100)
-        assert self.driver.find_element(By.CSS_SELECTOR, "p") == "¡Enhorabuena! Tu voto ha sido enviado."
-        self.driver.find_element(By.CSS_SELECTOR, "p").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(2)").click()
+        time.sleep(0.3)
+        prev = self.driver.find_element(By.ID, "prev-question")
+        assert 'display: none' not in prev.get_attribute('style')
+
+        #Close
         self.driver.close()
+        
+    
+    def test_next_button(self):
+        #Init
+        self.driver.get(f'{self.live_server_url}')
+        self.driver.set_window_size(1920, 1080)
+        time.sleep(0.5)
+        #Login
+        self.driver.find_element(By.LINK_TEXT, "Login").click()
+        time.sleep(0.5)
+        self.driver.find_element(By.ID, "id_username").send_keys("voter1")
+        self.driver.find_element(By.ID, "id_password").send_keys("113")
+        self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
+        time.sleep(0.5)
+        #Go to Booth 1
+        self.driver.get(f'{self.live_server_url}/booth/2')
+        time.sleep(1)
+        #Next button is present at the begining
+        assert 'display: none' not in self.driver.find_element(By.ID, "next-question").get_attribute('style')
+        #No Next button in last question
+        self.driver.find_element(By.ID, "next-question").click()
+        time.sleep(0.3)
+        assert 'display: none' in self.driver.find_element(By.ID, "next-question").get_attribute('style')
+        
+
+        #Close
+        self.driver.close()
+    
+    """
+    def test_primary_2qstions(self):
+        #Init
+        self.driver.get(f'{self.live_server_url}')
+        self.driver.set_window_size(1920, 1080)
+        time.sleep(0.5)
+        #Login
+        self.driver.find_element(By.LINK_TEXT, "Login").click()
+        time.sleep(0.5)
+        self.driver.find_element(By.ID, "id_username").send_keys("voter1")
+        self.driver.find_element(By.ID, "id_password").send_keys("113")
+        self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
+        time.sleep(0.5)
+        #Go to Booth 1
+        self.driver.get(f'{self.live_server_url}/booth/1')
+        time.sleep(1)
+        #Click Next once
+        self.driver.find_element(By.ID, "next-question").click()
+        time.sleep(0.3)
+        #No Next button then
+        assert 'display: none' in self.driver.find_element(By.ID, "next-question").get_attribute('style')
+
+        #Close
+        self.driver.close()
+    
+
+    def test_genearal_3qstions(self):
+        #Init
+        self.driver.get(f'{self.live_server_url}')
+        self.driver.set_window_size(1920, 1080)
+        time.sleep(0.5)
+        #Login
+        self.driver.find_element(By.LINK_TEXT, "Login").click()
+        time.sleep(0.5)
+        self.driver.find_element(By.ID, "id_username").send_keys("voter1")
+        self.driver.find_element(By.ID, "id_password").send_keys("113")
+        self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
+        time.sleep(0.5)
+        #Go to Booth 2
+        self.driver.get(f'{self.live_server_url}/booth/2')
+        time.sleep(1)
+        #Click Next twice
+        self.driver.find_element(By.ID, "next-question").click()
+        time.sleep(0.3)
+        self.driver.find_element(By.ID, "next-question").click()
+        time.sleep(0.3)
+        #No Next button then
+        assert 'display: none' in self.driver.find_element(By.ID, "next-question").get_attribute('style')
+
+        #Close
+        self.driver.close()
+    
+
+    def test_question_from_his_course(self):
+        #Init
+        self.driver.get(f'{self.live_server_url}')
+        self.driver.set_window_size(1920, 1080)
+        time.sleep(0.5)
+        #Login
+        self.driver.find_element(By.LINK_TEXT, "Login").click()
+        time.sleep(0.5)
+        self.driver.find_element(By.ID, "id_username").send_keys("voter1")
+        self.driver.find_element(By.ID, "id_password").send_keys("113")
+        self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
+        time.sleep(0.5)
+        #Go to Booth 1
+        self.driver.get(f'{self.live_server_url}/booth/1')
+        time.sleep(1)
+        #Question
+        assert "PRIMERO" in self.driver.find_element(By.CSS_SELECTOR, ".active-question strong").text
+
+        #Close
+        self.driver.close()
+    """
