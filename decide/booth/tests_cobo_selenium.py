@@ -141,7 +141,8 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
 
         v1.candiancy = c
         v1.save()
-        v2.save()       
+        v2.save()   
+            
             
     def tearDown(self):           
         super().tearDown()
