@@ -86,7 +86,7 @@ class BoothListView(APIView):
                     except:
                         print('La votación con id', c.voting_id, 'ha sido borrada')
 
-            if len(votings):
+            if len(votings) == 0:
                 msg= 'You dont have any votings'
 
         

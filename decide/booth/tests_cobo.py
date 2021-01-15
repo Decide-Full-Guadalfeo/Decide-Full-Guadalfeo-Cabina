@@ -14,7 +14,7 @@ import json
 
 from base import mods
 
-class BoothTestCaseCobo(APITestCase):
+class BoothViewsTestsCobo(APITestCase):
     def setUp(self):
         self.client = APIClient()
         mods.mock_query(self.client)
@@ -152,3 +152,4 @@ class BoothTestCaseCobo(APITestCase):
 
         votings = len(response.context['votings'])
         self.assertEquals(votings, 1)
+        

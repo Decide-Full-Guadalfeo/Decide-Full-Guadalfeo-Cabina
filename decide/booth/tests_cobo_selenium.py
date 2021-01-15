@@ -17,7 +17,6 @@ from census.models import Census
 
 class BoothTestCaseCobo(StaticLiveServerTestCase):
 
-
     def setUp(self):
         self.base = BaseTestCase()
         self.base.setUp()
@@ -134,21 +133,85 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         v2.create_pubkey()
         v2.start_date = timezone.now()   
 
-        c1 = Census(voting_id="1", voter_id="3")
+        c1 = Census(voting_id="3", voter_id="5")
         c1.save()
-        c2 = Census(voting_id="2", voter_id="3")
+        c2 = Census(voting_id="4", voter_id="5")
         c2.save()
+        c3 = Census(voting_id="5", voter_id="8")
+        c3.save()
+        c4 = Census(voting_id="7", voter_id="11")
+        c4.save()
+        c5 = Census(voting_id="9", voter_id="14")
+        c5.save()
+        c6 = Census(voting_id="11", voter_id="17")
+        c6.save()
 
         v1.candiancy = c
         v1.save()
-        v2.save()   
+        v2.save()       
             
-            
+
     def tearDown(self):           
         super().tearDown()
         self.driver.quit()
         self.base.tearDown()
         
+
+    def test_general_3qstions(self):
+        #Init
+        self.driver.get(f'{self.live_server_url}')
+        self.driver.set_window_size(1920, 1080)
+        time.sleep(0.5)
+        #Login
+        self.driver.find_element(By.LINK_TEXT, "Login").click()
+        time.sleep(0.5)
+        self.driver.find_element(By.ID, "id_username").send_keys("voter1")
+        self.driver.find_element(By.ID, "id_password").send_keys("113")
+        self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
+        time.sleep(0.5)
+        #Go to Booth
+        self.driver.get(f'{self.live_server_url}/booth')
+        time.sleep(0.5)
+        self.driver.find_element(By.CSS_SELECTOR, ".option:nth-child(2) #button").click()
+        time.sleep(1)
+        #Click Next twice
+        self.driver.find_element(By.ID, "next-question").click()
+        time.sleep(0.3)
+        self.driver.find_element(By.ID, "next-question").click()
+        time.sleep(0.3)
+        #No Next button then
+        assert 'display: none' in self.driver.find_element(By.ID, "next-question").get_attribute('style')
+
+        #Close
+        self.driver.close()
+    
+    def test_next_button(self):
+        #Init
+        self.driver.get(f'{self.live_server_url}')
+        self.driver.set_window_size(1920, 1080)
+        time.sleep(0.5)
+        #Login
+        self.driver.find_element(By.LINK_TEXT, "Login").click()
+        time.sleep(0.5)
+        self.driver.find_element(By.ID, "id_username").send_keys("voter1")
+        self.driver.find_element(By.ID, "id_password").send_keys("113")
+        self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
+        time.sleep(0.5)
+        #Go to Booth
+        self.driver.get(f'{self.live_server_url}/booth')
+        time.sleep(0.5)
+        self.driver.find_element(By.ID, "button").click()
+        time.sleep(1)
+        #Next button is present at the begining
+        assert 'display: none' not in self.driver.find_element(By.ID, "next-question").get_attribute('style')
+        #No Next button in last question
+        self.driver.find_element(By.ID, "next-question").click()
+        time.sleep(0.3)
+        assert 'display: none' in self.driver.find_element(By.ID, "next-question").get_attribute('style')
+        
+
+        #Close
+        self.driver.close()
     
     def test_prev_button(self):
         #Init
@@ -162,8 +225,10 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys("113")
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(0.5)
-        #Go to Booth 1
-        self.driver.get(f'{self.live_server_url}/booth/1')
+        #Go to Booth
+        self.driver.get(f'{self.live_server_url}/booth')
+        time.sleep(0.5)
+        self.driver.find_element(By.ID, "button").click()
         time.sleep(1)
         #No Prev button at first
         prev = self.driver.find_element(By.ID, "prev-question")
@@ -178,31 +243,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         self.driver.close()
         
     
-    def test_next_button(self):
-        #Init
-        self.driver.get(f'{self.live_server_url}')
-        self.driver.set_window_size(1920, 1080)
-        time.sleep(0.5)
-        #Login
-        self.driver.find_element(By.LINK_TEXT, "Login").click()
-        time.sleep(0.5)
-        self.driver.find_element(By.ID, "id_username").send_keys("voter1")
-        self.driver.find_element(By.ID, "id_password").send_keys("113")
-        self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
-        time.sleep(0.5)
-        #Go to Booth 1
-        self.driver.get(f'{self.live_server_url}/booth/2')
-        time.sleep(1)
-        #Next button is present at the begining
-        assert 'display: none' not in self.driver.find_element(By.ID, "next-question").get_attribute('style')
-        #No Next button in last question
-        self.driver.find_element(By.ID, "next-question").click()
-        time.sleep(0.3)
-        assert 'display: none' in self.driver.find_element(By.ID, "next-question").get_attribute('style')
-        
-
-        #Close
-        self.driver.close()
+    
     
     
     def test_primary_2qstions(self):
@@ -217,37 +258,12 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys("113")
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(0.5)
-        #Go to Booth 1
-        self.driver.get(f'{self.live_server_url}/booth/1')
+        #Go to Booth
+        self.driver.get(f'{self.live_server_url}/booth')
+        time.sleep(0.5)
+        self.driver.find_element(By.ID, "button").click()
         time.sleep(1)
         #Click Next once
-        self.driver.find_element(By.ID, "next-question").click()
-        time.sleep(0.3)
-        #No Next button then
-        assert 'display: none' in self.driver.find_element(By.ID, "next-question").get_attribute('style')
-
-        #Close
-        self.driver.close()
-    
-
-    def test_genearal_3qstions(self):
-        #Init
-        self.driver.get(f'{self.live_server_url}')
-        self.driver.set_window_size(1920, 1080)
-        time.sleep(0.5)
-        #Login
-        self.driver.find_element(By.LINK_TEXT, "Login").click()
-        time.sleep(0.5)
-        self.driver.find_element(By.ID, "id_username").send_keys("voter1")
-        self.driver.find_element(By.ID, "id_password").send_keys("113")
-        self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
-        time.sleep(0.5)
-        #Go to Booth 2
-        self.driver.get(f'{self.live_server_url}/booth/2')
-        time.sleep(1)
-        #Click Next twice
-        self.driver.find_element(By.ID, "next-question").click()
-        time.sleep(0.3)
         self.driver.find_element(By.ID, "next-question").click()
         time.sleep(0.3)
         #No Next button then
@@ -269,12 +285,15 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys("113")
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(0.5)
-        #Go to Booth 1
-        self.driver.get(f'{self.live_server_url}/booth/1')
+        #Go to Booth
+        self.driver.get(f'{self.live_server_url}/booth')
+        time.sleep(0.5)
+        self.driver.find_element(By.ID, "button").click()
         time.sleep(1)
         #Question
         assert "PRIMERO" in self.driver.find_element(By.CSS_SELECTOR, ".active-question strong").text
 
         #Close
         self.driver.close()
+    
     
