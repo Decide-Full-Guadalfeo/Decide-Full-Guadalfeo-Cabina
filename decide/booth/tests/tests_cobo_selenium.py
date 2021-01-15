@@ -21,7 +21,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         self.base = BaseTestCase()
         self.base.setUp()
         options = webdriver.ChromeOptions()
-        options.headless = False
+        options.headless = True
         self.driver = webdriver.Chrome(options=options)
         super().setUp()
 
@@ -148,7 +148,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         self.driver.quit()
         self.base.tearDown()
         
-    
+  
     def test_general_3qstions(self):
         #Init
         self.driver.get(f'{self.live_server_url}')
@@ -177,7 +177,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         #Close
         self.driver.close()
 
-
+'''
     def test_next_button(self):
         #Init
         self.driver.get(f'{self.live_server_url}')
@@ -286,4 +286,4 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
 
         #Close
         self.driver.close()
-    
+    '''

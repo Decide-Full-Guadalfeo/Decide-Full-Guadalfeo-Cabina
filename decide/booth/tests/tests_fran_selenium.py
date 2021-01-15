@@ -35,7 +35,6 @@ from base.models import Auth
 from census.models import Census
 
 from base import mods
-from parameterized import parameterized
 
 import time 
 
@@ -47,7 +46,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         self.base.setUp()
 
         options = webdriver.ChromeOptions()
-        options.headless = False
+        options.headless = True
         self.driver = webdriver.Chrome(options=options)
 
         super().setUp()
@@ -317,33 +316,14 @@ class BoothTestCase(StaticLiveServerTestCase):
 
         v1.candiancy = c
         v1.save()  
-        """
-        v2 = Voting(name="Votacion 2", desc="Descripcion 2", tipo='PV')
-        v2.save()
-        v2.question.add(q1)
-        v2.question.add(q2)
-        v2.question.add(q3)
-        v2.question.add(q4)
-        v2.question.add(q5)
-        v2.question.add(q6)
-
-        v2.auths.add(a1)
-
-        v2.create_pubkey()
-        v2.start_date = timezone.now()  
-
-        c2 = Census(voting_id=v2.id, voter_id=u1.id)
-        c2.save()
-
-        v2.save()    
-        """
+       
     def tearDown(self):
         super().tearDown()
         self.driver.quit()
 
         self.base.tearDown()
 
-
+'''
     def test_general_5_woman(self):
         self.driver.get(f'{self.live_server_url}/')
         self.driver.set_window_size(1920, 1080)
@@ -521,3 +501,4 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(2)
 
         assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
+        '''
