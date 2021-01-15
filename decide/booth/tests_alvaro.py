@@ -115,7 +115,8 @@ class BoothTestCase(APITestCase):
         self.client = None
 
     def test_voting_id_exist(self):
-        response = self.client.get('http://localhost:8000/booth/1/')
+        voting = Voting.objects.all()
+        response = self.client.get('http://localhost:8000/booth/' + str(voting[0].id) + '/')
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'booth/booth.html')
 
@@ -123,5 +124,5 @@ class BoothTestCase(APITestCase):
         self.assertEquals(voting["id"], 1)
 
     def test_voting_id_not_exist(self):
-        response = self.client.get('http://localhost:8000/booth/3/')
+        response = self.client.get('http://localhost:8000/booth/10000/')
         self.assertEquals(response.status_code, 404)

@@ -137,11 +137,11 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         
         q7 = Question(desc='Pregunta 7')
         q7.save()
-        qo19 = QuestionOption(number="1", option="Alvaro Aguilar / 4", question=q7)
+        qo19 = QuestionOption(number="1", option="Alvaro Aguilar / " + str(u2.id), question=q7)
         qo19.save()
-        qo20 = QuestionOption(number="2", option="Nuría Garcia / 5", question=q7)
+        qo20 = QuestionOption(number="2", option="Nuría Garcia / " + str(u3.id), question=q7)
         qo20.save()
-        qo21 = QuestionOption(number="3", option="Andrea Solar / 6", question=q7)
+        qo21 = QuestionOption(number="3", option="Andrea Solar / " + str(u4.id), question=q7)
         qo21.save()
 
         v1 = Voting(name="Votacion 1", desc="Descripcion 1", tipo='GV')
@@ -161,7 +161,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         v1.create_pubkey()
         v1.start_date = timezone.now()   
 
-        c1 = Census(voting_id="1", voter_id="3")
+        c1 = Census(voting_id=v1.id, voter_id=u1.id)
         c1.save()
 
         v1.candiancy = c
@@ -181,7 +181,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         v2.create_pubkey()
         v2.start_date = timezone.now()  
 
-        c2 = Census(voting_id="4", voter_id="9")
+        c2 = Census(voting_id=v2.id, voter_id=u1.id)
         c2.save()
 
         v2.save()    
@@ -193,6 +193,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.base.tearDown()
 
     def test_general(self):
+        voting = Voting.objects.all()
         self.driver.get(f'{self.live_server_url}/')
         self.driver.set_window_size(1920, 1080)
         time.sleep(1)
@@ -202,7 +203,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys("113")
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(1)
-        self.driver.get(f'{self.live_server_url}/booth/1')
+        self.driver.get(f'{self.live_server_url}/booth/' + str(voting[0].id) + '/')
         time.sleep(3)
         assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
@@ -225,6 +226,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.close()
  
     def test_primary(self):
+        voting = Voting.objects.all()
         self.driver.get(f'{self.live_server_url}/')
         self.driver.set_window_size(1920, 1080)
         time.sleep(1)
@@ -234,7 +236,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys("113")
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(1)
-        self.driver.get(f'{self.live_server_url}/booth/4')
+        self.driver.get(f'{self.live_server_url}/booth/' + str(voting[1].id) + '/')
         time.sleep(3)
         assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
@@ -250,6 +252,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.close()
 
     def test_voting_guide(self):
+        voting = Voting.objects.all()
         self.driver.get(f'{self.live_server_url}/')
         self.driver.set_window_size(1920, 1080)
         time.sleep(1)
@@ -259,7 +262,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys("113")
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(1)
-        self.driver.get(f'{self.live_server_url}/booth/5')
+        self.driver.get(f'{self.live_server_url}/booth/' + str(voting[0].id) + '/')
         time.sleep(3)
         self.driver.find_element(By.CSS_SELECTOR, ".moda > div > button").click()
         time.sleep(3)
@@ -267,6 +270,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.close()
 
     def test_voting_guide_close(self):
+        voting = Voting.objects.all()
         self.driver.get(f'{self.live_server_url}/')
         self.driver.set_window_size(1920, 1080)
         time.sleep(1)
@@ -276,11 +280,11 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys("113")
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(1)
-        self.driver.get(f'{self.live_server_url}/booth/7')
+        self.driver.get(f'{self.live_server_url}/booth/' + str(voting[1].id) + '/')
         time.sleep(3)
         self.driver.find_element(By.CSS_SELECTOR, ".moda > div > button").click()
         time.sleep(3)
         self.driver.find_element(By.CSS_SELECTOR, ".btn-secondary").click()
         time.sleep(1)
         assert self.driver.find_element(By.CSS_SELECTOR, ".question > div > h2 > strong").text == "PREGUNTA 1"
-        self.driver.close()
+        self.driver.close()  
