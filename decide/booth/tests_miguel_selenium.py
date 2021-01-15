@@ -128,8 +128,14 @@ class BoothTestCase(StaticLiveServerTestCase):
         v1.create_pubkey()
         v1.start_date = timezone.now()   
 
-        c1 = Census(voting_id="1", voter_id="3")
+        c1 = Census(voting_id="2", voter_id="6")
         c1.save()
+
+        c2 = Census(voting_id="3", voter_id="9")
+        c2.save()
+
+        c3 = Census(voting_id="6", voter_id="18")
+        c3.save()
 
         v1.candiancy = c
         v1.save()        
@@ -140,6 +146,47 @@ class BoothTestCase(StaticLiveServerTestCase):
 
         self.base.tearDown()
 
+    def test_booth_logged_no_candidate(self):
+        self.driver.get(f'{self.live_server_url}/')
+        self.driver.set_window_size(1294, 741)
+        time.sleep(2)
+        self.driver.find_element(By.LINK_TEXT, "Login").click()
+        time.sleep(2)
+        self.driver.find_element(By.ID, "id_username").send_keys("voter1")
+        self.driver.find_element(By.ID, "id_password").send_keys("113")
+        self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
+        time.sleep(1)
+        self.driver.get(f'{self.live_server_url}/booth/1')
+        time.sleep(3)
+        assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
+        self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
+        time.sleep(2)
+        self.driver.find_element(By.ID, "next-question").click()
+        assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(2) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
+        self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(2) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
+        time.sleep(2)
+        self.driver.find_element(By.ID, "voteButton").click()
+        time.sleep(4)
+        assert self.driver.find_element(By.CSS_SELECTOR, "p").text == "Error: Unauthorized"
+        self.driver.close()
+
+    def test_language_boothlist(self):
+        self.driver.get(f'{self.live_server_url}/')
+        self.driver.set_window_size(1294, 741)
+        time.sleep(2)
+        self.driver.find_element(By.LINK_TEXT, "Login").click()
+        time.sleep(2)
+        self.driver.find_element(By.ID, "id_username").send_keys("voter1")
+        self.driver.find_element(By.ID, "id_password").send_keys("113")
+        self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
+        time.sleep(2)
+        self.driver.get(f'{self.live_server_url}/booth/')
+        time.sleep(2)
+        assert self.driver.find_element(By.ID, "title").text == "Votaciones activas"
+        time.sleep(1)
+        self.driver.find_element(By.ID, "image").click()
+        assert self.driver.find_element(By.ID, "title").text == "Active Questions"
+        self.driver.close()
     
     def test_logged_booth_list(self):
         self.driver.get(f'{self.live_server_url}/')
@@ -156,17 +203,11 @@ class BoothTestCase(StaticLiveServerTestCase):
         assert self.driver.find_element(By.ID, "button").text == "Click aquí"
         self.driver.close()
         
-
-    def test_not_logged_boothlist(self):
-        self.driver.get(f'{self.live_server_url}/booth/')
-        self.driver.set_window_size(1294, 741)
-        time.sleep(2)
-        assert self.driver.find_element(By.ID, "error").text == "You must be logged to access there!"
-        self.driver.close()
-
     def test_logged_with_no_census_boothlist(self):
         self.driver.get(f'{self.live_server_url}/')
         self.driver.set_window_size(1294, 741)
+        time.sleep(2)
+        self.driver.find_element(By.LINK_TEXT, "Login").click()
         time.sleep(2)
         self.driver.find_element(By.ID, "id_username").send_keys("voter1")
         self.driver.find_element(By.ID, "id_password").send_keys("113")
@@ -176,6 +217,13 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(2)
         self.driver.find_element(By.CSS_SELECTOR, ".question").click()
         assert self.driver.find_element(By.CSS_SELECTOR, ".row:nth-child(1)").text =="You dont have any votings"
+        self.driver.close()
+
+    def test_not_logged_boothlist(self):
+        self.driver.get(f'{self.live_server_url}/booth/')
+        self.driver.set_window_size(1294, 741)
+        time.sleep(2)
+        assert self.driver.find_element(By.ID, "error").text == "You must be logged to access there!"
         self.driver.close()
 
     def test_with_census_boothlist(self):
@@ -192,44 +240,3 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(2)
         assert self.driver.find_element(By.ID, "button").text == "Click aquí"
         self.driver.close()
-
-    def test_with_census_boothlist(self):
-        self.driver.get(f'{self.live_server_url}/')
-        self.driver.set_window_size(1294, 741)
-        time.sleep(2)
-        self.driver.find_element(By.LINK_TEXT, "Login").click()
-        time.sleep(2)
-        self.driver.find_element(By.ID, "id_username").send_keys("voter1")
-        self.driver.find_element(By.ID, "id_password").send_keys("113")
-        self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
-        time.sleep(2)
-        self.driver.get(f'{self.live_server_url}/booth/')
-        time.sleep(2)
-        assert self.driver.find_element(By.ID, "image").click()
-        assert self.driver.find_element(By.ID, "title").click()
-
-    def test_testboothloggednocandidate(self):
-    self.driver.get(f'{self.live_server_url}/')
-    self.driver.set_window_size(1294, 741)
-    time.sleep(2)
-    self.driver.find_element(By.LINK_TEXT, "Login").click()
-    time.sleep(2)
-    self.driver.find_element(By.ID, "id_username").click()
-    self.driver.find_element(By.ID, "id_username").send_keys("voter1")
-    self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
-    self.driver.find_element(By.ID, "id_password").send_keys("113")
-    time.sleep(2)
-    self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").click()
-    self.driver.find_element(By.ID, "next-question").click()
-    time.sleep(2)
-    self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(2) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").click()
-    self.driver.find_element(By.ID, "next-question").click()
-    time.sleep(2)
-    self.driver.find_element(By.CSS_SELECTOR, ".p-3:nth-child(1) .default").click()
-    self.driver.find_element(By.ID, "voteButton").click()
-    time.sleep(2)
-    assert self.driver.find_element(By.CSS_SELECTOR, "p").click().text == "No esta autorizado"
-    self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(2)").click()
-    
-
-
