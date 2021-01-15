@@ -11,6 +11,7 @@ RUN pip install ipython
 WORKDIR /app
 
 RUN git clone https://github.com/Decide-Full-Guadalfeo/Decide-Full-Guadalfeo-Cabina.git .
+RUN git checkout main
 RUN pip install -r requirements.txt
 
 WORKDIR /app/decide
