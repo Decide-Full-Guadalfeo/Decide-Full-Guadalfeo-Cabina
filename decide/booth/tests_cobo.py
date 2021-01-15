@@ -114,11 +114,7 @@ class BoothTestCaseCobo(APITestCase):
     def tearDown(self):
         self.client = None
 
-
-################################################
-##################### Cobo #####################
-################################################
-    """
+    
     def test_boothlist_no_census(self):
         #Login
         response = self.client.get('/authentication/decide/login/')
@@ -156,4 +152,3 @@ class BoothTestCaseCobo(APITestCase):
 
         votings = len(response.context['votings'])
         self.assertEquals(votings, 1)
-        """
