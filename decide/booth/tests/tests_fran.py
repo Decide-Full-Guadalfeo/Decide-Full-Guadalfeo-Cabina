@@ -1,15 +1,15 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
-
 from django.utils import timezone
-
 from django.contrib.auth.models import User
 from voting.models import Voting, Question, QuestionOption
 from authentication.models import VotingUser
 from rest_framework.authtoken.models import Token
 from base.models import Auth
+from census.models import Census
 import json
+
 
 from base import mods
 
@@ -22,6 +22,11 @@ class BoothTestCase(APITestCase):
         u1.set_password('password1234')
         u1.save()
         self.user1 = u1
+        # this user wont have auth_user
+        u2 = User(username='voter2', email='voter2@gmail.com')
+        u2.set_password('password1234')
+        u2.save()
+        self.user2 = u2
         vu1 = VotingUser(user=u1, dni='45454545T', sexo='Man', titulo='Software', curso='First', edad=18)
         vu1.save()
         self.votingUser = vu1
@@ -108,50 +113,41 @@ class BoothTestCase(APITestCase):
 
         v1.create_pubkey()
         v1.start_date = timezone.now()
+        v1.save()
 
     def tearDown(self):
         self.client = None
 
-    def test_voting_id_exist(self):
-        response = self.client.get('http://localhost:8000/booth/1/')
-        self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'booth/booth.html')
 
-        voting = json.loads(response.context['voting'])
-        self.assertEquals(voting["id"], 1)
 
-    
-    def test_voting_token_exist(self): #The token is created alongside with the user
+    def test_boothlist_no_auth_user(self):
+        #Login
         response = self.client.get('/authentication/decide/login/')
-        data = {"username":"voter1","password": "password1234"}
         csrftoken = response.cookies['csrftoken']
+        data = {'username': 'voter2', 'password': 'password1234'}
         response = self.client.post('/authentication/decide/login/', data = data, headers={
             "Content-Type": "application/x-www-form-urlencoded",
             'X-CSRFToken': csrftoken})
-        self.assertRedirects(response, '/', 
-            status_code=302, target_status_code=200, 
-            fetch_redirect_response=False)
 
         response = self.client.get('/booth/', follow=True)
-
+        
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response,'booth/boothlist.html')
+        # it has to redirect to auhtentication login in order to finish setting the auth_users
+        # PLACEHOLDER SE PODRIA MIRAR QUE BOOTH NO ESTE EN LAS TEMPLATE USED
+        self.assertTemplateUsed(response,'votingusers/login.html')
+        self.assertEqual(response.status_code, 200)
 
-    '''NOT VALID
-    def test_voting_token_not_exist(self): #The token is created alongside with the user
-        self.token1= ""                     
+
+    def test_boothlist_with_auth_user(self):
+        #Login
         response = self.client.get('/authentication/decide/login/')
-        data = {"username":"voter1","password": "password1234"}
         csrftoken = response.cookies['csrftoken']
+        data = {'username': 'voter1', 'password': 'password1234'}
         response = self.client.post('/authentication/decide/login/', data = data, headers={
             "Content-Type": "application/x-www-form-urlencoded",
             'X-CSRFToken': csrftoken})
-        self.assertRedirects(response, '/', 
-            status_code=302, target_status_code=200, 
-            fetch_redirect_response=False)
 
         response = self.client.get('/booth/', follow=True)
-
+        
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,'booth/boothlist.html')
-        '''

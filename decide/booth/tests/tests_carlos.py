@@ -1,20 +1,19 @@
+
 from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
 from django.utils import timezone
-
 from django.contrib.auth.models import User
 from voting.models import Voting, Question, QuestionOption
 from authentication.models import VotingUser
 from rest_framework.authtoken.models import Token
 from base.models import Auth
-from census.models import Census
 import json
-
-
+from django.test import TestCase
 from base import mods
 
-class BoothViewsTestsCobo(TestCase):
+class BoothTestCase(APITestCase):
+
     def setUp(self):
         self.client = APIClient()
         mods.mock_query(self.client)
@@ -109,46 +108,32 @@ class BoothViewsTestsCobo(TestCase):
 
         v1.create_pubkey()
         v1.start_date = timezone.now()
+
         v1.save()
 
     def tearDown(self):
         self.client = None
 
-    
-    def test_boothlist_no_census(self):
-        #Login
+    def test_boothlist_login(self):
+
         response = self.client.get('/authentication/decide/login/')
-        csrftoken = response.cookies['csrftoken']
-        data = {'username': 'voter1', 'password': 'password1234'}
-        response = self.client.post('/authentication/decide/login/', data = data, headers={
-            "Content-Type": "application/x-www-form-urlencoded",
-            'X-CSRFToken': csrftoken})
-
-        response = self.client.get('/booth/', follow=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response,'booth/boothlist.html')
-
-        msg = response.context['msg']
-        self.assertEquals(msg, 'You dont have any votings')
-    
-    
-    def test_boothlist_have_census(self):
-        #Añadimos usuario al censo
-        c = Census(voting_id='1', voter_id='1')
-        c.save()
         
-        #Login
-        response = self.client.get('/authentication/decide/login/')
         csrftoken = response.cookies['csrftoken']
         data = {'username': 'voter1', 'password': 'password1234'}
         response = self.client.post('/authentication/decide/login/', data = data, headers={
             "Content-Type": "application/x-www-form-urlencoded",
             'X-CSRFToken': csrftoken})
-
-
+        self.assertRedirects(response, '/', status_code=302, target_status_code=200, fetch_redirect_response=False)
+        
         response = self.client.get('/booth/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,'booth/boothlist.html')
 
-        votings = len(response.context['votings'])
-        self.assertEquals(votings, 1)
+    def test_boothlist_no_login(self):
+
+        response = self.client.get('/booth/')
+        self.assertRedirects(response, '/authentication/decide/login/', status_code=302, target_status_code=200, fetch_redirect_response=False)
+
+  
+
+        

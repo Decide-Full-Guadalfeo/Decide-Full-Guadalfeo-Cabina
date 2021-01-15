@@ -2,6 +2,7 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
 from django.utils import timezone
+
 from django.contrib.auth.models import User
 from voting.models import Voting, Question, QuestionOption
 from authentication.models import VotingUser
@@ -13,7 +14,7 @@ import json
 
 from base import mods
 
-class BoothTestCase(APITestCase):
+class BoothViewsTestsCobo(TestCase):
     def setUp(self):
         self.client = APIClient()
         mods.mock_query(self.client)
@@ -22,11 +23,6 @@ class BoothTestCase(APITestCase):
         u1.set_password('password1234')
         u1.save()
         self.user1 = u1
-        # this user wont have auth_user
-        u2 = User(username='voter2', email='voter2@gmail.com')
-        u2.set_password('password1234')
-        u2.save()
-        self.user2 = u2
         vu1 = VotingUser(user=u1, dni='45454545T', sexo='Man', titulo='Software', curso='First', edad=18)
         vu1.save()
         self.votingUser = vu1
@@ -118,31 +114,8 @@ class BoothTestCase(APITestCase):
     def tearDown(self):
         self.client = None
 
-
-
-###############################################
-#################### Views ####################
-###############################################
-    def test_boothlist_no_auth_user(self):
-        #Login
-        response = self.client.get('/authentication/decide/login/')
-        csrftoken = response.cookies['csrftoken']
-        data = {'username': 'voter2', 'password': 'password1234'}
-        response = self.client.post('/authentication/decide/login/', data = data, headers={
-            "Content-Type": "application/x-www-form-urlencoded",
-            'X-CSRFToken': csrftoken})
-
-        response = self.client.get('/booth/', follow=True)
-        # print(response.status_code)
-        
-        self.assertEqual(response.status_code, 200)
-        # it has to redirect to auhtentication login in order to finish setting the auth_users
-        # PLACEHOLDER SE PODRIA MIRAR QUE BOOTH NO ESTE EN LAS TEMPLATE USED
-        self.assertTemplateUsed(response,'votingusers/login.html')
-        self.assertEqual(response.status_code, 200)
-
-
-    def test_boothlist_with_auth_user(self):
+    
+    def test_boothlist_no_census(self):
         #Login
         response = self.client.get('/authentication/decide/login/')
         csrftoken = response.cookies['csrftoken']
@@ -152,15 +125,32 @@ class BoothTestCase(APITestCase):
             'X-CSRFToken': csrftoken})
 
         response = self.client.get('/booth/', follow=True)
-        # print(response.status_code)
-        
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,'booth/boothlist.html')
 
-        # msg = response.context['msg']
-        # self.assertEquals(msg, 'You dont have any votings')
+        msg = response.context['msg']
+        self.assertEquals(msg, 'You dont have any votings')
     
+    
+    def test_boothlist_have_census(self):
+        voting = Voting.objects.all()[0]
+        user = User.objects.all()[0]
+        #Añadimos usuario al censo
+        c = Census(voting_id=voting.id, voter_id=user.id)
+        c.save()
+        
+        #Login
+        response = self.client.get('/authentication/decide/login/')
+        csrftoken = response.cookies['csrftoken']
+        data = {'username': 'voter1', 'password': 'password1234'}
+        response = self.client.post('/authentication/decide/login/', data = data, headers={
+            "Content-Type": "application/x-www-form-urlencoded",
+            'X-CSRFToken': csrftoken})
 
-##################################################
-#################### Selenium ####################
-##################################################
+
+        response = self.client.get('/booth/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,'booth/boothlist.html')
+
+        votings = len(response.context['votings'])
+        self.assertEquals(votings, 1)

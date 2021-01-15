@@ -142,14 +142,8 @@ class BoothTestCase(StaticLiveServerTestCase):
         v1.create_pubkey()
         v1.start_date = timezone.now()   
 
-        c1 = Census(voting_id="1", voter_id="3")
+        c1 = Census(voting_id=v1.id, voter_id=u1.id)
         c1.save()
-
-        c2 = Census(voting_id="2", voter_id="6")
-        c2.save()
-
-        c3 = Census(voting_id="3", voter_id="9")
-        c3.save()
 
         v1.candiancy = c
         v1.save()        
@@ -169,31 +163,33 @@ class BoothTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_username").send_keys("voter1")
         self.driver.find_element(By.ID, "id_password").send_keys("113")
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
-        time.sleep(3)
-        self.driver.get(f'{self.live_server_url}/booth/3')
-        time.sleep(3)
+        time.sleep(0.5)
+        voting = Voting.objects.all()[0]
+        self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
+        time.sleep(2)
         assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
-        time.sleep(3)
+        time.sleep(0.5)
         self.driver.find_element(By.ID, "next-question").click()
         self.driver.find_element(By.ID, "voteButton").click()
-        time.sleep(3)
+        time.sleep(0.5)
         assert self.driver.find_element(By.CSS_SELECTOR, "p").text == "Por favor, no deje preguntas vacías"
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(2)").click()
         self.driver.close()
-
+    
     def test_send_blank(self):
         self.driver.get(f'{self.live_server_url}/')
         self.driver.set_window_size(1920, 1080)
-        time.sleep(1)
+        time.sleep(0.5)
         self.driver.find_element(By.LINK_TEXT, "Login").click()
-        time.sleep(1)
+        time.sleep(0.5)
         self.driver.find_element(By.ID, "id_username").send_keys("voter1")
         self.driver.find_element(By.ID, "id_password").send_keys("113")
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
-        time.sleep(3)
-        self.driver.get(f'{self.live_server_url}/booth/2')
-        time.sleep(3)
+        time.sleep(0.5)
+        voting = Voting.objects.all()[0]
+        self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
+        time.sleep(2)
         self.driver.find_element(By.ID, "voteButton").click()
         time.sleep(3)
         assert self.driver.find_element(By.CSS_SELECTOR, "p").text == "Por favor, no deje preguntas vacías"
@@ -203,32 +199,34 @@ class BoothTestCase(StaticLiveServerTestCase):
     def test_languagetest(self):
         self.driver.get(f'{self.live_server_url}/')
         self.driver.set_window_size(1920, 1080)
-        time.sleep(1)
+        time.sleep(0.5)
         self.driver.find_element(By.LINK_TEXT, "Login").click()
-        time.sleep(1)
+        time.sleep(0.5)
         self.driver.find_element(By.ID, "id_username").send_keys("voter1")
         self.driver.find_element(By.ID, "id_password").send_keys("113")
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
-        time.sleep(3)
-        self.driver.get(f'{self.live_server_url}/booth/1')
-        time.sleep(3)
+        time.sleep(0.5)
+        voting = Voting.objects.all()[0]
+        self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
+        time.sleep(2)
         assert self.driver.find_element(By.CSS_SELECTOR, ".moda > div > button").text == 'Guía de votación' 
         self.driver.find_element(By.CSS_SELECTOR, ".languageImg").click()
-        time.sleep(3)
+        time.sleep(0.5)
         assert self.driver.find_element(By.CSS_SELECTOR, ".moda > div > button").text == 'Voting guide' 
         self.driver.close()
 
     def test_usernotbeingVotingUser(self):
         self.driver.get(f'{self.live_server_url}/')
         self.driver.set_window_size(1920, 1080)
-        time.sleep(1)
+        time.sleep(0.5)
         self.driver.find_element(By.LINK_TEXT, "Login").click()
-        time.sleep(1)
+        time.sleep(0.5)
         self.driver.find_element(By.ID, "id_username").send_keys("voter3")
         self.driver.find_element(By.ID, "id_password").send_keys("113")
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
-        time.sleep(3)
+        time.sleep(0.5)
         self.driver.get(f'{self.live_server_url}/booth')
-        time.sleep(3)
+        time.sleep(0.5)
         assert self.driver.find_element(By.CSS_SELECTOR, "h3").text == "Votings Visualizer" 
         self.driver.close()
+        

@@ -1,19 +1,19 @@
-
 from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
+
 from django.utils import timezone
+
 from django.contrib.auth.models import User
 from voting.models import Voting, Question, QuestionOption
 from authentication.models import VotingUser
 from rest_framework.authtoken.models import Token
 from base.models import Auth
 import json
-from django.test import TestCase
+
 from base import mods
 
 class BoothTestCase(APITestCase):
-
     def setUp(self):
         self.client = APIClient()
         mods.mock_query(self.client)
@@ -108,30 +108,24 @@ class BoothTestCase(APITestCase):
 
         v1.create_pubkey()
         v1.start_date = timezone.now()
+        v1.save()
 
     def tearDown(self):
         self.client = None
 
-    def test_boothlist_login(self):
-
+    
+    def test_voting_token_exist(self): #The token is created alongside with the user
         response = self.client.get('/authentication/decide/login/')
-        
+        data = {"username":"voter1","password": "password1234"}
         csrftoken = response.cookies['csrftoken']
-        data = {'username': 'voter1', 'password': 'password1234'}
         response = self.client.post('/authentication/decide/login/', data = data, headers={
             "Content-Type": "application/x-www-form-urlencoded",
             'X-CSRFToken': csrftoken})
-        self.assertRedirects(response, '/', status_code=302, target_status_code=200, fetch_redirect_response=False)
-        
+        self.assertRedirects(response, '/', 
+            status_code=302, target_status_code=200, 
+            fetch_redirect_response=False)
+
         response = self.client.get('/booth/', follow=True)
+
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,'booth/boothlist.html')
-
-    def test_boothlist_no_login(self):
-
-        response = self.client.get('/booth/')
-        self.assertRedirects(response, '/authentication/decide/login/', status_code=302, target_status_code=200, fetch_redirect_response=False)
-
-  
-
-        
