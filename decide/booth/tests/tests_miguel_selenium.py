@@ -139,7 +139,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         self.driver.quit()
 
         self.base.tearDown()
-
+    """
     def test_booth_logged_no_candidate(self):
         self.driver.get(f'{self.live_server_url}/')
         self.driver.set_window_size(1294, 741)
@@ -236,3 +236,4 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(1)
         assert self.driver.find_element(By.ID, "button").text == "Click aquí"
         self.driver.close()
+    """

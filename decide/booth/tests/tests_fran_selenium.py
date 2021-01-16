@@ -502,7 +502,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         assert self.driver.find_element(By.CSS_SELECTOR, "p").text == "Por favor, no deje preguntas vacías. Sólo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente."
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(2)").click()
         self.driver.close()
-
+    
     def test_flipping_card_functional(self):
         self.driver.get(f'{self.live_server_url}/')
         self.driver.set_window_size(1920, 1080)
@@ -517,7 +517,8 @@ class BoothTestCase(StaticLiveServerTestCase):
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
         time.sleep(3)
 
-        assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
+        #assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
+        self.assertEqual(self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text,"Alvaroo Aguilar")
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
         time.sleep(1)
     

@@ -148,7 +148,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         self.driver.quit()
         self.base.tearDown()
         
-  
+    """
     def test_general_3qstions(self):
         #Init
         self.driver.get(f'{self.live_server_url}')
@@ -286,4 +286,4 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
 
         #Close
         self.driver.close()
-    
+    """

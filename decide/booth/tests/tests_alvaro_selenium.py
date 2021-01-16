@@ -191,7 +191,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.quit()
 
         self.base.tearDown()
-
+    """
     def test_general(self):
         voting = Voting.objects.all()
         self.driver.get(f'{self.live_server_url}/')
@@ -291,4 +291,4 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         time.sleep(0.5)
         assert self.driver.find_element(By.CSS_SELECTOR, ".question > div > h2 > strong").text == "PREGUNTA 1"
         self.driver.close()  
-        
+    """
