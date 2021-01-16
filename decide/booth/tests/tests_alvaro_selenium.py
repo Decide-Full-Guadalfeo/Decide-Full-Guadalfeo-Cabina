@@ -204,7 +204,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(0.5)
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting[0].id) + '/')
-        time.sleep(6)
+        time.sleep(10)
         assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
         time.sleep(1)
@@ -238,7 +238,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(0.5)
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting[1].id) + '/')
-        time.sleep(6)
+        time.sleep(10)
         assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
         time.sleep(2)
@@ -264,7 +264,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(0.5)
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting[0].id) + '/')
-        time.sleep(6)
+        time.sleep(10)
         self.driver.find_element(By.CSS_SELECTOR, ".moda > div > button").click()
         time.sleep(0.5)
         assert self.driver.find_element(By.CSS_SELECTOR, ".modal-body").text == "¡Bienvenido al portal de votaciones de Decide! Para registrar tu voto, solo tienes que pulsar en una de las cartas, y esta se girará. Solo puedes elegir uno por pregunta. Si es una votación general, en la pregunta final puedes elegir más de uno, pero un máximo de 10 candidatos, 5 hombres y 5 mujeres."
@@ -282,7 +282,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(0.5)
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting[1].id) + '/')
-        time.sleep(6)
+        time.sleep(10)
         self.driver.find_element(By.CSS_SELECTOR, ".moda > div > button").click()
         time.sleep(0.5)
         self.driver.find_element(By.CSS_SELECTOR, ".btn-secondary").click()
