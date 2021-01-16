@@ -336,11 +336,12 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(0.5)
         voting = Voting.objects.all()[0]
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
-        time.sleep(4)
+        time.sleep(6)
         assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
         time.sleep(2)
         self.driver.find_element(By.ID, "next-question").click()
+        time.sleep(0.5)
         assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(2) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(2) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
         time.sleep(2)
@@ -349,18 +350,23 @@ class BoothTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.CSS_SELECTOR, ".p-3:nth-child(2) .default").click()
         time.sleep(0.5)
         self.driver.find_element(By.CSS_SELECTOR, ".p-3:nth-child(3) .default").click()
+        time.sleep(0.5)
         self.driver.find_element(By.CSS_SELECTOR, ".p-3:nth-child(3) .default").click()
         time.sleep(0.5)
         self.driver.find_element(By.CSS_SELECTOR, ".p-3:nth-child(4) .default").click()
+        time.sleep(0.5)
         self.driver.find_element(By.CSS_SELECTOR, ".p-3:nth-child(4) .default").click()
         time.sleep(0.5)
         self.driver.find_element(By.CSS_SELECTOR, ".p-3:nth-child(5) .default").click()
+        time.sleep(0.5)
         self.driver.find_element(By.CSS_SELECTOR, ".p-3:nth-child(5) .default").click()
         time.sleep(0.5)
         self.driver.find_element(By.CSS_SELECTOR, ".p-3:nth-child(6) .default").click()
+        time.sleep(0.5)
         self.driver.find_element(By.CSS_SELECTOR, ".p-3:nth-child(6) .default").click()
         time.sleep(0.5)
         self.driver.find_element(By.CSS_SELECTOR, ".p-3:nth-child(7) .default").click()
+        time.sleep(0.5)
         self.driver.find_element(By.CSS_SELECTOR, ".p-3:nth-child(7) .default").click()
         time.sleep(0.5)
         
@@ -383,7 +389,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(0.5)
         voting = Voting.objects.all()[0]
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
-        time.sleep(4)
+        time.sleep(6)
         assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
         time.sleep(2)
@@ -438,7 +444,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(0.5)
         voting = Voting.objects.all()[0]
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
-        time.sleep(4)
+        time.sleep(6)
         assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
         time.sleep(2)
@@ -517,7 +523,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(0.5)
         voting = Voting.objects.all()[0]
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
-        time.sleep(4)
+        time.sleep(6)
 
         assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
