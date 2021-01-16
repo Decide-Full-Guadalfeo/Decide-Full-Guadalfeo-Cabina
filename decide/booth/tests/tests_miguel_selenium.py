@@ -152,7 +152,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(0.5)
         voting = Voting.objects.all()[0]
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
-        time.sleep(2)
+        time.sleep(4)
         assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
         time.sleep(1)
@@ -161,7 +161,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(2) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
         time.sleep(1)
         self.driver.find_element(By.ID, "voteButton").click()
-        time.sleep(3)
+        time.sleep(4)
         assert self.driver.find_element(By.CSS_SELECTOR, "p").text == "Error: Unauthorized"
         self.driver.close()
    
@@ -180,6 +180,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         assert self.driver.find_element(By.ID, "title").text == "Votaciones activas"
         time.sleep(0.5)
         self.driver.find_element(By.ID, "image").click()
+        time.sleep(0.3)
         assert self.driver.find_element(By.ID, "title").text == "Active Questions"
         self.driver.close()
     
@@ -194,7 +195,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(0.5)
         self.driver.get(f'{self.live_server_url}/booth/')
-        time.sleep(0.5)
+        time.sleep(1)
         assert self.driver.find_element(By.ID, "button").text == "Click aquí"
         self.driver.close()
         
@@ -209,7 +210,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(0.5)
         self.driver.get(f'{self.live_server_url}/booth/')
-        time.sleep(0.5)
+        time.sleep(1)
         self.driver.find_element(By.CSS_SELECTOR, ".question").click()
         assert self.driver.find_element(By.CSS_SELECTOR, ".row:nth-child(1)").text =="You dont have any votings"
         self.driver.close()
@@ -232,6 +233,6 @@ class BoothTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(0.5)
         self.driver.get(f'{self.live_server_url}/booth/')
-        time.sleep(0.5)
+        time.sleep(1)
         assert self.driver.find_element(By.ID, "button").text == "Click aquí"
         self.driver.close()

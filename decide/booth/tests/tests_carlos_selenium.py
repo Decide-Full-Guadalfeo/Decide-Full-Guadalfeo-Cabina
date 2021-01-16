@@ -166,7 +166,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(0.5)
         voting = Voting.objects.all()[0]
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
-        time.sleep(2)
+        time.sleep(4)
         assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
         time.sleep(0.5)
@@ -189,9 +189,9 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(0.5)
         voting = Voting.objects.all()[0]
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
-        time.sleep(2)
+        time.sleep(4)
         self.driver.find_element(By.ID, "voteButton").click()
-        time.sleep(3)
+        time.sleep(4)
         assert self.driver.find_element(By.CSS_SELECTOR, "p").text == "Por favor, no deje preguntas vacías"
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(2)").click()
         self.driver.close()
@@ -208,7 +208,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(0.5)
         voting = Voting.objects.all()[0]
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
-        time.sleep(2)
+        time.sleep(4)
         assert self.driver.find_element(By.CSS_SELECTOR, ".moda > div > button").text == 'Guía de votación' 
         self.driver.find_element(By.CSS_SELECTOR, ".languageImg").click()
         time.sleep(0.5)
@@ -226,7 +226,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(0.5)
         self.driver.get(f'{self.live_server_url}/booth')
-        time.sleep(0.5)
+        time.sleep(1)
         assert self.driver.find_element(By.CSS_SELECTOR, "h3").text == "Votings Visualizer" 
         self.driver.close()
         

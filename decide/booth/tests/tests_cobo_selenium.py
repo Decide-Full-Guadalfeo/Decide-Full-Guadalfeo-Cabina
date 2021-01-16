@@ -165,7 +165,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         self.driver.get(f'{self.live_server_url}/booth')
         time.sleep(0.5)
         self.driver.find_element(By.CSS_SELECTOR, ".option:nth-child(2) #button").click()
-        time.sleep(3)
+        time.sleep(4)
         #Click Next twice
         self.driver.find_element(By.ID, "next-question").click()
         time.sleep(0.3)
@@ -194,7 +194,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         self.driver.get(f'{self.live_server_url}/booth')
         time.sleep(0.5)
         self.driver.find_element(By.ID, "button").click()
-        time.sleep(3)
+        time.sleep(4)
         #Next button is present at the begining
         assert 'display: none' not in self.driver.find_element(By.ID, "next-question").get_attribute('style')
         #No Next button in last question
@@ -223,7 +223,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         self.driver.get(f'{self.live_server_url}/booth')
         time.sleep(0.5)
         self.driver.find_element(By.ID, "button").click()
-        time.sleep(3)
+        time.sleep(4)
         #No Prev button at first
         prev = self.driver.find_element(By.ID, "prev-question")
         assert 'display: none' in prev.get_attribute('style')
@@ -253,7 +253,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         self.driver.get(f'{self.live_server_url}/booth')
         time.sleep(0.5)
         self.driver.find_element(By.ID, "button").click()
-        time.sleep(3)
+        time.sleep(4)
         #Click Next once
         self.driver.find_element(By.ID, "next-question").click()
         time.sleep(0.3)
@@ -280,7 +280,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         self.driver.get(f'{self.live_server_url}/booth')
         time.sleep(0.5)
         self.driver.find_element(By.ID, "button").click()
-        time.sleep(3)
+        time.sleep(4)
         #Question
         assert "PRIMERO" in self.driver.find_element(By.CSS_SELECTOR, ".active-question strong").text
 
