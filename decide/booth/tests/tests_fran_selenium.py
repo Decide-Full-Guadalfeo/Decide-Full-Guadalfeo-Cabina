@@ -337,7 +337,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         voting = Voting.objects.all()[0]
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
         time.sleep(3)
-        assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
+        self.assertEqual(self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text,"Alvaro Aguilar")
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
         time.sleep(0.5)
         self.driver.find_element(By.ID, "next-question").click()
@@ -386,7 +386,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         voting = Voting.objects.all()[0]
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
         time.sleep(3)
-        assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
+        self.assertEqual(self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text,"Alvaro Aguilar")
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
         time.sleep(0.5)
         self.driver.find_element(By.ID, "next-question").click()
@@ -439,7 +439,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         voting = Voting.objects.all()[0]
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
         time.sleep(3)
-        assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
+        self.assertEqual(self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text,"Alvaro Aguilar")
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
         time.sleep(1)
         self.driver.find_element(By.ID, "next-question").click()
@@ -518,7 +518,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(3)
 
         #assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
-        self.assertEqual(self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text,"Alvaroo Aguilar")
+        self.assertEqual(self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text,"Alvaro Aguilar")
         self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
         time.sleep(1)
     
