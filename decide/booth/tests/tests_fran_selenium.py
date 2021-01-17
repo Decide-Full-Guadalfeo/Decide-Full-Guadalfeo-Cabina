@@ -362,7 +362,7 @@ class BoothTestCase(StaticLiveServerTestCase):
 
         self.base.tearDown()
 
-
+"""
     def test_flipping_card_functional(self):
         self.driver.get(f'{self.live_server_url}/')
         self.driver.set_window_size(1920, 1080)
@@ -394,7 +394,6 @@ class BoothTestCase(StaticLiveServerTestCase):
         assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text == "Alvaro Aguilar"
 
 
-"""    
     def test_general_5_woman(self):
         self.driver.get(f'{self.live_server_url}/')
         self.driver.set_window_size(1920, 1080)
