@@ -289,7 +289,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         qo31 = QuestionOption(number="13", option="Alvaro Aguilar F / " + str(u14.id), question=q7)
         qo31.save()
 
-        v1 = Voting(name="Votacion 1", desc="Descripcion 1", tipo='GV')
+        v1 = Voting(name="Votacion 1 Xisco", desc="Descripcion 1", tipo='GV')
         v1.save()
         v1.question.add(q1)
         v1.save()
@@ -335,7 +335,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys("113")
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(0.5)
-        voting = Voting.objects.all()[0]
+        voting = Voting.objects.filter(name="Votacion 1 Xisco")[0]
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
         time.sleep(3)
         #assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text.__contains__("Alvaro Aguilar") 
