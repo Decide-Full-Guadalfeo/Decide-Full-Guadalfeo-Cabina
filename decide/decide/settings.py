@@ -27,7 +27,7 @@ SECRET_KEY = '^##ydkswfu0+=ofw0l#$kv^8n)0$i(qd&d&ol#p9!b$8*5%j1+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -215,7 +215,7 @@ KEYBITS = 256
 ALLOWED_VERSIONS = ['v1', 'v2']
 DEFAULT_VERSION = 'v1'
 
-BASEURL = "http://localhost:8000"
+BASEURL = "https://decide-full-guadalfeo-cabina.herokuapp.com"
 APIS = {
     'authentication': BASEURL,
     'base': BASEURL,
