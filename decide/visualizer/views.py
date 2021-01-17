@@ -43,7 +43,6 @@ class BotResponse(TemplateView):
                 r = mods.get('voting', params={'id': vid})
                 context['voting'] = json.dumps(r[0]["postproc"],indent=4)
 
-
                 message="<b>Votación: "+ r[0]["postproc"]['titulo']+"</b>  " + r[0]["postproc"]['fecha_inicio']+" - "+ r[0]["postproc"]['fecha_fin']+"\n"+"Descripción: "+r[0]["postproc"]['desc']+"\n"+"Personas censadas: "+str(r[0]["postproc"]['n_personas_censo'])+" / Votantes: "+str(r[0]["postproc"]['n_votantes'])+"\n"
                 preguntas=r[0]["postproc"]['preguntas']
                 for pregunta in preguntas:
