@@ -263,7 +263,9 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         #Close
         self.driver.close()
     
+
 '''
+
     def test_question_from_his_course(self):
         #Init
         self.driver.get(f'{self.live_server_url}')
@@ -282,8 +284,12 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "button").click()
         time.sleep(3)
         #Question
-        assert "PRIMERO" in self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div/div/h2/strong").text
+
+        assert "PRIMERO" in self.driver.find_element(By.CSS_SELECTOR, ".active-question strong").text
 
         #Close
         self.driver.close()
+    
+
   '''  
+

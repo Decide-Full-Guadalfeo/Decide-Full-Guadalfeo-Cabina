@@ -36,6 +36,7 @@ from census.models import Census
 
 from base import mods
 
+
 import time
 
 
@@ -46,6 +47,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         self.base.setUp()
 
         options = webdriver.ChromeOptions()
+
         options.headless = True
         self.driver = webdriver.Chrome(options=options)
 
@@ -134,7 +136,6 @@ class BoothTestCase(StaticLiveServerTestCase):
         t7 = Token(user=u7)
         t7.save()
         self.token7 = t7
-
         u8 = User(username='8', email='d@gmail.com')
         u8.set_password('113')
         u8.save()
@@ -218,7 +219,6 @@ class BoothTestCase(StaticLiveServerTestCase):
         t14 = Token(user=u14)
         t14.save()
         self.token14 = t14
-
         q1 = Question(desc='Pregunta 1')
         q1.save()
         qo1 = QuestionOption(
@@ -362,6 +362,7 @@ class BoothTestCase(StaticLiveServerTestCase):
 
         self.base.tearDown()
 
+
 """
     def test_flipping_card_functional(self):
         self.driver.get(f'{self.live_server_url}/')
@@ -392,6 +393,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(1)
 
         assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text == "Alvaro Aguilar"
+
 
 
     def test_general_5_woman(self):
@@ -546,4 +548,6 @@ class BoothTestCase(StaticLiveServerTestCase):
         assert self.driver.find_element(By.CSS_SELECTOR, "p").text == "Por favor, no deje preguntas vacías. Sólo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente."
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(2)").click()
         self.driver.close()
+
 """
+
