@@ -7,11 +7,13 @@ before_script:
 - psql -U postgres -c "create user decide password 'decide'"
 - psql -U postgres -c "create database test_decide owner decide"
 - psql -U postgres -c "ALTER USER decide CREATEDB"
+- CHROME_MAIN_VERSION=`google-chrome-stable --version | sed -E 's/(^Google Chrome |\.[0-9]+ )//g'`
+- CHROMEDRIVER_VERSION=`curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_MAIN_VERSION"`
+- curl "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip" -O
+- unzip chromedriver_linux64.zip -d ~/bin
 language: python
 python:
 - '3.6'
-before_install:
-- sudo apt-get -y install chromium-chromedriver
 install:
 - pip install -r requirements.txt
 - pip install codacy-coverage
@@ -19,11 +21,14 @@ install:
 script:
 - cd decide
 - cp travis_local_settings.py local_settings.py
+- coverage run --branch --source=. ./manage.py test booth --keepdb
+- coverage xml
+- python-codacy-coverage -r coverage.xml
 deploy:
   provider: heroku
   app: decide-full-guadalfeo-cabina
   strategy: git
-  api_key:
-    secure: M+NvuCG2Avasqnc+RoMG/ztriChpJCyT3psXYgyDyoG35QtAzca5KNZqr4A3pU7/GtO8YtqOS2JAvSSx8r3glO0n2NMf08l/pxNZikC5yALkNOQzus/cLvE8UNv7SK/1W6Mz5DB95idEJO+9XwOtftYhwb/MpsE2sLIagvLgpU4BYpEMgwIav2jvh1y72W9YyVFAPWZwbzc7wf3lwWq95yxykloctIlG/XUkNLwIV7krD3jcstVHr11OEcbxqMDdauxWlazzALZCh2IEdRcteTfdbItQ09LRkkmTqBUmqyOxJdDnkfmXpU8CEbbHeaJHxwFod4McXqIucg08qWsEjDyT2YdJd1Jz8jY8QzynBSBZ3Z6iqKrb4dl9/SPxbW/cvXy9ldqV8FXYpEUf3iD2jOmf7aiiTzB88d2RZhmcxyUF3fLnIyDkA1wV0X7m77qjsU7proQCVWC6hypyXacTNyeu06U8MYCwrNLpsHxSP6pZfqL7NaaeIwqrbDxK9xaZQ7nxziAHWK+dPo5dXqI200m5SP5PcT8aaScnP1GE9N6U+w6vJdCwwW5IT2+GhWpwkGZhuhvijvK26YbwNnHUFO5qvpY0OdUSYCRDU03RzKB7jznusMfxs/4c/e3kDOiOQUa25tH4h4QQo83NhI07sUdanWFdfwBdopl9Ik/8wKs=
+  api_key: $HEROKU_AUTH_TOKEN
+  run: "cd decide && python ./manage.py flush && python ./manage.py loaddata db_heroku.json"
   on:
-    branch: main
+    branch: deploy

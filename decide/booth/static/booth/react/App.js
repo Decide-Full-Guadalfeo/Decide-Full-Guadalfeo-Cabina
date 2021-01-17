@@ -21,7 +21,7 @@ const App = () => {
     language_button: "https://images.vexels.com/media/users/3/164598/isolated/preview/ae39cafd26e1b3739a0265ad7e65ebdc-icono-de-idioma-de-la-bandera-de-espa-ntilde-a-by-vexels.png",
     modal_close_button: "Ok, let's go!",
     cand: "Candidate",
-    select: "You selected:",
+    select: "You selected",
     internalError: "Internal error",
     congratulations: "Congratulations! Your vote has been sent.",
     blankError: "Please, do not leave empty questions",
@@ -44,7 +44,7 @@ const App = () => {
     language_button: "https://images.vexels.com/media/users/3/163965/isolated/lists/5bb2c926d53cc59030477ec3ecb6d26a-england-flag-language-icon.png",
     modal_close_button: "Entendido, ¡vamos allá!",
     cand: "Candidato",
-    select: "Seleccionaste:",
+    select: "Has elegido",
     internalError: "Error interno",
     congratulations: "¡Enhorabuena! Tu voto ha sido enviado.",
     blankError: "Por favor, no deje preguntas vacías",
@@ -82,9 +82,9 @@ const App = () => {
       },
       method: "POST",
     };
-
     if (votingUserData) {
       fdata.headers["Authorization"] = "Token " + votingUserData.token;
+      fdata.headers["auth-token"] = "Token " + votingUserData.token;
     }
 
     return fetch(url, fdata).then((response) => {
@@ -103,7 +103,8 @@ const App = () => {
         setVotingUserData(res);
       })
       .catch((error) => {
-        console.log(error); //this.showAlert("danger", '{% trans "Error: " %}' + error);
+        console.log(error);
+        window.location.replace('/decide/login')
       });
   };
 

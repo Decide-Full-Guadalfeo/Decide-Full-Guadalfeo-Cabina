@@ -23,11 +23,10 @@ class BoothView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         vid = kwargs.get('voting_id', 0)
-        print(kwargs)
 
         try:
             r = mods.get('voting', params={'id': vid})
-
+    
             # Casting numbers to string to manage in javascript with BigInt
             # and avoid problems with js and big number conversion
             for k, v in r[0]['pub_key'].items():
@@ -80,9 +79,12 @@ class BoothListView(APIView):
             
             else:
                 for c in census:
-                    voting = Voting.objects.get(id=c.voting_id)
-                    if voting.start_date != None and voting.end_date == None:
-                        votings.append({'name':voting.name, 'id':voting.id})
+                    try:
+                        voting = Voting.objects.get(id=c.voting_id)
+                        if voting.start_date != None and voting.end_date == None:
+                            votings.append({'name':voting.name, 'id':voting.id})
+                    except:
+                        print('La votación con id', c.voting_id, 'ha sido borrada')
 
 
         

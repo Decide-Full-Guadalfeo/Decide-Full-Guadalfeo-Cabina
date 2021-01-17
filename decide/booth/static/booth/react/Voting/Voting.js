@@ -116,7 +116,7 @@ const Voting = ({ utils }) => {
 
     let cont1 = 0
     for (let i = 0; i < questions.length; i++) {
-      const titulo = questions[i].children[0].innerHTML.replace(" <h2>", "").replace("</h2>", "");
+      const titulo = questions[i].children[0].innerHTML.replace(' <h2 style="text-transform: uppercase;"><strong>', "").replace("</strong></h2>", "").replace("<h2>", "").replace("</h2>", "");
       let inputs = questions[i].getElementsByTagName("input");
       for (let j = 0; j < inputs.length; j++) {
         if (inputs[j].checked) {
@@ -133,25 +133,28 @@ const Voting = ({ utils }) => {
 
     if (votingType === "general") {
       let la = document.getElementsByClassName("alum-list");
-      let alumns = [];
+      let alumnsId = [];
+      let alumnsNumber = [];
       let inputs = la[0].getElementsByTagName("input");
       let cont2 = 0
 
       for (let j = 0; j < inputs.length; j++) {
         if (inputs[j].checked) {
-          alumns.push(inputs[j].value);
+          alumnsId.push(inputs[j].value.split(" ")[0]);
+          alumnsNumber.push(inputs[j].value.split(" ")[1])
           cont2 = cont2 + 1
         }
       }
-      res[la[0].children[0].innerHTML] = alumns;
+      res[la[0].children[0].innerHTML.replace("<h2>", "").replace("</h2>", "")] = alumnsNumber;
 
-      const valid = await checkRestrictions(alumns);
+      const valid = await checkRestrictions(alumnsId);
       cont1 = cont1 - cont2;
       if (!valid || cont1 < 2 || cont2 === 0) res = false;
 
     } else {
       if (cont1 < 2) res = false;
     }
+    console.log(res)
     return res;
   };
 
@@ -325,13 +328,9 @@ const Voting = ({ utils }) => {
       });
 
       var colors = new Array(
-        "#DE8F7B",
-        "#E4A282",
-        "#E9B489",
-        "#E1C98D",
-        "#44b8AA",
+        "#426A7A",
         "#439192",
-        "#426A7A"
+        "#E4A282"
       );
      
       $(".question").each(function (index) {
@@ -451,7 +450,7 @@ const Voting = ({ utils }) => {
               <div className="question" key={o.desc}>
                 <div align="center">
                   {" "}
-                  <h2>{o.desc}</h2>
+                  <h2 style={{textTransform: 'uppercase'}}><strong>{o.desc}</strong></h2>
                 </div>
                 <div className="container-fluid ">
                   <div className="boxesDiv">
@@ -476,15 +475,16 @@ const Voting = ({ utils }) => {
                                       className="card-input-element"
                                       value={p.number}
                                     />
-                                    <h4>{utils.lang["cand"]}</h4>
-                                    <br />
-                                    <h3>{p.option}</h3>
+
+                                    <h4>{utils.lang["cand"]}</h4><br/>
+                                    <h3>{p.option.split(" / ")[0]}</h3>
+                                    <img className="responsive" src="https://www.uco.es/investigacion/proyectos/SEBASENet/images/Logo_US.png" alt="logo"></img>
+                                    
                                   </div>
 
                                   <div className="flip-card-back">
-                                    <h4>{utils.lang["select"]}</h4>
-                                    <br></br>
-                                    <h3><strong>{p.option}</strong></h3>
+                                    <h4>{utils.lang["select"]}</h4><br/>
+                                    <h3>{p.option.split("/")[0]}</h3>
                                   </div>
                                 </div>
                               </div>
@@ -521,9 +521,9 @@ const Voting = ({ utils }) => {
                           <input
                             type="checkbox"
                             name={alumList.desc}
-                            value={parseInt(
-                              p.option.split("/")[1].replace(" ", "")
-                            )}
+                            value={
+                              p.option.split("/")[1].replace(" ","") + " " + p.number
+                            }
                           />
                           <span className="default"></span>
                         </label>

@@ -45,8 +45,6 @@ def query(modname, entry_point='/', method='get', baseurl=None, **kwargs):
     params = kwargs.get('params', None)
     if params:
         url += '?{}'.format(urllib.parse.urlencode(params))
-        print(method)
-        print(url)
 
     if method == 'get':
         response = q(url, headers=headers)

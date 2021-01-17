@@ -38,11 +38,11 @@ div.active-question {
 
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
-  
+
   background-color: transparent;
-  width: 16vw;
+  width: 20vw;
   height: 25vh;
-  border-radius: 30px;
+  border-radius: 5px;
   perspective: 1000px;
 }
 
@@ -77,8 +77,8 @@ div.active-question {
 .flip-card-front {
   margin: 0 auto;
   float: none;
-  background-color: rgb(58, 58, 58);
-  color: white;
+  background-color: white;
+  color: black;
 }
 .flip-card-front>h4,
 .flip-card-back>h4 {
@@ -92,6 +92,13 @@ div.active-question {
 .flip-card-back {
   color: white;
   transform: rotateY(180deg);
+}
+
+.flip-card-front>h1{
+  font-size: 30px ;
+  text-align: center;
+  margin: 0 auto;
+  float: none;
 }
 
 /* Style for the cards grid */
@@ -193,8 +200,8 @@ div.active-question {
 }
 
 div.question{
-  background-image: url("https://i0.wp.com/www.pov21.com/wp-content/uploads/2020/10/element5-digital-T9CXBZLUvic-unsplash-1-e1604044339820.jpg?fit=2400%2C1200&ssl=1");
-
+  
+  background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), url("https://i0.wp.com/www.pov21.com/wp-content/uploads/2020/10/element5-digital-T9CXBZLUvic-unsplash-1-e1604044339820.jpg?fit=2400%2C1200&ssl=1");
   background-color: #3E3D3C;
   /* height: 500px; */
   background-position: center;
@@ -202,6 +209,7 @@ div.question{
   background-size: cover;
   background-blend-mode: screen;
   box-shadow: 0 0 8px 1px #cccccc inset;
+  
 }
 div.question>div>h2{
   padding-top: 30px;
@@ -225,6 +233,12 @@ div.alum-list.question > div.container-fluid > div > div{
   display: flex;
   padding-top: 20px;
   
+}
+
+@media(max-width: 1000px){
+  .boxesDiv{
+    flex-direction: column;
+  }
 }
 
 @keyframes check {0% {height: 0;width: 0;}
@@ -297,4 +311,16 @@ float: left;
 .but{
   margin-left: 20px;
   float: right;
+}
+
+hr.linea {
+  border-top: 1px solid white;
+}
+
+.responsive{
+  height: 40%;
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  opacity: 0.6;
 }
