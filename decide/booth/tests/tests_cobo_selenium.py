@@ -263,7 +263,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         #Close
         self.driver.close()
     
-
+'''
     def test_question_from_his_course(self):
         #Init
         self.driver.get(f'{self.live_server_url}')
@@ -286,4 +286,4 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
 
         #Close
         self.driver.close()
-    
+  '''  
