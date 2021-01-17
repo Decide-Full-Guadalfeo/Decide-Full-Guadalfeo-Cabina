@@ -22,6 +22,7 @@ from django.contrib import messages
 from .models import VotingUser
 from voting.models import Voting, Candidatura
 
+
 class GetUserView(APIView):
     def post(self, request):
         key = request.data.get('token', '')
@@ -84,6 +85,7 @@ class IndexUserView(APIView):
             "voting_user": votinguser,
             "votes": Voting.objects.all(),
             "candidaturas": candidaturas
+
         })
 
 
@@ -307,6 +309,7 @@ class GetCandidaturesView(APIView):
         return render(request, "votingusers/candidatures.html", {
             "candidatura": candidatura
         })
+
 
 # API
 

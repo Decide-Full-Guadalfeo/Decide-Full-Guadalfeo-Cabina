@@ -79,6 +79,7 @@ const App = () => {
       headers: {
         "content-type": "application/json",
         "X-CSRFToken": getCookie("csrftoken"),
+        //"auth-token": votingUserData.token,
       },
       method: "POST",
     };

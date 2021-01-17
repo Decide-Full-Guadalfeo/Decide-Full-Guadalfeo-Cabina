@@ -52,6 +52,25 @@ class Candidatura(models.Model):
         return self.nombre
 
 
+class Candidatura(models.Model):
+    nombre = models.TextField()
+    delegadoCentro = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE,
+                                       related_name='delegado_centro')
+    representanteDelegadoPrimero = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE,
+                                                     related_name='representante_primero')
+    representanteDelegadoSegundo = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE,
+                                                     related_name='representante_segundo')
+    representanteDelegadoTercero = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE,
+                                                     related_name='representante_tercero')
+    representanteDelegadoCuarto = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE,
+                                                    related_name='representante_cuarto')
+    representanteDelegadoMaster = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE,
+                                                    related_name='representante_master')
+
+    def __str__(self):
+        return self.nombre
+
+
 class Voting(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField(blank=True, null=True)
@@ -97,7 +116,7 @@ class Voting(models.Model):
         auth = self.auths.first()
         data = {
             "voting": self.id,
-            "auths": [ {"name": a.name, "url": a.url} for a in self.auths.all() ],
+            "auths": [{"name": a.name, "url": a.url} for a in self.auths.all()],
         }
         key = mods.post('mixnet', baseurl=auth.url, json=data)
         pk = Key(p=key["p"], g=key["g"], y=key["y"])

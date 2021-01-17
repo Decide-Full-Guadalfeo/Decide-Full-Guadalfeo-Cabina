@@ -1085,6 +1085,7 @@
  }
 },
 {
+
  "model": "voting.question",
  "pk": 47,
  "fields": {
@@ -1103,6 +1104,7 @@
  "pk": 49,
  "fields": {
   "desc": "Votaci\u00f3n general 1: Elige al delegado de tercero"
+
  }
 },
 {
@@ -1659,6 +1661,7 @@
 {
  "model": "voting.candidatura",
  "pk": 3,
+
  "fields": {
   "nombre": "Candidatura Enrique Reina",
   "delegadoCentro": 10,
