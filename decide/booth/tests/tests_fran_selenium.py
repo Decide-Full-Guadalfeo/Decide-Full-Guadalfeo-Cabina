@@ -377,7 +377,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting.id))
         time.sleep(3)
 
-        assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text = "Alvaro Aguilar"
+        assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text == "Alvaro Aguilar"
         self.driver.find_element(
             By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div/div/div/label/div/div/div[1]").click()
         time.sleep(1)
@@ -391,7 +391,7 @@ class BoothTestCase(StaticLiveServerTestCase):
             By.CSS_SELECTOR, ".flipped .flip-card-back").click()
         time.sleep(1)
 
-        assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text = "Alvaro Aguilar"
+        assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text == "Alvaro Aguilar"
 
 
 """    
