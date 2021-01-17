@@ -336,7 +336,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(0.5)
         self.driver.find_element(By.ID, "next-question").click()
         time.sleep(0.5)
-        assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text.__contains__("Alvaro Aguilar")
+        assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text.__contains__("Andrea Solar")
         self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div/div/label/div/div/div[1]").click()
         time.sleep(0.5)
         self.driver.find_element(By.ID, "next-question").click()
@@ -385,7 +385,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(0.5)
         self.driver.find_element(By.ID, "next-question").click()
         time.sleep(0.5)
-        assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text.__contains__("Alvaro Aguilar")
+        assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text.__contains__("Andrea Solar")
         self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div/div/label/div/div/div[1]").click()
         time.sleep(0.5)
         self.driver.find_element(By.ID, "next-question").click()
@@ -439,7 +439,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(0.5)
         self.driver.find_element(By.ID, "next-question").click()
         time.sleep(0.5)
-        assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text.__contains__("Alvaro Aguilar")
+        assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text.__contains__("Andrea Solar")
         self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div/div/label/div/div/div[1]").click()
         time.sleep(1)
         self.driver.find_element(By.ID, "next-question").click()
@@ -518,7 +518,7 @@ class BoothTestCase(StaticLiveServerTestCase):
         time.sleep(1)
     
         assert self.driver.find_element(By.CSS_SELECTOR, ".flipped .flip-card-back > h4").text == "Has elegido"
-        assert self.driver.find_element(By.CSS_SELECTOR, ".flipped .flip-card-back > h3").text == "Alvaro Aguilar"
+        assert self.driver.find_element(By.CSS_SELECTOR, ".flipped .flip-card-back > h3").text.__contains__("Alvaro Aguilar")
 
         self.driver.find_element(By.CSS_SELECTOR, ".flipped .flip-card-back").click()
         time.sleep(1)
