@@ -282,7 +282,7 @@ class BoothTestCaseCobo(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "button").click()
         time.sleep(3)
         #Question
-        assert "PRIMERO" in self.driver.find_element(By.CSS_SELECTOR, ".active-question strong").text
+        assert "PRIMERO" in self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div/div/h2/strong").text
 
         #Close
         self.driver.close()
