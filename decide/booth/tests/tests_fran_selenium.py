@@ -206,11 +206,6 @@ class BoothTestCase(StaticLiveServerTestCase):
         self.token14 = t14
 
 
-        c = Candidatura(nombre="Candidatura completa", delegadoCentro=u1, representanteDelegadoPrimero=u1,
-            representanteDelegadoSegundo=u1, representanteDelegadoTercero=u1, representanteDelegadoCuarto=u1,
-            representanteDelegadoMaster=u1)
-        c.save()
-
         q1 = Question(desc='Pregunta 1')
         q1.save()
         qo1 = QuestionOption(number="1", option="Alvaro Aguilar / 1", question=q1)
@@ -314,7 +309,6 @@ class BoothTestCase(StaticLiveServerTestCase):
         c1 = Census(voting_id=v1.id, voter_id=u1.id)
         c1.save()
 
-        v1.candiancy = c
         v1.save()  
        
     def tearDown(self):
