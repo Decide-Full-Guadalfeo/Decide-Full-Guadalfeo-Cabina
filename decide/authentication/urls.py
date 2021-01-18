@@ -20,5 +20,4 @@ urlpatterns = [
     path('social-auth/', include('social_django.urls')),
     path('user/<int:id>/', GetUserDetailsView.as_view()),
     path('candidatures/<int:id>/', GetCandidaturesView.as_view()),
-
 ]

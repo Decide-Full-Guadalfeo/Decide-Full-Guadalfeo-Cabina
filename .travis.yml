@@ -32,6 +32,6 @@ deploy:
   app: decide-full-guadalfeo-cabina
   strategy: git
   api_key: $HEROKU_AUTH_TOKEN
-  run: "cd decide && python ./manage.py flush && python ./manage.py loaddata db_heroku.json"
+  run: "cd decide && python ./manage.py flush --noinput && python ./manage.py loaddata db_heroku.json"
   on:
     branch: deploy

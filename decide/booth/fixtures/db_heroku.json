@@ -833,7 +833,7 @@
      "pk": 1,
      "fields": {
       "name": "localhost",
-      "url": "localhost:8000",
+      "url": "127.0.0.1:8000",
       "me": false
      }
     },
