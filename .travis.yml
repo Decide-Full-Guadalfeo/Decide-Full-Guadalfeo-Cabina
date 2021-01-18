@@ -21,6 +21,9 @@ install:
 script:
 - cd decide
 - cp travis_local_settings.py local_settings.py
+- cd decide
+- cp travis_settings.py settings.py
+- cd ..
 - coverage run --branch --source=. ./manage.py test booth --keepdb
 - coverage xml
 - python-codacy-coverage -r coverage.xml
@@ -29,6 +32,6 @@ deploy:
   app: decide-full-guadalfeo-cabina
   strategy: git
   api_key: $HEROKU_AUTH_TOKEN
-  run: "cd decide && python ./manage.py flush && python ./manage.py loaddata db.json"
+  run: "cd decide && python ./manage.py flush --noinput && python ./manage.py loaddata db_heroku.json"
   on:
-    branch: release
+    branch: deploy

@@ -191,7 +191,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.quit()
 
         self.base.tearDown()
-
+    
     def test_general(self):
         voting = Voting.objects.all()
         self.driver.get(f'{self.live_server_url}/')
@@ -204,15 +204,17 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(0.5)
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting[0].id) + '/')
-        time.sleep(2)
-        assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
-        self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
-        time.sleep(1)
+        time.sleep(3)
+        assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text == "Alvaro Aguilar" 
+        self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div/div/div/label/div/div/div[1]").click()
+        time.sleep(0.5)
         self.driver.find_element(By.ID, "next-question").click()
-        assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(2) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
-        self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(2) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
-        time.sleep(1)
+        time.sleep(0.5)
+        assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text == "Alvaro Aguilar"
+        self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div/div/label/div/div/div[1]").click()
+        time.sleep(0.5)
         self.driver.find_element(By.ID, "next-question").click()
+        time.sleep(0.5)
         self.driver.find_element(By.CSS_SELECTOR, ".p-3:nth-child(1) .default").click()
         time.sleep(0.5)
         self.driver.find_element(By.CSS_SELECTOR, ".p-3:nth-child(2) .default").click()
@@ -224,7 +226,7 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         assert self.driver.find_element(By.CSS_SELECTOR, "p").text == "¡Enhorabuena! Tu voto ha sido enviado."
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(2)").click()
         self.driver.close()
- 
+   
     def test_primary(self):
         voting = Voting.objects.all()
         self.driver.get(f'{self.live_server_url}/')
@@ -237,14 +239,15 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_password").send_keys(Keys.ENTER)
         time.sleep(0.5)
         self.driver.get(f'{self.live_server_url}/booth/' + str(voting[1].id) + '/')
-        time.sleep(2)
-        assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
-        self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(1) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
-        time.sleep(2)
+        time.sleep(3)
+        assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text == "Alvaro Aguilar" 
+        self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div/div/div/label/div/div/div[1]").click()
+        time.sleep(1)
         self.driver.find_element(By.ID, "next-question").click()
-        assert self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(2) .boxesDiv:nth-child(1) > div:nth-child(1) h3:nth-child(4)").text == "Alvaro Aguilar"
-        self.driver.find_element(By.CSS_SELECTOR, ".question:nth-child(2) .boxesDiv:nth-child(1) > div:nth-child(1) .flip-card-front:nth-child(1)").click()
-        time.sleep(2)
+        time.sleep(1)
+        assert self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div/div/label/div/div/div[1]/h3").text == "Alvaro Aguilar"
+        self.driver.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div/div/label/div/div/div[1]").click()
+        time.sleep(0.5)
         self.driver.find_element(By.ID, "voteButton").click()
         time.sleep(4)
         assert self.driver.find_element(By.CSS_SELECTOR, "p").text == "¡Enhorabuena! Tu voto ha sido enviado."
@@ -287,4 +290,5 @@ class BoothGeneralTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.CSS_SELECTOR, ".btn-secondary").click()
         time.sleep(0.5)
         assert self.driver.find_element(By.CSS_SELECTOR, ".question > div > h2 > strong").text == "PREGUNTA 1"
-        self.driver.close()
+        self.driver.close()  
+  

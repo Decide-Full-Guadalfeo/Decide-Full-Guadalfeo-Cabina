@@ -1,0 +1,1726 @@
+[
+    {
+     "model": "auth.user",
+     "pk": 1,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$GVAzWjGygBdl$+lGgvAAnBY9cN+pWdujXBMFT4qEU33A8ij0YAX67Ymo=",
+      "last_login": "2021-01-14T14:18:43.624Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "auguadalfeo@gmail.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2020-10-22T12:00:24.231Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 2,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$XbTJUuLspDsT$ou/vHfvpSh4ske4CMH3rGs6dD/8NbZu73tBBJ5k6weY=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "JoseManuelCoboGuerrero",
+      "first_name": "Jose",
+      "last_name": "Cobo",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T14:20:13Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 3,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$Kp5Hy7Vie75Y$1V1HR3fKP9MaufjSZRVjXZGr4sgPBipfS7IgPH+ZZVs=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "CarlosDobladoHerrero",
+      "first_name": "Carlos",
+      "last_name": "Doblado",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T14:20:38Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 4,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$k4yFaJSFTpFZ$C2Qf0z8LvEmE+l0aa1q0K/f2g/QPPiT0EWGuMNttwfI=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "MiguelPonceMelero",
+      "first_name": "Miguel",
+      "last_name": "Ponce",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T14:21:01Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 5,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$PPdVFFN1hV73$gVMUTff5845jk8FKKZkhQa4lP8BHDaHd5HK2TBS5QFo=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "AlvaroAguilarAlhama",
+      "first_name": "Alvaro",
+      "last_name": "Aguilar",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T14:21:17Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 6,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$tSpciBRvwcx3$ItAnefZ3w6T0ocGeB6w7r1UIjaUnAflOfNhU1vBMsWE=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "FranciscoJoseQuintelaVela",
+      "first_name": "Francisco",
+      "last_name": "Quintela",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T14:21:32Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 7,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$wFwlgKm5lQnA$uOgjZpgU2cjn5s2656TuYpSQsg6uKU1VB0WnZ86/qYM=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "ReyesBlascoCuadrado",
+      "first_name": "Reyes",
+      "last_name": "Blasco",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T14:21:52Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 8,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$uSruMl0KtN2A$gualbkZ39JIfqnUE2uMl7NOeGTNd2DIJJPxaVF/qqZg=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "EstefaniaGanforninaTriguero",
+      "first_name": "Estefania",
+      "last_name": "Ganfornina",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T14:24:54Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 9,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$P3jp3SfrKWrD$WjyTh3RzHp1hQQQZLh2JEBE47pepBly6xD/HhXgiZrA=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "VanessaPradasFernandez",
+      "first_name": "Vanessa",
+      "last_name": "Pradas",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T14:25:16Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 10,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$PefuEsSmrP3o$IuHwmc7F4KoP0sNQnHzrbOu1ZEuzzP4YEf/l2uw/JAE=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "LuciaMartinezFernandez",
+      "first_name": "Lucia",
+      "last_name": "Martinez",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T14:25:44Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 11,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$70m9GV0e0UTJ$uI3MN6swPmxRj3hJeXjlKTXMulxux9RjlWCysyEdQJQ=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "MariaGutierrezFernandez",
+      "first_name": "Maria",
+      "last_name": "Gutierrez",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T14:26:22Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 12,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$06pcERpJFl0k$S3wY3OgdAcJQ+1WjWqUnrvL5mzRTBaww9VhLLFHlZAU=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "MartaAlvarezFernandez",
+      "first_name": "Marta",
+      "last_name": "Alvarez",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T14:26:48Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 13,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$5UCGZWkYpNoH$aRu1w5xZYJ4q/pSMaABJjdkEotWYZtKD9zC5voNA1/Y=",
+      "last_login": "2021-01-14T15:34:41.699Z",
+      "is_superuser": false,
+      "username": "EnriqueReinaGutierrez",
+      "first_name": "Enrique",
+      "last_name": "Reina",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T14:27:36Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 14,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$7uYk3CURv5kf$UYxsfT9UbR9gji6QE+uGC/VMvdNdTmWzZow1UCBRayU=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "JaimeBlazquez",
+      "first_name": "Jaime",
+      "last_name": "Blazquez",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T15:17:31Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 15,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$3YynikUUtLch$Umdkq2MZ9ZaUC+vHJERh1wnKQvvzSCkS6dpkHydvsh4=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "RubenDominguez",
+      "first_name": "Ruben",
+      "last_name": "Dominguez",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T15:18:02Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 16,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$ra3pDh6j9oZC$HUstBC3YqgXfEZWxoQ8QsgUyNnWoYyAsXjuMY5uTkks=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "FelicianoAlamo",
+      "first_name": "Feliciano",
+      "last_name": "Alamo",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T15:18:14Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 17,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$UIY8EhzFnY9p$v89h4TsR8MqKkLmxmUWTNiRqFXtYQVCOFrG3iOdE4Q4=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "IsmailMayoral",
+      "first_name": "Ismail",
+      "last_name": "Mayoral",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T15:18:33Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 18,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$9fKwiQVDYe43$yBUanU30f+j2gmj2SUapT4XVtnJOfLgvxI381gBCn8E=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "CristianSancho",
+      "first_name": "Cristian",
+      "last_name": "Sancho",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T15:18:46Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 19,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$bmDMhKWmRO7q$MLyL1lilkJB6xC4/9D6Iq3hG1EZvH5Pddd2fheKqHlA=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "AriadnaBarba",
+      "first_name": "Ariadna",
+      "last_name": "Barba",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T15:19:04Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 20,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$jHCC8iIy2qqG$cziTrjj7Kb6AjfADkQhqYnnuS+qg90XVjg30mfhHjlU=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "MariaAngelaMoyano",
+      "first_name": "MariaAngela",
+      "last_name": "Moyano",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T15:19:20Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 21,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$HHUUhptGLwiQ$5zHim3s4hUoFYLy9Td2ZUZVmANbTUci2z1r/O8vE5nY=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "EsmeraldaValle",
+      "first_name": "Esmeralda",
+      "last_name": "Valle",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T15:19:41Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 22,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$x8spOmptatko$LnsLb+m9a97O+RHgzsQpGeofrOBDg5Cr1hV2y9LP5II=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "DeliaJerez",
+      "first_name": "Delia",
+      "last_name": "Jerez",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T15:20:02Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 23,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$Efj14DrLqRJp$W7BLg5KiLYpnHbXraAznzjxd5Dbcw7yCtIBNY/q+f8o=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "MiriamVilchez",
+      "first_name": "Miriam",
+      "last_name": "Vilchez",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T15:20:51Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 24,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$Su4sLODwRlF3$qDVuYcHMzfOvfAbdU4CbgUPphK2/jqqa5PCBvBqPcSQ=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "MarianaEspin",
+      "first_name": "Mariana",
+      "last_name": "Espin",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T15:21:12Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "auth.user",
+     "pk": 25,
+     "fields": {
+      "password": "pbkdf2_sha256$100000$K93iuGCtp7Va$3LAj52fx9jwlOGzeWdxlVdvZgm2KB1husGpIOvrATk8=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "JuanPedroGomis",
+      "first_name": "JuanPedro",
+      "last_name": "Gomis",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-01-14T15:21:37Z",
+      "groups": [],
+      "user_permissions": []
+     }
+    },
+    {
+     "model": "sessions.session",
+     "pk": "17qj95xcguy0rnixt7bs4p8pvlp0xkpq",
+     "fields": {
+      "session_data": "Mzk0ZDg0NDZjMWUxMDk2NDc2ZjQ4ZjU4NmQ1ZWE4MjRjYzgxMGM0Njp7ImF1dGgtdG9rZW4iOiI3NmNhZDk3MDJiYTMxMTNhODhlNjVkMzEzYmRjZWQxOTRhOTI0OGNkIiwiX2F1dGhfdXNlcl9pZCI6IjEzIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiYmFzZS5iYWNrZW5kcy5BdXRoQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IjgyMTgxYzhhMjAyNWRkYzIxYjhhNjMxYWE3YjkxNzVjYWIzZDZhYjcifQ==",
+      "expire_date": "2021-01-28T15:34:41.735Z"
+     }
+    },
+    {
+     "model": "sessions.session",
+     "pk": "r3451hi6div2f3jtkepe4titwhyrsrwl",
+     "fields": {
+      "session_data": "NzI5YmUzOTM3MmFhYmQ4YzkzZWViYTE5YjI5ODkxZTBiOTQ1NDZkODp7ImF1dGgtdG9rZW4iOiJjYzg3NjAzNzc1ODMyN2EwMTY1ZDcwZTY5N2EzZmE1ZTBkYmI0YmM2IiwiX2F1dGhfdXNlcl9pZCI6IjEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJiYXNlLmJhY2tlbmRzLkF1dGhCYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiNDU1ZjVhMWYyNTUwMGMyYWJkMDRhOGM3YWMxZGMyNTE4N2EyNWE4YiJ9",
+      "expire_date": "2021-01-28T14:18:43.660Z"
+     }
+    },
+    {
+     "model": "sites.site",
+     "pk": 1,
+     "fields": {
+      "domain": "localhost:8000",
+      "name": "localhost:8000"
+     }
+    },
+    {
+     "model": "authtoken.token",
+     "pk": "76cad9702ba3113a88e65d313bdced194a9248cd",
+     "fields": {
+      "user": 13,
+      "created": "2021-01-14T15:34:41.633Z"
+     }
+    },
+    {
+     "model": "authtoken.token",
+     "pk": "cc876037758327a0165d70e697a3fa5e0dbb4bc6",
+     "fields": {
+      "user": 1,
+      "created": "2021-01-14T14:18:43.537Z"
+     }
+    },
+    {
+     "model": "socialaccount.socialapp",
+     "pk": 1,
+     "fields": {
+      "provider": "google",
+      "name": "Google API",
+      "client_id": "949634819550-fpt7aflj5pj52e5spjppsl940tdshojb.apps.googleusercontent.com",
+      "secret": "7_Hoj6rTtcDppv5Q1zylGZGx",
+      "key": "",
+      "sites": [
+       1
+      ]
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 1,
+     "fields": {
+      "user": 5,
+      "dni": "12345678A",
+      "sexo": "Woman",
+      "titulo": "Software",
+      "curso": "Master",
+      "candidatura": 2,
+      "edad": 21
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 2,
+     "fields": {
+      "user": 3,
+      "dni": "12345678B",
+      "sexo": "Man",
+      "titulo": "Software",
+      "curso": "First",
+      "candidatura": 2,
+      "edad": 22
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 3,
+     "fields": {
+      "user": 13,
+      "dni": "12345678C",
+      "sexo": "Man",
+      "titulo": "Software",
+      "curso": "Second",
+      "candidatura": 2,
+      "edad": 21
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 4,
+     "fields": {
+      "user": 8,
+      "dni": "12345678D",
+      "sexo": "Woman",
+      "titulo": "Software",
+      "curso": "Third",
+      "candidatura": 2,
+      "edad": 21
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 5,
+     "fields": {
+      "user": 6,
+      "dni": "12345678E",
+      "sexo": "Man",
+      "titulo": "Software",
+      "curso": "Fourth",
+      "candidatura": 2,
+      "edad": 21
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 6,
+     "fields": {
+      "user": 2,
+      "dni": "12345678F",
+      "sexo": "Man",
+      "titulo": "Software",
+      "curso": "First",
+      "candidatura": 2,
+      "edad": 22
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 7,
+     "fields": {
+      "user": 1,
+      "dni": "12345678Z",
+      "sexo": "Woman",
+      "titulo": "Software",
+      "curso": "First",
+      "candidatura": null,
+      "edad": 18
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 8,
+     "fields": {
+      "user": 10,
+      "dni": "12345678G",
+      "sexo": "Woman",
+      "titulo": "Software",
+      "curso": "First",
+      "candidatura": 3,
+      "edad": 19
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 9,
+     "fields": {
+      "user": 11,
+      "dni": "12345678H",
+      "sexo": "Woman",
+      "titulo": "Software",
+      "curso": "Second",
+      "candidatura": 3,
+      "edad": 24
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 10,
+     "fields": {
+      "user": 12,
+      "dni": "12345678I",
+      "sexo": "Woman",
+      "titulo": "Software",
+      "curso": "Third",
+      "candidatura": 3,
+      "edad": 21
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 11,
+     "fields": {
+      "user": 4,
+      "dni": "12345678J",
+      "sexo": "Man",
+      "titulo": "Software",
+      "curso": "Third",
+      "candidatura": 3,
+      "edad": 21
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 12,
+     "fields": {
+      "user": 7,
+      "dni": "12345678K",
+      "sexo": "Woman",
+      "titulo": "Software",
+      "curso": "Fourth",
+      "candidatura": 3,
+      "edad": 21
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 13,
+     "fields": {
+      "user": 9,
+      "dni": "12345678L",
+      "sexo": "Woman",
+      "titulo": "Software",
+      "curso": "Master",
+      "candidatura": 3,
+      "edad": 22
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 14,
+     "fields": {
+      "user": 19,
+      "dni": "12345670A",
+      "sexo": "Woman",
+      "titulo": "Software",
+      "curso": "First",
+      "candidatura": 2,
+      "edad": 18
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 15,
+     "fields": {
+      "user": 18,
+      "dni": "12345670B",
+      "sexo": "Man",
+      "titulo": "Software",
+      "curso": "Second",
+      "candidatura": 2,
+      "edad": 19
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 16,
+     "fields": {
+      "user": 22,
+      "dni": "12345670C",
+      "sexo": "Woman",
+      "titulo": "Software",
+      "curso": "Third",
+      "candidatura": 2,
+      "edad": 20
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 17,
+     "fields": {
+      "user": 21,
+      "dni": "12345670D",
+      "sexo": "Woman",
+      "titulo": "Software",
+      "curso": "Fourth",
+      "candidatura": 2,
+      "edad": 21
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 18,
+     "fields": {
+      "user": 16,
+      "dni": "12345670E",
+      "sexo": "Man",
+      "titulo": "Software",
+      "curso": "Master",
+      "candidatura": 2,
+      "edad": 27
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 19,
+     "fields": {
+      "user": 17,
+      "dni": "12345670F",
+      "sexo": "Man",
+      "titulo": "Software",
+      "curso": "First",
+      "candidatura": 2,
+      "edad": 18
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 20,
+     "fields": {
+      "user": 14,
+      "dni": "12345670G",
+      "sexo": "Man",
+      "titulo": "Software",
+      "curso": "Second",
+      "candidatura": 3,
+      "edad": 25
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 21,
+     "fields": {
+      "user": 25,
+      "dni": "12345670H",
+      "sexo": "Man",
+      "titulo": "Software",
+      "curso": "First",
+      "candidatura": 3,
+      "edad": 25
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 22,
+     "fields": {
+      "user": 20,
+      "dni": "12345670I",
+      "sexo": "Woman",
+      "titulo": "Software",
+      "curso": "Third",
+      "candidatura": 2,
+      "edad": 22
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 23,
+     "fields": {
+      "user": 24,
+      "dni": "12345670J",
+      "sexo": "Woman",
+      "titulo": "Software",
+      "curso": "Second",
+      "candidatura": 2,
+      "edad": 20
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 24,
+     "fields": {
+      "user": 23,
+      "dni": "12345670K",
+      "sexo": "Woman",
+      "titulo": "Software",
+      "curso": "First",
+      "candidatura": 3,
+      "edad": 19
+     }
+    },
+    {
+     "model": "authentication.votinguser",
+     "pk": 25,
+     "fields": {
+      "user": 15,
+      "dni": "12345670P",
+      "sexo": "Man",
+      "titulo": "Software",
+      "curso": "Master",
+      "candidatura": 3,
+      "edad": 26
+     }
+    },
+    {
+     "model": "base.auth",
+     "pk": 1,
+     "fields": {
+      "name": "0.0.0.0:5000",
+      "url": "http://0.0.0.0:5000/",
+      "me": false
+     }
+    },
+    {
+     "model": "base.key",
+     "pk": 1,
+     "fields": {
+      "p": 108883222090762673703132233443236469550341341623353306737355444757262806443487,
+      "g": 80902730834074176136646850569853915151768579445209192834558815355316376949797,
+      "y": 46444580554062307328292152515323849647720732846147094221050677339606950946840,
+      "x": 17931659289925164374107302254151398902693994440890154041240264259952329431793
+     }
+    },
+    {
+     "model": "base.key",
+     "pk": 2,
+     "fields": {
+      "p": 108883222090762673703132233443236469550341341623353306737355444757262806443487,
+      "g": 80902730834074176136646850569853915151768579445209192834558815355316376949797,
+      "y": 46444580554062307328292152515323849647720732846147094221050677339606950946840,
+      "x": 0
+     }
+    },
+    {
+     "model": "base.key",
+     "pk": 3,
+     "fields": {
+      "p": 108883222090762673703132233443236469550341341623353306737355444757262806443487,
+      "g": 80902730834074176136646850569853915151768579445209192834558815355316376949797,
+      "y": 46444580554062307328292152515323849647720732846147094221050677339606950946840,
+      "x": 0
+     }
+    },
+    {
+     "model": "base.key",
+     "pk": 4,
+     "fields": {
+      "p": 62454582829273350292445610547021802495928647132260163484319467223192903323647,
+      "g": 44144301524309587636487234810012805948266639142320827925150394210658201057464,
+      "y": 23501696432383268351430903914153031724124850539042875179157582001798335531846,
+      "x": 6618758877971715291852928889889746625183092219126669065268643448600575648889
+     }
+    },
+    {
+     "model": "base.key",
+     "pk": 5,
+     "fields": {
+      "p": 62454582829273350292445610547021802495928647132260163484319467223192903323647,
+      "g": 44144301524309587636487234810012805948266639142320827925150394210658201057464,
+      "y": 23501696432383268351430903914153031724124850539042875179157582001798335531846,
+      "x": 0
+     }
+    },
+    {
+     "model": "base.key",
+     "pk": 6,
+     "fields": {
+      "p": 62454582829273350292445610547021802495928647132260163484319467223192903323647,
+      "g": 44144301524309587636487234810012805948266639142320827925150394210658201057464,
+      "y": 23501696432383268351430903914153031724124850539042875179157582001798335531846,
+      "x": 0
+     }
+    },
+    {
+     "model": "base.key",
+     "pk": 7,
+     "fields": {
+      "p": 100603085496353901203612570821969415440225321767122364105549987334601788597187,
+      "g": 32047264008670488788220083064879953467408927786883269412658226431788123327073,
+      "y": 6979891626857911596455795055966016521254834319091383232106121358498396415751,
+      "x": 55241633971786329091216551326714773226955409044652843355428189653705518529927
+     }
+    },
+    {
+     "model": "base.key",
+     "pk": 8,
+     "fields": {
+      "p": 100603085496353901203612570821969415440225321767122364105549987334601788597187,
+      "g": 32047264008670488788220083064879953467408927786883269412658226431788123327073,
+      "y": 6979891626857911596455795055966016521254834319091383232106121358498396415751,
+      "x": 0
+     }
+    },
+    {
+     "model": "base.key",
+     "pk": 9,
+     "fields": {
+      "p": 100603085496353901203612570821969415440225321767122364105549987334601788597187,
+      "g": 32047264008670488788220083064879953467408927786883269412658226431788123327073,
+      "y": 6979891626857911596455795055966016521254834319091383232106121358498396415751,
+      "x": 0
+     }
+    },
+    {
+     "model": "base.key",
+     "pk": 10,
+     "fields": {
+      "p": 63084141395945095880430497417676158031642815974444696242027841244740616293967,
+      "g": 29628215338103678433179355076370649008998654937001595558015188877944555935006,
+      "y": 50350142693135103805312503013989786649288264248263155617557779255878534056689,
+      "x": 59475337190800233831446226770940950886565434791494986177507896268942712363352
+     }
+    },
+    {
+     "model": "base.key",
+     "pk": 11,
+     "fields": {
+      "p": 63084141395945095880430497417676158031642815974444696242027841244740616293967,
+      "g": 29628215338103678433179355076370649008998654937001595558015188877944555935006,
+      "y": 50350142693135103805312503013989786649288264248263155617557779255878534056689,
+      "x": 0
+     }
+    },
+    {
+     "model": "base.key",
+     "pk": 12,
+     "fields": {
+      "p": 63084141395945095880430497417676158031642815974444696242027841244740616293967,
+      "g": 29628215338103678433179355076370649008998654937001595558015188877944555935006,
+      "y": 50350142693135103805312503013989786649288264248263155617557779255878534056689,
+      "x": 0
+     }
+    },
+    {
+     "model": "base.key",
+     "pk": 13,
+     "fields": {
+      "p": 62657332753176358254038442059083500362890239739384129875792467639747541290519,
+      "g": 56279611921600577211684308622378261751836981313812455287123141688090002062952,
+      "y": 58219291009497777967120941108541646521268837047282407547113433106524206478053,
+      "x": 902793310522636876080693699679029258206955150173161552023936904361749745405
+     }
+    },
+    {
+     "model": "base.key",
+     "pk": 14,
+     "fields": {
+      "p": 62657332753176358254038442059083500362890239739384129875792467639747541290519,
+      "g": 56279611921600577211684308622378261751836981313812455287123141688090002062952,
+      "y": 58219291009497777967120941108541646521268837047282407547113433106524206478053,
+      "x": 0
+     }
+    },
+    {
+     "model": "base.key",
+     "pk": 15,
+     "fields": {
+      "p": 62657332753176358254038442059083500362890239739384129875792467639747541290519,
+      "g": 56279611921600577211684308622378261751836981313812455287123141688090002062952,
+      "y": 58219291009497777967120941108541646521268837047282407547113433106524206478053,
+      "x": 0
+     }
+    },
+    {
+     "model": "census.census",
+     "pk": 5,
+     "fields": {
+      "voting_id": 8,
+      "voter_id": 1
+     }
+    },
+    {
+     "model": "census.census",
+     "pk": 6,
+     "fields": {
+      "voting_id": 8,
+      "voter_id": 13
+     }
+    },
+    {
+     "model": "census.census",
+     "pk": 7,
+     "fields": {
+      "voting_id": 9,
+      "voter_id": 1
+     }
+    },
+    {
+     "model": "census.census",
+     "pk": 8,
+     "fields": {
+      "voting_id": 9,
+      "voter_id": 13
+     }
+    },
+    {
+     "model": "mixnet.mixnet",
+     "pk": 1,
+     "fields": {
+      "voting_id": 3,
+      "auth_position": 0,
+      "key": 1,
+      "pubkey": 2,
+      "auths": [
+       1
+      ]
+     }
+    },
+    {
+     "model": "mixnet.mixnet",
+     "pk": 2,
+     "fields": {
+      "voting_id": 4,
+      "auth_position": 0,
+      "key": 4,
+      "pubkey": 5,
+      "auths": [
+       1
+      ]
+     }
+    },
+    {
+     "model": "mixnet.mixnet",
+     "pk": 3,
+     "fields": {
+      "voting_id": 6,
+      "auth_position": 0,
+      "key": 7,
+      "pubkey": 8,
+      "auths": [
+       1
+      ]
+     }
+    },
+    {
+     "model": "mixnet.mixnet",
+     "pk": 4,
+     "fields": {
+      "voting_id": 8,
+      "auth_position": 0,
+      "key": 10,
+      "pubkey": 11,
+      "auths": [
+       1
+      ]
+     }
+    },
+    {
+     "model": "mixnet.mixnet",
+     "pk": 5,
+     "fields": {
+      "voting_id": 9,
+      "auth_position": 0,
+      "key": 13,
+      "pubkey": 14,
+      "auths": [
+       1
+      ]
+     }
+    },
+    {
+     "model": "voting.question",
+     "pk": 47,
+     "fields": {
+      "desc": "Votaci\u00f3n general 1: Elige al delegado de primero"
+     }
+    },
+    {
+     "model": "voting.question",
+     "pk": 48,
+     "fields": {
+      "desc": "Votaci\u00f3n general 1: Elige al delegado de segundo"
+     }
+    },
+    {
+     "model": "voting.question",
+     "pk": 49,
+     "fields": {
+      "desc": "Votaci\u00f3n general 1: Elige al delegado de tercero"
+     }
+    },
+    {
+     "model": "voting.question",
+     "pk": 50,
+     "fields": {
+      "desc": "Votaci\u00f3n general 1: Elige al delegado de cuarto"
+     }
+    },
+    {
+     "model": "voting.question",
+     "pk": 51,
+     "fields": {
+      "desc": "Votaci\u00f3n general 1: Elige al delegado del master"
+     }
+    },
+    {
+     "model": "voting.question",
+     "pk": 52,
+     "fields": {
+      "desc": "Votaci\u00f3n general 1: Elige al delegado al centro"
+     }
+    },
+    {
+     "model": "voting.question",
+     "pk": 53,
+     "fields": {
+      "desc": "Votaci\u00f3n general 1: Elige a los miembros de delegaci\u00f3n de alumnos"
+     }
+    },
+    {
+     "model": "voting.question",
+     "pk": 54,
+     "fields": {
+      "desc": "elige representante de primero de la candidatura \"Candidatura 2020/2021\""
+     }
+    },
+    {
+     "model": "voting.question",
+     "pk": 55,
+     "fields": {
+      "desc": "elige representante de segundo de la candidatura \"Candidatura 2020/2021\""
+     }
+    },
+    {
+     "model": "voting.question",
+     "pk": 56,
+     "fields": {
+      "desc": "elige representante de tercero de la candidatura \"Candidatura 2020/2021\""
+     }
+    },
+    {
+     "model": "voting.question",
+     "pk": 57,
+     "fields": {
+      "desc": "elige representante de cuarto de la candidatura \"Candidatura 2020/2021\""
+     }
+    },
+    {
+     "model": "voting.question",
+     "pk": 58,
+     "fields": {
+      "desc": "elige representante de m\u00e1ster de la candidatura \"Candidatura 2020/2021\""
+     }
+    },
+    {
+     "model": "voting.question",
+     "pk": 59,
+     "fields": {
+      "desc": "elige representante de delegado de centro de la candidatura \"Candidatura 2020/2021\""
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 75,
+     "fields": {
+      "question": 47,
+      "number": 1,
+      "option": "Maria Gutierrez / 11"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 76,
+     "fields": {
+      "question": 48,
+      "number": 1,
+      "option": "Marta Alvarez / 12"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 77,
+     "fields": {
+      "question": 49,
+      "number": 1,
+      "option": "Miguel Ponce / 4"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 78,
+     "fields": {
+      "question": 50,
+      "number": 1,
+      "option": "Reyes Blasco / 7"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 79,
+     "fields": {
+      "question": 51,
+      "number": 1,
+      "option": "Vanessa Pradas / 9"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 80,
+     "fields": {
+      "question": 52,
+      "number": 1,
+      "option": "Lucia Martinez / 10"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 81,
+     "fields": {
+      "question": 53,
+      "number": 1,
+      "option": "Jaime Blazquez / 14"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 82,
+     "fields": {
+      "question": 53,
+      "number": 2,
+      "option": "JuanPedro Gomis / 25"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 83,
+     "fields": {
+      "question": 53,
+      "number": 3,
+      "option": "Miriam Vilchez / 23"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 84,
+     "fields": {
+      "question": 53,
+      "number": 4,
+      "option": "Ruben Dominguez / 15"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 85,
+     "fields": {
+      "question": 47,
+      "number": 2,
+      "option": "Carlos Doblado / 3"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 86,
+     "fields": {
+      "question": 48,
+      "number": 2,
+      "option": "Enrique Reina / 13"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 87,
+     "fields": {
+      "question": 49,
+      "number": 2,
+      "option": "Estefania Ganfornina / 8"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 88,
+     "fields": {
+      "question": 50,
+      "number": 2,
+      "option": "Francisco Quintela / 6"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 89,
+     "fields": {
+      "question": 51,
+      "number": 2,
+      "option": "Jose Cobo / 2"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 90,
+     "fields": {
+      "question": 52,
+      "number": 2,
+      "option": "Alvaro Aguilar / 5"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 91,
+     "fields": {
+      "question": 53,
+      "number": 2,
+      "option": "Ariadna Barba / 19"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 92,
+     "fields": {
+      "question": 53,
+      "number": 3,
+      "option": "Delia Jerez / 22"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 93,
+     "fields": {
+      "question": 53,
+      "number": 4,
+      "option": "Esmeralda Valle / 21"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 94,
+     "fields": {
+      "question": 53,
+      "number": 5,
+      "option": "Feliciano Alamo / 16"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 95,
+     "fields": {
+      "question": 53,
+      "number": 6,
+      "option": "Ismail Mayoral / 17"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 96,
+     "fields": {
+      "question": 53,
+      "number": 7,
+      "option": "MariaAngela Moyano / 20"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 97,
+     "fields": {
+      "question": 53,
+      "number": 8,
+      "option": "Mariana Espin / 24"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 98,
+     "fields": {
+      "question": 53,
+      "number": 9,
+      "option": "Cristian Sancho / 18"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 99,
+     "fields": {
+      "question": 54,
+      "number": 1,
+      "option": "Carlos Doblado / 3"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 100,
+     "fields": {
+      "question": 54,
+      "number": 2,
+      "option": "Jose Cobo / 2"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 101,
+     "fields": {
+      "question": 54,
+      "number": 3,
+      "option": "Ariadna Barba / 19"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 102,
+     "fields": {
+      "question": 54,
+      "number": 4,
+      "option": "Ismail Mayoral / 17"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 103,
+     "fields": {
+      "question": 55,
+      "number": 1,
+      "option": "Enrique Reina / 13"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 104,
+     "fields": {
+      "question": 55,
+      "number": 2,
+      "option": "Mariana Espin / 24"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 105,
+     "fields": {
+      "question": 55,
+      "number": 3,
+      "option": "Cristian Sancho / 18"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 106,
+     "fields": {
+      "question": 56,
+      "number": 1,
+      "option": "Estefania Ganfornina / 8"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 107,
+     "fields": {
+      "question": 56,
+      "number": 2,
+      "option": "Delia Jerez / 22"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 108,
+     "fields": {
+      "question": 56,
+      "number": 3,
+      "option": "MariaAngela Moyano / 20"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 109,
+     "fields": {
+      "question": 57,
+      "number": 1,
+      "option": "Francisco Quintela / 6"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 110,
+     "fields": {
+      "question": 57,
+      "number": 2,
+      "option": "Esmeralda Valle / 21"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 111,
+     "fields": {
+      "question": 58,
+      "number": 1,
+      "option": "Alvaro Aguilar / 5"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 112,
+     "fields": {
+      "question": 58,
+      "number": 2,
+      "option": "Feliciano Alamo / 16"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 113,
+     "fields": {
+      "question": 59,
+      "number": 1,
+      "option": "Alvaro Aguilar / 5"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 114,
+     "fields": {
+      "question": 59,
+      "number": 2,
+      "option": "Carlos Doblado / 3"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 115,
+     "fields": {
+      "question": 59,
+      "number": 3,
+      "option": "Enrique Reina / 13"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 116,
+     "fields": {
+      "question": 59,
+      "number": 4,
+      "option": "Estefania Ganfornina / 8"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 117,
+     "fields": {
+      "question": 59,
+      "number": 5,
+      "option": "Francisco Quintela / 6"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 118,
+     "fields": {
+      "question": 59,
+      "number": 6,
+      "option": "Jose Cobo / 2"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 119,
+     "fields": {
+      "question": 59,
+      "number": 7,
+      "option": "Ariadna Barba / 19"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 120,
+     "fields": {
+      "question": 59,
+      "number": 8,
+      "option": "Delia Jerez / 22"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 121,
+     "fields": {
+      "question": 59,
+      "number": 9,
+      "option": "Esmeralda Valle / 21"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 122,
+     "fields": {
+      "question": 59,
+      "number": 10,
+      "option": "Feliciano Alamo / 16"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 123,
+     "fields": {
+      "question": 59,
+      "number": 11,
+      "option": "Ismail Mayoral / 17"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 124,
+     "fields": {
+      "question": 59,
+      "number": 12,
+      "option": "MariaAngela Moyano / 20"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 125,
+     "fields": {
+      "question": 59,
+      "number": 13,
+      "option": "Mariana Espin / 24"
+     }
+    },
+    {
+     "model": "voting.questionoption",
+     "pk": 126,
+     "fields": {
+      "question": 59,
+      "number": 14,
+      "option": "Cristian Sancho / 18"
+     }
+    },
+    {
+     "model": "voting.candidatura",
+     "pk": 2,
+     "fields": {
+      "nombre": "Candidatura 2020/2021",
+      "delegadoCentro": 5,
+      "representanteDelegadoPrimero": 3,
+      "representanteDelegadoSegundo": 13,
+      "representanteDelegadoTercero": 8,
+      "representanteDelegadoCuarto": 6,
+      "representanteDelegadoMaster": 2
+     }
+    },
+    {
+     "model": "voting.candidatura",
+     "pk": 3,
+     "fields": {
+      "nombre": "Candidatura Enrique Reina",
+      "delegadoCentro": 10,
+      "representanteDelegadoPrimero": 11,
+      "representanteDelegadoSegundo": 12,
+      "representanteDelegadoTercero": 4,
+      "representanteDelegadoCuarto": 7,
+      "representanteDelegadoMaster": 9
+     }
+    },
+    {
+     "model": "voting.voting",
+     "pk": 8,
+     "fields": {
+      "name": "Votaci\u00f3n general 1",
+      "desc": "Elige a los representantes de tu centro",
+      "start_date": "2021-01-14T15:32:36.465Z",
+      "end_date": null,
+      "tipo": "GV",
+      "candiancy": null,
+      "pub_key": 12,
+      "tally": null,
+      "postproc": null,
+      "question": [
+       47,
+       48,
+       49,
+       50,
+       51,
+       52,
+       53
+      ],
+      "auths": [
+       1
+      ]
+     }
+    },
+    {
+     "model": "voting.voting",
+     "pk": 9,
+     "fields": {
+      "name": "Votaciones de la candidatura \"Candidatura 2020/2021\"",
+      "desc": "Elige a los representantes de tu candidatura.",
+      "start_date": "2021-01-14T15:36:30.163Z",
+      "end_date": null,
+      "tipo": "PV",
+      "candiancy": 2,
+      "pub_key": 15,
+      "tally": null,
+      "postproc": null,
+      "question": [
+       54,
+       55,
+       56,
+       57,
+       58,
+       59
+      ],
+      "auths": [
+       1
+      ]
+     }
+    }
+    ]
+    
