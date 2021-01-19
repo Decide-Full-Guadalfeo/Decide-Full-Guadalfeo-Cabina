@@ -412,6 +412,33 @@ const Voting = ({ utils }) => {
 
   //   show the first element, the others are hide by default
 
+  ////////////// MEJORA //////////////////////
+  const [genres, setGenres] = useState([])
+
+
+  const getGenres = () => {
+    
+    let inputs = document.getElementsByClassName("alum-list")[0].getElementsByTagName("input");
+    console.log(inputs)
+    let ids = [];
+
+    for (let j = 0; j < inputs.length; j++) {
+        ids.push(inputs[j].value.split(" ")[0]);
+    }
+    
+    getGenresByIds(ids)
+      .then(r => {
+         setGenres(r) 
+        })
+      .catch(e => console.log(e))
+  }
+
+  useEffect(() => {
+    if(votingType === "general"){
+      getGenres()
+    }
+  }, [])
+
   /*############### RETURN ###############*/
   return (
     <div id="voting-body" className="voting container-fluid">
@@ -513,8 +540,10 @@ const Voting = ({ utils }) => {
                   )}
                   <div className="d-flex align-content-center flex-wrap ">
                     {alumList.options.map((p) => (
-                      <div key={p.number} className="p-3">
+                      <div key={index} className={"p-3 " + genres[index]}>
                         {p.option.split("/")[0]}
+                        <br />
+                        {utils.lang["genre_label"]}: {utils.lang[genres[index]]}
                         <label className="checkbox">
                           <input
                             type="checkbox"
