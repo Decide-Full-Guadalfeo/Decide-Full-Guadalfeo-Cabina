@@ -27,7 +27,10 @@ const App = () => {
     blankError: "Please, do not leave empty questions",
     bigError:"Please, do not leave empty questions.\nIf this is a general voting in the final question, you can choose more than one, but a maximum of ten and five men and five women",
     volver: "Return to index",
-    empezar: "Start again"
+    empezar: "Start again",
+    genre_label: "Gender",
+    Woman: "Woman",
+    Man: "Man"
   };
   const es = {
     current: "es",
@@ -50,7 +53,10 @@ const App = () => {
     blankError: "Por favor, no deje preguntas vacías",
     bigError:"Por favor, no deje preguntas vacías.\nSólo se pueden seleccionar 10 alumnos en la lista como máximo, y 5 hombres y mujeres respectivamente.",
     volver: "Volver al inicio",
-    empezar: "Empezar de nuevo"
+    empezar: "Empezar de nuevo",
+    genre_label: "Género",
+    Woman: "Mujer",
+    Man: "Hombre"
 
   };
 
